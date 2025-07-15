@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.logout {
+ width: 100px;
+}
+
+.textcenter {
+  text-align: center;
+}
+
+body{
+    width: 500px;
+    margin: auto;
+	background-color: rgb(251, 255, 251);
+}
+
+.btn--ordermanagemant{
+  color: #fff;
+  background-color: rgb(0, 64, 0);
+}
+
+.btn--menumanagemant{
+  color: #fff;
+  background-color: rgb(0, 128, 0);
+}
+
+button {
+ width: 100px;
+ height:35px;
+ border-radius: 2vh;
+ box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
