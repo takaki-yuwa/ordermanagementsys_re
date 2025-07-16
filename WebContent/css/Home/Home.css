@@ -1,18 +1,17 @@
 @charset "UTF-8";
 
+main{
+ margin:auto;
+ width: 500px;
+}
+
 .logout {
  width: 100px;
+ margin-right: 20px;
 }
 
 .textcenter {
   text-align: center;
-}
-
-body{
-    width: 500px;
-    margin: auto;
-	padding-top:20px;
-	background-color: rgb(251, 255, 251);
 }
 
 .btn--ordermanagemant{
@@ -27,8 +26,12 @@ body{
 
 button {
  width: 100px;
+ margin-left: 20px;
  height:35px;
  border-radius: 10px;
  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
 }
 
+h5{
+ margin-left: 20px;
+}
