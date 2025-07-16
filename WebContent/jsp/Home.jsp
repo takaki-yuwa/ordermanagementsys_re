@@ -10,8 +10,9 @@
 <title>Home</title>
 <!--.cssの呼び出し-->
 <link rel="stylesheet" href="../css/main.css">
-<link rel="stylesheet" href="../css/Home/Home.css">
-
+<link rel="stylesheet" href="../css/Home/home.css">
+<!-- ファビコン非表示 -->
+<link rel="icon" href="data:," />
 </head>
 <body>
 	<main>
@@ -19,7 +20,7 @@
 			<input type="image" src="../image/logoutButton.png" alt="ログアウトボタン"
 				class="logout right-image">
 		</form>
-		<div class=textcenter>ホームメニュー</div>
+		<div class=text-center>ホームメニュー</div>
 		<hr>
 		<h5>注文管理</h5>
 		<form action="OrderList" method="post">

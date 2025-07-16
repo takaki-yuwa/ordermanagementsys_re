@@ -15,6 +15,7 @@
 </head>
 <body>
 	<main>
+		<div class=text-center>ログイン</div>
 		
 	</main>
 </body>
