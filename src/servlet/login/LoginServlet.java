@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.login.LoginInfo;
+import util.PasswordUtil;
 
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
@@ -26,7 +27,6 @@ public class LoginServlet extends HttpServlet {
 		// デバッグ用出力
 		System.out.println("入力されたユーザーID: " + userId);
 		System.out.println("入力されたパスワード: " + password);
-		
 
 		//IDが空の場合
 		if (userId == null || userId.trim().isEmpty()) {
@@ -47,23 +47,26 @@ public class LoginServlet extends HttpServlet {
 			return;
 		}
 
-		//認証処理
-		LoginDAO loginDao=new LoginDAO();
+		// 認証処理
+		LoginDAO loginDao = new LoginDAO();
 		LoginInfo info = loginDao.getLogin(userId);
-		
-		if(info != null && info.getPassword().equals(password)) {
-			//認証成功
-			HttpSession session=request.getSession();
+
+		// デバッグ出力（DBから取得したハッシュ値を確認）
+		System.out.println("DBのハッシュパスワード: " + info.getPassword());
+
+		//PasswordUtil.verify()でハッシュ化
+		if (info != null && PasswordUtil.verify(password, info.getPassword())) {
+			// 認証成功
+			HttpSession session = request.getSession();
 			session.setAttribute("userId", userId);
-			session.setAttribute("password", password);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Home");
 			dispatcher.forward(request, response);
-		}else {
-			//認証失敗
+		} else {
+			// 認証失敗
 			request.setAttribute("errorMessage", "IDまたはパスワードが間違っています。");
-			RequestDispatcher dispatcher=request.getRequestDispatcher("Login.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 	}
 }

@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import dao.DBUtil;
 import model.login.LoginInfo;
+import util.DBUtil;
 
 public class LoginDAO {
 	public LoginInfo getLogin(String userid) {
@@ -23,6 +23,7 @@ public class LoginDAO {
 					String password=rs.getString("login_password");
 					
 					loginInfo=new LoginInfo();
+					loginInfo.setId(userid);
 					loginInfo.setPassword(password);
 				}
 			}
