@@ -10,13 +10,31 @@
 <title>ログイン画面</title>
 <!-- .cssの呼び出し -->
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/Login/login.css">
 <!-- ファビコン非表示 -->
 <link rel="icon" href="data:," />
 </head>
 <body>
+	<div class="text-center text-bottom">ログイン</div>
 	<main>
-		<div class=text-center>ログイン</div>
-		
+		<div class="login-box">
+			<form id="loginForm" action="Login" method="post" novalidate>
+				<!-- ID入力 -->
+				<label for="userid">ID</label><br> 
+				<input type="text" id="userid" name="userid" required><br>
+				<!-- IDが空の場合JavaScriptでエラーテキスト表示 -->
+				<span id="useridError" class="text-error"></span><br><br>
+				<!-- パスワード入力 -->
+				<label for="password" method="post">パスワード</label><br>
+				<input type="password" id="password" name="password" required><br>
+				<!-- パスワードが空の場合JavaScriptでエラーテキスト表示 -->
+				<span id="passwordError" class="text-error"></span><br><br>
+				
+				<button type="submit">ログイン</button>
+			</form>
+		</div>
 	</main>
+<!-- .jsの呼び出し -->
+<script src="JavaScript/Login/LoginError.js"></script>
 </body>
 </html>

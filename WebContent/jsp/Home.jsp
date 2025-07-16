@@ -16,11 +16,11 @@
 </head>
 <body>
 	<main>
-		<form action="Logoutt" style="text-align: right;">
+		<form action="Logout" style="text-align: right;">
 			<input type="image" src="../image/logoutButton.png" alt="ログアウトボタン"
 				class="logout right-image">
 		</form>
-		<div class=text-center>ホームメニュー</div>
+		<div class="text-center">ホームメニュー</div>
 		<hr>
 		<h5>注文管理</h5>
 		<form action="OrderList" method="post">
