@@ -13,6 +13,10 @@ public class LoginInfo {
 		this.setPassword(password);
 	}
 
+	public LoginInfo() {
+		// TODO 自動生成されたコンストラクター・スタブ
+	}
+
 	public String getId() {
 		return id;
 	}
