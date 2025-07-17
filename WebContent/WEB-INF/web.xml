@@ -39,7 +39,7 @@
 		<url-pattern>*.jsp</url-pattern>
 	</servlet-mapping>
 	<!-- LoginFilter の設定 -->
-	<!--<filter>
+	<filter>
 		<filter-name>LoginFilter</filter-name>
 		<filter-class>filter.LoginFilter</filter-class>
 	</filter>
@@ -47,5 +47,5 @@
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>-->
+	</filter-mapping>
 </web-app>

@@ -42,36 +42,53 @@ public class LoginServlet extends HttpServlet {
 
 		//エラーフラグがtrueの場合ログイン画面に遷移
 		if (hasError) {
-			RequestDispatcher dispacher = request.getRequestDispatcher("/Home");
+			RequestDispatcher dispacher = request.getRequestDispatcher("Login.jsp");
 			dispacher.forward(request, response);
 			return;
 		}
+		
+		try {
+			//ここで例外を強制発生（テスト用）
+		    //String test = null;
+		    //test.length();
+		    
+			// 認証処理
+			LoginDAO loginDao = new LoginDAO();
+			LoginInfo info = loginDao.getLogin(userId);
 
-		// 認証処理
-		LoginDAO loginDao = new LoginDAO();
-		LoginInfo info = loginDao.getLogin(userId);
+			// ユーザーが見つからない場合
+			if (info == null) {
+				request.setAttribute("errorMessage", "IDまたはパスワードが間違っています。");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+				dispatcher.forward(request, response);
+				return; // 処理をここで終了
+			}
 
-		// ユーザーが見つからない場合
-		if (info == null) {
-			request.setAttribute("errorMessage", "IDまたはパスワードが間違っています。");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
-			dispatcher.forward(request, response);
-			return; // 処理をここで終了
-		}
+			// デバッグ出力（DBから取得したハッシュ値を確認）
+			System.out.println("DBのハッシュパスワード: " + info.getPassword());
 
-		// デバッグ出力（DBから取得したハッシュ値を確認）
-		System.out.println("DBのハッシュパスワード: " + info.getPassword());
+			//PasswordUtil.verify()でハッシュ化
+			if (PasswordUtil.verify(password, info.getPassword())) {
+				// 認証成功
+				HttpSession session = request.getSession();
+				session.setAttribute("userId", userId);
+				response.sendRedirect(request.getContextPath() + "/Home");
+			} else {
+				// 認証失敗
+				request.setAttribute("errorMessage", "IDまたはパスワードが間違っています。");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+				dispatcher.forward(request, response);
+			}
+		//例外処理
+		} catch (Exception e) {
+			// ログに出力（開発時）
+			e.printStackTrace();
 
-		//PasswordUtil.verify()でハッシュ化
-		if (PasswordUtil.verify(password, info.getPassword())) {
-			// 認証成功
-			HttpSession session = request.getSession();
-			session.setAttribute("userId", userId);
-			response.sendRedirect(request.getContextPath() + "/Home");
-		} else {
-			// 認証失敗
-			request.setAttribute("errorMessage", "IDまたはパスワードが間違っています。");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+			// ユーザー向けエラーメッセージ
+			request.setAttribute("errorMessage", "システムエラーが発生しました。再度お試しください。");
+
+			// エラー画面やログイン画面に戻す
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/Error.jsp");
 			dispatcher.forward(request, response);
 		}
 
