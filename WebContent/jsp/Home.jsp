@@ -9,15 +9,15 @@
 	content="width=device-width,height=device-height,initial-scale=1.0">
 <title>Home</title>
 <!--.cssの呼び出し-->
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/main.css">
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/Home/home.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/Home/home.css">
 <!-- ファビコン非表示 -->
 <link rel="icon" href="data:," />
 </head>
 <body>
 	<main>
-		<form action="Logout" style="text-align: right;">
-			<input type="image" src="<%= request.getContextPath() %>/image/logoutButton.png" alt="ログアウトボタン"
+		<form action="Logout" method="post" style="text-align: right;">
+			<input type="image" src="image/logoutButton.png" alt="ログアウトボタン"
 				class="logout right-image">
 		</form>
 		<div class="text-center">ホームメニュー</div>

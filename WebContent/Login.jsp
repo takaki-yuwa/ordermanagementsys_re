@@ -32,7 +32,8 @@
 				
 				<button type="submit">ログイン</button><br>
 				<!-- IDまたはパスワードを間違えている場合エラーテキスト表示 -->
-				<span class="text-error"><%=request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage"):"" %></span><br><br>
+				<span class="text-error"><%=request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage"):"" %></span><br>
+				<span class="text-error"><%=request.getAttribute("noLoginMessage") != null ? request.getAttribute("noLoginMessage"):"" %></span><br><br>
 			</form>
 		</div>
 	</main>

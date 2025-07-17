@@ -51,11 +51,19 @@ public class LoginServlet extends HttpServlet {
 		LoginDAO loginDao = new LoginDAO();
 		LoginInfo info = loginDao.getLogin(userId);
 
+		// ユーザーが見つからない場合
+		if (info == null) {
+			request.setAttribute("errorMessage", "IDが存在しません。");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+			dispatcher.forward(request, response);
+			return; // 処理をここで終了
+		}
+
 		// デバッグ出力（DBから取得したハッシュ値を確認）
 		System.out.println("DBのハッシュパスワード: " + info.getPassword());
 
 		//PasswordUtil.verify()でハッシュ化
-		if (info != null && PasswordUtil.verify(password, info.getPassword())) {
+		if (PasswordUtil.verify(password, info.getPassword())) {
 			// 認証成功
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", userId);
