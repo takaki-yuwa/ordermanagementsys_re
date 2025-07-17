@@ -10,7 +10,7 @@ import util.DBUtil;
 public class LoginDAO {
 	public LoginInfo getLogin(String userid) {
 		LoginInfo loginInfo=null;
-		
+		//login_idを参照してlogin_passwordを取得する
 		String sql="SELECT login_password FROM user_login WHERE login_id = ?";
 		
 		try(Connection con=DBUtil.getConnection();

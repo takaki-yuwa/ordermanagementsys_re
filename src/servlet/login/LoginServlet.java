@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 
 		//エラーフラグがtrueの場合ログイン画面に遷移
 		if (hasError) {
-			RequestDispatcher dispacher = request.getRequestDispatcher("Login.jsp");
+			RequestDispatcher dispacher = request.getRequestDispatcher("/Home");
 			dispacher.forward(request, response);
 			return;
 		}
@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 
 		// ユーザーが見つからない場合
 		if (info == null) {
-			request.setAttribute("errorMessage", "IDが存在しません。");
+			request.setAttribute("errorMessage", "IDまたはパスワードが間違っています。");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
 			dispatcher.forward(request, response);
 			return; // 処理をここで終了
@@ -67,8 +67,7 @@ public class LoginServlet extends HttpServlet {
 			// 認証成功
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", userId);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/Home");
-			dispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/Home");
 		} else {
 			// 認証失敗
 			request.setAttribute("errorMessage", "IDまたはパスワードが間違っています。");
