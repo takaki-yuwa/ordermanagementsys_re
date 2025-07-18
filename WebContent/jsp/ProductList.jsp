@@ -48,7 +48,7 @@
 	<div class="popup-overlay" id="popup-overlay"></div>
 	<!--ポップアップの内容-->
 	<div class="popup-content" id="popup-content">
-		<p id="popup-prodcut-name"></p>
+		<p id="popup-product-name" class="text-bold"></p>
 		<p id="popup-message"></p>
 		<p>よろしいですか？</p>
 		<!-- 商品の表示変更 -->

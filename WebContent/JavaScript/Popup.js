@@ -88,8 +88,8 @@ function openProductDisplayTogglePopup(productId,visibleFlag,productName){
 	const popupProductId=document.getElementById('popup-product-id');
 	const popupVisibleFlag=document.getElementById('popup-product-visible-flag');
 	
-	if(popupProductName){
-		popupProductName.innerHTML=productName;
+	if(popupProductName && productName != null){
+		popupProductName.textContent=productName;
 	}
 	
 	if (visibleFlag === '1') {
