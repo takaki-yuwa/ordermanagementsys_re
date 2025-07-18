@@ -15,29 +15,43 @@ import jakarta.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = { "/jsp/*", "/servlet/*" })
 public class LoginFilter implements Filter {
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
 
-		HttpSession session = req.getSession(false);
-		String loginURI = req.getContextPath() + "/Login.jsp";
+		try {
+			HttpServletRequest req = (HttpServletRequest) request;
+			HttpServletResponse res = (HttpServletResponse) response;
 
-		boolean loggedIn = (session != null && session.getAttribute("userId") != null);
-		boolean loginRequest = req.getRequestURI().equals(loginURI) || req.getRequestURI().endsWith("/Login");
-		boolean isStaticResource = req.getRequestURI().matches(".*(\\.css|\\.js|\\.png|\\.jpg|\\.gif)$");
+			HttpSession session = req.getSession(false);
+			String loginURI = req.getContextPath() + "/Login.jsp";
 
-		if (loggedIn || loginRequest || isStaticResource) {
-			chain.doFilter(request, response); // 次のフィルターまたはサーブレットへ進む
-		} else {
-			request.setAttribute("noLoginMessage", "ログインしてください");
-			res.sendRedirect(loginURI); // 未ログインの場合はログイン画面へリダイレクト
+			boolean loggedIn = (session != null && session.getAttribute("userId") != null);
+			boolean loginRequest = req.getRequestURI().equals(loginURI) || req.getRequestURI().endsWith("/Login");
+			boolean isStaticResource = req.getRequestURI().matches(".*(\\.css|\\.js|\\.png|\\.jpg|\\.gif)$");
+
+			if (loggedIn || loginRequest || isStaticResource) {
+				chain.doFilter(request, response); // 通過
+			} else {
+				request.setAttribute("noLoginMessage", "ログインしてください");
+				res.sendRedirect(loginURI); // 未ログインはログイン画面へ
+			}
+		} catch (Exception e) {
+			System.err.println("LoginFilterで予期しない例外が発生しました");
+			e.printStackTrace();
+
+			// エラーページにリダイレクトするなどの対応（必要に応じて）
+			if (response instanceof HttpServletResponse) {
+				((HttpServletResponse) response).sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "内部エラーが発生しました");
+			}
 		}
 	}
 
+	@Override
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
 
+	@Override
 	public void destroy() {
 	}
 }

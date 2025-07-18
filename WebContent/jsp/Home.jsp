@@ -31,17 +31,17 @@
 		<table>
 			<tr>
 				<td>
-					<form action="Product" method="post">
+					<form action="ProductList" method="post">
 						<button class="btn--menumanagemant">商品</button>
 					</form>
 				</td>
 				<td>
-					<form action="Topping" method="post">
+					<form action="ToppingList" method="post">
 						<button class="btn--menumanagemant">トッピング</button>
 					</form>
 				</td>
 				<td>
-					<form action="Category" method="post">
+					<form action="CategoryList" method="post">
 						<button class="btn--menumanagemant">カテゴリ</button>
 					</form>
 				</td>

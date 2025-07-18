@@ -18,6 +18,7 @@ public class ProductInfo {
 		this.setPrice(price);
 		this.setCategory(category);
 		this.setStock(stock);
+		this.setVisible_flag(visible_flag);
 	}
 
 	public int getId() {

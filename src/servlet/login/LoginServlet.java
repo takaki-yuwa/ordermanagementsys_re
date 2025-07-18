@@ -16,7 +16,8 @@ import util.PasswordUtil;
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -81,7 +82,7 @@ public class LoginServlet extends HttpServlet {
 		} catch (Exception e) {
 			// ログに出力（開発時）
 			e.printStackTrace();
-
+			
 			// エラー画面に戻す
 			request.getRequestDispatcher("/jsp/Error.jsp").forward(request, response);
 		}
