@@ -2,23 +2,24 @@
 
 main{
  margin:auto;
+/* width: 500px;*/
 }
-
+/*ログアウトボタン*/
 .logout {
  width: 100px;
  margin-right: 20px;
 }
-
+/*注文管理のボタン色*/
 .btn--ordermanagemant{
   color: #fff;
   background-color: rgb(0, 64, 0);
 }
-
+/*メニュー管理のボタン色*/
 .btn--menumanagemant{
   color: #fff;
   background-color: rgb(0, 128, 0);
 }
-
+/*ボタン設定*/
 button {
  width: 100px;
  margin-left: 20px;
@@ -26,7 +27,8 @@ button {
  border-radius: 10px;
  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
 }
-
+/*見出し5レイアウト*/
 h5{
  margin-left: 20px;
 }
+
