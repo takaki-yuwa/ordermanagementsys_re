@@ -78,7 +78,7 @@ button:active {
 .tab-labels {
   display: flex;
   overflow-x: auto;
-  margin: 0 auto; /* 左右のマージン自動で中央寄せ */
+  margin: 0 auto;
   scroll-behavior: smooth;
 }
 /*ラジオボタンを非表示にする*/
@@ -96,12 +96,11 @@ button:active {
 }
 /* コンテンツ切り替え */
 .tab-content {
-  margin-top: 30px;
-  margin-bottom: 30px;
   display: none;
-  padding: 20px 40px;
-  margin: 0 auto; /* 左右のマージン自動で中央寄せ */
-  width: max-content; /* コンテンツ幅に合わせる */
+  max-width: 100%;
+  padding: 20px 10px 50px 10px;
+  margin: 0 auto;
+  width: max-content;
   color: #555;
 }
 /*テーブルデザイン*/
@@ -144,4 +143,19 @@ ul {
   border-top: 2px solid rgb(128, 128, 128);
   padding: 5px 20px;
   z-index: 1000; /* 他の要素より前面に出す */
+}
+
+.circle{
+  display: inline-block;
+  font-size: 12px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgb(255, 128, 128);
+  text-align:center;
+  line-height: 16px;
+  position: relative;
+  left: -10px;
+  bottom: -5px;
+  color: rgb(255, 255, 255);
 }

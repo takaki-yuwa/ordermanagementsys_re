@@ -16,6 +16,7 @@
 <title>OrderList</title>
 </head>
 <script src="JavaScript/setTabContent.js"></script>
+<!--<script src="JavaScript/OrderList.js"></script>-->
 <body>
 	<main>
 		<div class="tab">
@@ -39,7 +40,7 @@
 		　</form>
 		  <!-- ラベル（横スクロール） -->
 			  <div class="tab-labels">
-			    <label for="tab1">全て</label>
+			    <label for="tab1">全て</label><span class="circle">1</span>
 			    <label for="tab2">お好み焼き</label>
 			    <label for="tab3">もんじゃ焼き</label>
 			    <label for="tab4">鉄板焼き</label>
@@ -64,7 +65,7 @@
 			        <th>トッピング</th>
 			        <th>卓番/提供</th>
 			      </tr>
-				  <!-- historyinfo リストをループして表示 -->
+				  <!-- orderinfo リストをループして表示 -->
 		          <c:forEach var="order" items="${orderinfo}">
 					  <tr class="tr">
 					    <td>
