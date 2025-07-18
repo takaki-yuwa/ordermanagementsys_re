@@ -1,0 +1,147 @@
+@charset "UTF-8";
+
+main {
+  width: 80%;
+  margin: 0 auto; 
+  height: 100vh;       
+  padding: 0;
+}
+/*注文番号ボタン*/
+.order_num{
+  width: 35px;
+  height:35px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(0, 128, 0)
+}
+/*卓番/提供ボタン*/
+.order_flag{
+  width: 50px;
+  height:50px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 128, 0);
+  border: 1px solid #333
+}
+/*履歴ボタン*/
+.history-form {
+  display: flex;
+  justify-content: space-between; /* 左右に分ける */
+  align-items: center;
+  padding: 0px 40px;
+}
+.history{
+  width: 45px;
+  height:25px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #333
+}
+/*ボタン*/
+button {
+ border-radius: 10px;
+ box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+}
+button:active {
+  transform: translateY(1px);
+}
+/* タブラッパーを上部に固定 */
+.tab-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: rgb(251, 255, 251);
+  z-index: 1000;
+  padding: 10px;
+}
+/*ホームボタン*/
+.homebutton {
+ width: 30px;
+ height: auto;
+ border-right: 1px solid rgb(192, 192, 192);
+ padding-right: 10px;
+}
+/*タブ全体*/
+.tab {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px;
+}
+/* 横スクロールバー非表示 */
+.tab-labels::-webkit-scrollbar {
+  display: none;
+}
+/* ラベルを包むラッパーに横スクロールを指定 */
+.tab-labels {
+  display: flex;
+  overflow-x: auto;
+  margin: 0 auto; /* 左右のマージン自動で中央寄せ */
+  scroll-behavior: smooth;
+}
+/*ラジオボタンを非表示にする*/
+.tab-item {
+  display: none;
+}
+/*ラベルの設定*/
+.tab-labels label {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  color: #999;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+}
+/* コンテンツ切り替え */
+.tab-content {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: none;
+  padding: 20px 40px;
+  margin: 0 auto; /* 左右のマージン自動で中央寄せ */
+  width: max-content; /* コンテンツ幅に合わせる */
+  color: #555;
+}
+/*テーブルデザイン*/
+table {
+  border-collapse: collapse;
+  border: 1px solid #333;
+  text-align: center;
+}
+th {
+  border: 1px solid #333;
+  padding: 8px;
+}
+td {
+  border-bottom: 1px solid #333;
+  padding: 8px;
+}
+/* 横並び２列 */
+ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+.list {
+  display: grid;
+  width: fit-content;
+  column-gap: 2em;
+  grid-template-columns: repeat(3, auto);
+}
+.topping{
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: rgb(192, 192, 192);
+  text-underline-offset: 4px;
+}
+.fixed-row {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgb(236, 236, 236);
+  border-top: 2px solid rgb(128, 128, 128);
+  padding: 5px 20px;
+  z-index: 1000; /* 他の要素より前面に出す */
+}
