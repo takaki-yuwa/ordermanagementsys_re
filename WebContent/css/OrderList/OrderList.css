@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 main {
-  width: 80%;
+  width: 100%;
   margin: 0 auto; 
   height: 100vh;       
   padding: 0;
@@ -22,14 +22,22 @@ main {
   background-color: rgb(0, 128, 0);
   border: 1px solid #333
 }
-/*履歴ボタン*/
-.history-form {
+/*戻すボタン*/
+.order_return{
+  width: 50px;
+  height:50px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 128, 128);
+  border: 1px solid #333
+}
+/*履歴/注文ボタン*/
+.order_history-form {
   display: flex;
   justify-content: space-between; /* 左右に分ける */
   align-items: center;
   padding: 0px 40px;
 }
-.history{
+.order_history{
   width: 45px;
   height:25px;
   color: rgb(0, 0, 0);

@@ -8,12 +8,10 @@
 <!--サイトのサイズ自動調整-->
 <meta name="viewport"
 	content="width=device-width,height=device-height,initial-scale=1.0">
-<title>注文一覧</title>
 <!--.cssの呼び出し-->
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/OrderList/OrderList.css">
-
-<title>OrderList</title>
+<title>注文一覧</title>
 </head>
 <script src="JavaScript/setTabContent.js"></script>
 <!--<script src="JavaScript/OrderList.js"></script>-->
@@ -36,7 +34,7 @@
 		  <div class="tab-wrapper">
 		　<!--ホームボタン-->
 		  <form action="Home" style="margin-top: 8px;">
-		  	<input type="image" src="<%= request.getContextPath() %>/image/homeButton.png" alt="ホームボタン" class="homebutton">
+		  	<input type="image" src="image/homeButton.png" alt="ホームボタン" class="homebutton">
 		　</form>
 		  <!-- ラベル（横スクロール） -->
 			  <div class="tab-labels">
@@ -108,7 +106,10 @@
 
 					     </td>
 						 <td>
-							 <form action="UpdateFlag">
+						<!--提供済みフラグの更新-->
+							 <form action="OrderList" method="post">
+								<input type="hidden" name="order_id" value="${order.orderId}">
+								<input type="hidden" name="order_flag" value="${order.orderFlag}">
 							 	<button class="order_flag">${order.tableNumber}卓<br>提供</button>
 							 </form>
 						 </td>
@@ -117,22 +118,115 @@
 			    </table>
 			</c:if>
 		    </div>
-		    <div class="tab-content content2"></div>
+		    <div class="tab-content content2">
+		    <c:if test="${not empty orderinfo}">
+			   <table>
+			      <tr>
+			        <th>注文番号</th>
+			        <th>個数</th>
+			        <th>商品</th>
+			        <th>トッピング</th>
+			        <th>卓番/提供</th>
+			      </tr>
+		    <c:forEach var="order" items="${orderinfo}">
+			  <!-- 「おこのみやき」カテゴリだけを表示 -->
+			  <c:if test="${order.categoryName == 'お好み焼き'}">
+			    <tr class="tr">
+			      <td>
+			        <form action="OrderEdit">
+			          <button class="order_num">${order.orderId}</button>
+			        </form>
+			      </td>
+			      <td>${order.productQuantity}個</td>
+			      <td>${order.productName}</td>
+			      <td class="topping">
+			        <c:if test="${not empty order.orderTopping}">
+			          <ul class="list">
+			            <c:forEach var="topping" items="${order.orderTopping}">
+			              <c:if test="${topping.toppingQuantity > 0}">
+			                <li>${topping.toppingName}×${topping.toppingQuantity}</li>
+			              </c:if>
+			            </c:forEach>
+			          </ul>
+			        </c:if>
+			        <c:if test="${empty order.orderTopping}">
+			          <span></span>
+			        </c:if>
+			      </td>
+			      <td>
+			        <form action="OrderList" method="post">
+			          <input type="hidden" name="order_id" value="${order.orderId}">
+			          <input type="hidden" name="order_flag" value="${order.orderFlag}">
+			          <button class="order_flag">${order.tableNumber}卓<br>提供</button>
+			        </form>
+			      </td>
+			    </tr>
+			  </c:if>
+			</c:forEach>
+			</table>
+			</c:if>
+		    </div>
 		    <div class="tab-content content3"></div>
 		    <div class="tab-content content4"></div>
 		    <div class="tab-content content5"></div>
 		    <div class="tab-content content6"></div>
 		    <div class="tab-content content7"></div>
 		    <div class="tab-content content8"></div>
-		    <div class="tab-content content9"></div>
+		    <div class="tab-content content9">
+		    <c:if test="${not empty orderinfo}">
+			   <table>
+			      <tr>
+			        <th>注文番号</th>
+			        <th>個数</th>
+			        <th>商品</th>
+			        <th>トッピング</th>
+			        <th>卓番/提供</th>
+			      </tr>
+		    <c:forEach var="order" items="${orderinfo}">
+			  <!-- テーブル番号が1の注文だけ表示 -->
+			  <c:if test="${order.tableNumber == 1}">
+			    <tr class="tr">
+			      <td>
+			        <form action="OrderEdit">
+			          <button class="order_num">${order.orderId}</button>
+			        </form>
+			      </td>
+			      <td>${order.productQuantity}個</td>
+			      <td>${order.productName}</td>
+			      <td class="topping">
+			        <c:if test="${not empty order.orderTopping}">
+			          <ul class="list">
+			            <c:forEach var="topping" items="${order.orderTopping}">
+			              <c:if test="${topping.toppingQuantity > 0}">
+			                <li>${topping.toppingName}×${topping.toppingQuantity}</li>
+			              </c:if>
+			            </c:forEach>
+			          </ul>
+			        </c:if>
+			        <c:if test="${empty order.orderTopping}">
+			          <span></span>
+			        </c:if>
+			      </td>
+			      <td>
+			        <form action="OrderList" method="post">
+			          <input type="hidden" name="order_id" value="${order.orderId}">
+			          <input type="hidden" name="order_flag" value="${order.orderFlag}">
+			          <button class="order_flag">${order.tableNumber}卓<br>提供</button>
+			        </form>
+			      </td>
+			    </tr>
+			  </c:if>
+			</c:forEach>
+			</table>
+			</c:if>
+		    </div>
 		    <div class="tab-content content10"></div>
 		    <div class="tab-content content11"></div>
 		  </div>
 		</div>
 		<div class="fixed-row">
-		  
-		  <form action="ProvidedHistory" class="history-form">
-		  	※注文番号を押下することで注文内容の変更・取り消しが可能です<button class="history">履歴</button>
+		  <form action="ProvidedHistory" class="order_history-form" method="post">
+		  	※注文番号を押下することで注文内容の変更・取り消しが可能です<button class="order_history">履歴</button>
 		  </form>
 		</div>
 	</main>

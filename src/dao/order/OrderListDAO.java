@@ -1,6 +1,7 @@
 package dao.order;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 import model.order.OrderInfo;
 import model.order.OrderToppingInfo;
+import util.DBUtil;
 
 public class OrderListDAO {
     public List<OrderInfo> getAllOrderList() {
@@ -89,4 +91,20 @@ public class OrderListDAO {
         // マップの値をリストとして返す
         return new ArrayList<>(orderMap.values());
     }
+  //表示・非表示フラグの更新
+  	public void updateOrderList(int orderId,int orderFlag){
+  		String sql = "UPDATE order_details SET order_flag = ? WHERE order_id = ?";
+  		try(Connection con = DBUtil.getConnection();
+  				PreparedStatement ps = con.prepareStatement(sql)){
+  			
+  			ps.setInt(1, orderFlag);
+  			ps.setInt(2, orderId);
+  			
+  			ps.executeUpdate();
+  			
+  		} catch (SQLException e) {
+  			System.err.println("予期しないエラーが発生しました。");
+  			e.printStackTrace();
+  		}
+  	}
 }

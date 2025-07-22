@@ -16,27 +16,40 @@ import model.order.OrderInfo;
 public class OrderListServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        try {
+            // キャッシュ制御ヘッダーを設定
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
+        	//情報を取得
+            String orderIdStr = request.getParameter("order_id");
+            String orderFlagStr = request.getParameter("order_flag");
 
-        // キャッシュ制御ヘッダーを設定
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP/1.1
-        response.setHeader("Pragma", "no-cache"); // HTTP/1.0
-        response.setDateHeader("Expires", 0); // プロキシ／Expiresヘッダー用
+            OrderListDAO dao = new OrderListDAO();
 
-        // 注文リストを取得
-        OrderListDAO dao = new OrderListDAO();
-        List<OrderInfo> orderList = dao.getAllOrderList();
+            // 注文情報の更新処理がある場合
+            if (orderIdStr != null && orderFlagStr != null) {
+                int orderId = Integer.parseInt(orderIdStr);
+                int orderFlag = Integer.parseInt(orderFlagStr);
+                orderFlag = (orderFlag == 0) ? 1 : 0;
 
-        // リストの内容を出力
-        System.out.println(orderList);  // Listの内容をそのまま表示
+                dao.updateOrderList(orderId, orderFlag);
+            }
 
-        // 注文リストをリクエスト属性にセット
-        request.setAttribute("orderinfo", orderList);
+            // 注文リストを取得
+            List<OrderInfo> orderList = dao.getAllOrderList();
+            System.out.println(orderList);  // デバッグ表示
 
-        // 次のページ (OrderList.jsp) へフォワード
-        request.getRequestDispatcher("/jsp/OrderList.jsp").forward(request, response);
+            // 注文リストをセットしてJSPにフォワード
+            request.setAttribute("orderinfo", orderList);
+            request.getRequestDispatcher("/jsp/OrderList.jsp").forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.getRequestDispatcher("/jsp/Error.jsp").forward(request, response);
+        }
     }
 }
-
-
