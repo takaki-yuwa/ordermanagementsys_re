@@ -7,7 +7,7 @@
 <!--サイトのサイズ自動調整-->
 <meta name="viewport"
 	content="width=device-width,height=device-height,initial-scale=1.0">
-<title>ログイン画面</title>
+<title>Login</title>
 <!-- .cssの呼び出し -->
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/Login/login.css">

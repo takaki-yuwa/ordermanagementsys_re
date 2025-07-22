@@ -88,6 +88,10 @@ function openProductDisplayTogglePopup(productId,visibleFlag,productName){
 	const popupProductId=document.getElementById('popup-product-id');
 	const popupVisibleFlag=document.getElementById('popup-product-visible-flag');
 	
+	const selectedRadio=document.querySelector('input[name="tab"]:checked');
+	const selectedIndex=Array.from(document.querySelectorAll('input[name="tab"]')).indexOf(selectedRadio);
+	document.getElementById('popup-selected-category').value = categoryList[selectedIndex];
+	
 	if(popupProductName && productName != null){
 		popupProductName.textContent=productName;
 	}
@@ -129,9 +133,16 @@ function toppingDisplayHidePopup(toppingId) {
 }
 
 //トッピング一覧画面で使うポップアップメッセージ処理
-function openToppingDisplayTogglePopup(toppingId,visibleFlag){
+function openToppingDisplayTogglePopup(toppingId,visibleFlag,toppingName){
+	const popupToppingName=document.getElementById('popup-topping-name');
 	const popupMessage = document.getElementById('popup-message');
 	const confirmButton = document.getElementById('confirm-button');
+	const popupToppingId=document.getElementById('popup-topping-id');
+	const popupVisibleFlag=document.getElementById('popup-topping-visible-flag');
+	
+	if(popupToppingName && toppingName != null){
+		popupToppingName.textContent=toppingName;
+	}
 
 	if (visibleFlag === '1') {
 		popupMessage.innerHTML = 'このトッピングを<span style="color: red;">非表示</span>にしますか？';
@@ -142,5 +153,10 @@ function openToppingDisplayTogglePopup(toppingId,visibleFlag){
 	confirmButton.dataset.action = 'toppingDisplayHide';
 	confirmButton.dataset.targetToppingId = `toggle-btn-${toppingId}`;
 
+
+	//トッピングIDと表示フラグをhidden inputにセット
+	popupToppingId.value=toppingId;
+	popupVisibleFlag.value=visibleFlag;
+	
 	showDisplayHidePopup();
 }

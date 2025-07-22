@@ -12,7 +12,7 @@ import model.product.ProductInfo;
 import util.DBUtil;
 
 public class ProductListDAO {
-
+	//情報取得
 	public List<ProductInfo> selectProductList() {
 		List<ProductInfo> productInfo = new ArrayList<>();
 

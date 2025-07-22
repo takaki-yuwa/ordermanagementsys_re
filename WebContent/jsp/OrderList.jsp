@@ -8,10 +8,10 @@
 <!--サイトのサイズ自動調整-->
 <meta name="viewport"
 	content="width=device-width,height=device-height,initial-scale=1.0">
+<title>注文一覧</title>
 <!--.cssの呼び出し-->
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/OrderList/OrderList.css">
-<title>注文一覧</title>
 </head>
 <script src="JavaScript/setTabContent.js"></script>
 <!--<script src="JavaScript/OrderList.js"></script>-->
