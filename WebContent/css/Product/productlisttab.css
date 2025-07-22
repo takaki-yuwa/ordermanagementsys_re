@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+main {
+  width: 80%;
+  margin: 0 auto; 
+  height: 100vh;       
+  padding: 0;
+}
+
+/*タブ全体*/
+.tab {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px;
+}
+/* 横スクロールバー非表示 */
+.tab-labels::-webkit-scrollbar {
+  display: none;
+}
+/* ラベルを包むラッパーに横スクロールを指定 */
+.tab-labels {
+  display: flex;
+  overflow-x: auto;
+  margin: 0 auto; /* 左右のマージン自動で中央寄せ */
+  scroll-behavior: smooth;
+}
+/*ラジオボタンを非表示にする*/
+.tab-item {
+  display: none;
+}
+/*ラベルの設定*/
+.tab-labels label {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  color: #999;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+}
+/* コンテンツ切り替え */
+.tab-content {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: none;
+  padding: 20px 40px;
+  margin: 0 auto; /* 左右のマージン自動で中央寄せ */
+  width: max-content; /* コンテンツ幅に合わせる */
+  color: #555;
+}
+
+/* タブラッパーを上部に固定 */
+.tab-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: rgb(251, 255, 251);
+  z-index: 1000;
+  padding: 10px;
+}
+/*ホームボタン*/
+.homebutton {
+ width: 30px;
+ height: auto;
+ border-right: 1px solid rgb(192, 192, 192);
+ padding-right: 10px;
+}

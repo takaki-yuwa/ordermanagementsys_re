@@ -3,6 +3,7 @@ package servlet.productlist;
 import java.io.IOException;
 import java.util.List;
 
+import constants.Constants;
 import dao.product.ProductListDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,6 +31,7 @@ public class ProductListServlet extends HttpServlet {
 
 			//商品リストをリクエスト属性にセット
 			request.setAttribute("productInfo", productInfo);
+			request.setAttribute("categoryList", Constants.PRODUCT_CATEGORY_LIST);
 
 			//商品一覧画面に遷移
 			request.getRequestDispatcher("/jsp/ProductList.jsp").forward(request, response);
@@ -70,7 +72,8 @@ public class ProductListServlet extends HttpServlet {
 				ProductListDAO dao = new ProductListDAO();
 				dao.updateProductList(productId,visibleFlag);
 			}
-
+			
+			
 			// 更新後は一覧画面にリダイレクト（PRGパターン推奨）
             response.sendRedirect(request.getContextPath() + "/ProductList");
 
