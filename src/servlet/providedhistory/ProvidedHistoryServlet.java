@@ -27,7 +27,7 @@ public class ProvidedHistoryServlet extends HttpServlet {
 			//情報を取得
 			String orderIdStr = request.getParameter("order_id");
 			String orderFlagStr = request.getParameter("order_flag");
-			String selectedCategory = request.getParameter("selectedCategory");
+			String selectedCategory = request.getParameter("selected_category");
 			// 選択カテゴリーをセッションにも保持
 			if (selectedCategory != null && !selectedCategory.isEmpty()) {
 				request.getSession().setAttribute("selectedCategory", selectedCategory);

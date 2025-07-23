@@ -102,11 +102,11 @@
 								</td>
 								<td>
 									<!--提供済みフラグの更新-->
-									<form action="ProvidedHistory" method="get">
+									<form action="ProvidedHistory" method="post">
 										<input type="hidden" name="order_id" value="${order.orderId}">
 										<input type="hidden" name="order_flag"
 											value="${order.orderFlag}">
-										<input type="hidden" name="selected_category" id="popup-selected-category">
+										<input type="hidden" name="selected_category" class="selected-category">
 										<button class="order_return">戻す</button>
 									</form>
 								</td>
