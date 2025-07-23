@@ -11,20 +11,22 @@
 <!--.cssの呼び出し-->
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/Home/home.css">
+<!-- .jsの呼び出し -->
+<script src="JavaScript/Popup.js"></script>
 <!-- ファビコン非表示 -->
 <link rel="icon" href="data:," />
 </head>
 <body>
 	<main>
-		<form action="Logout" method="post" style="text-align: right;">
+		<div style="text-align: right;">
 			<input type="image" src="image/logoutButton.png" alt="ログアウトボタン"
-				class="logout right-image">
-		</form>
+				class="logout right-image" onclick="showDisplayHidePopup()">
+		</div>
 		<div class="text-center">ホームメニュー</div>
 		<hr>
 		<h5>注文管理</h5>
 		<form action="OrderList" method="post">
-			<button class="btn--ordermanagemant">注文一覧</button>
+			<button class="btn--ordermanagemant button">注文一覧</button>
 		</form>
 		<hr>
 		<h5>メニュー管理</h5>
@@ -32,21 +34,35 @@
 			<tr>
 				<td>
 					<form action="ProductList" method="post">
-						<button class="btn--menumanagemant">商品</button>
+						<button class="btn--menumanagemant button">商品</button>
 					</form>
 				</td>
 				<td>
 					<form action="ToppingList" method="post">
-						<button class="btn--menumanagemant">トッピング</button>
+						<button class="btn--menumanagemant button">トッピング</button>
 					</form>
 				</td>
 				<td>
 					<form action="CategoryList" method="post">
-						<button class="btn--menumanagemant">カテゴリ</button>
+						<button class="btn--menumanagemant button">カテゴリ</button>
 					</form>
 				</td>
 			</tr>
 		</table>
 	</main>
+	<!--ポップアップの背景-->
+	<div class="popup-overlay" id="popup-overlay"></div>
+	<!--ポップアップの内容-->
+	<div class="popup-content" id="popup-content">
+		<p class="text-bold">ログアウトします</p>
+		<p>よろしいですか？</p>
+		<!-- 商品の表示変更 -->
+		<form action="Logout" method="post">
+			<button type="submit" class="popup-proceed" id="confirm-button"
+				data-action="setupConfirmHidePopup">は　い</button>
+		</form>
+
+		<button class="popup-close" id="close-popup">いいえ</button>
+	</div>
 </body>
 </html>

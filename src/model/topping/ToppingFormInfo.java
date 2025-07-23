@@ -19,6 +19,11 @@ public class ToppingFormInfo {
 		this.setVisible_flag(visible_flag);
 	}
 
+	//空の情報
+	public static ToppingFormInfo createEmpty() {
+		return new ToppingFormInfo(0, "", 0, 0, 0);
+	}
+
 	public int getId() {
 		return id;
 	}

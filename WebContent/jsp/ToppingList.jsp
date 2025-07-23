@@ -48,6 +48,7 @@
 						<input type="hidden" name="topping_name" value="${topping.name}">
 						<input type="hidden" name="topping_price" value="${topping.price}">
 						<input type="hidden" name="topping_stock" value="${topping.stock}">
+						<input type="hidden" name="topping_visible_flag" value="${topping.visible_flag}">
 						<button class="btn-edit" type="submit">編集</button>
 					</form>
 
@@ -75,7 +76,7 @@
 			<input type="hidden" name="topping_visible_flag"
 				id="popup-topping-visible-flag">
 			<button type="submit" class="popup-proceed" id="confirm-button"
-				data-action="" data-target-topping-id="">は い</button>
+				data-action="" data-target-topping-id="">は　い</button>
 		</form>
 
 		<button class="popup-close" id="close-popup">いいえ</button>

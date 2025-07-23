@@ -40,6 +40,7 @@
 					</form>
 					<!-- 新規作成ボタン -->
 					<form action="ProductCreateForm" method="post">
+						<input type="hidden" name="form" value="ProductCreate">
 						<button type="submit" class="btn-create">新規作成</button>
 					</form>
 				</div>
@@ -66,13 +67,14 @@
 						</c:if>
 
 						<!-- 編集ボタンで商品新規作成・編集画面へ遷移する -->
-						<form action="ProductEditForm" method="get">
+						<form action="ProductEditForm" method="post">
+							<input type="hidden" name="form" value="ProductEdit">
 							<input type="hidden" name="product_id" value="${product.id}">
 							<input type="hidden" name="product_name" value="${product.name}">
-							<input type="hidden" name="category_name"
-								value="${product.category}"> <input type="hidden"
-								name="product_price" value="${product.price}"> <input
-								type="hidden" name="product_stock" value="${product.stock}">
+							<input type="hidden" name="category_name" value="${product.category}"> 
+							<input type="hidden" name="product_price" value="${product.price}"> 
+							<input type="hidden" name="product_stock" value="${product.stock}">
+							<input type="hidden" name="product_visible_flag" value="${product.visible_flag}">
 							<button class="btn-edit" type="submit">編集</button>
 						</form>
 
@@ -101,7 +103,7 @@
 			<input type="hidden" name="product_visible_flag" id="popup-product-visible-flag">
 			<input type="hidden" name="selected_category" id="popup-selected-category">
 			<button type="submit" class="popup-proceed" id="confirm-button"
-				data-action="" data-target-product-id="">は い</button>
+				data-action="" data-target-product-id="">は　い</button>
 		</form>
 
 		<button class="popup-close" id="close-popup">いいえ</button>
