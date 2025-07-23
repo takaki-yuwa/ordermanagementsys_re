@@ -21,6 +21,11 @@
 	padding: 10px 0;
 }
 
+/*一時的に非表示にするクラス*/
+.hidden-row{
+	display: none;
+}
+
 /*最後の行はボーダーあり*/
 .product-row:last-child{
 	border-bottom: 1px solid black;

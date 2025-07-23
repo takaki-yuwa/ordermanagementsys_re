@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const products = productBox.querySelectorAll('.product-row');
 	products.forEach(product => {
 		const productCategory = product.getAttribute('data-category');
+		product.classList.remove('hidden-row');
 		product.style.display = (selectedCategory === '全て' || productCategory === selectedCategory)
 			? ''
 			: 'none';

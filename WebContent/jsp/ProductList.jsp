@@ -53,7 +53,7 @@
 			</div>
 			<div class="product-box">
 				<c:forEach var="product" items="${productInfo}">
-					<div class="product-row" data-category="${product.category}">
+					<div class="product-row hidden-row" data-category="${product.category}">
 						<div class="product-name">${product.name}</div>
 						<div class="product-price">${product.price}円</div>
 						<c:if test="${product.visible_flag == 1}">
