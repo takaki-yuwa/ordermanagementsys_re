@@ -24,7 +24,7 @@ public class ProductListServlet extends HttpServlet {
 			response.setHeader("Pragma", "no-cache"); // HTTP/1.0
 			response.setDateHeader("Expires", 0); // プロキシ／Expiresヘッダー用
 			
-			// セッションから選択カテゴリ取得（あればリクエスト属性にセット）
+			// セッションから選択カテゴリー取得（あればリクエスト属性にセット）
 			String selectedCategory = (String) request.getSession().getAttribute("selectedCategory");
 			if (selectedCategory != null) {
 			    request.setAttribute("selectedCategory", selectedCategory);
@@ -83,7 +83,7 @@ public class ProductListServlet extends HttpServlet {
 			}
 			
 			
-			// POST内でカテゴリ保持（セッションに保存）
+			// POST内でカテゴリー保持（セッションに保存）
 			if (selectedCategory != null && !selectedCategory.isEmpty()) {
 			    request.getSession().setAttribute("selectedCategory", selectedCategory);
 			}

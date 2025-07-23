@@ -19,11 +19,12 @@
 </head>
 <body>
 	<main>
-		<!-- 選択されたカテゴリを JavaScript に渡すための hidden input -->
+		<!-- 選択されたカテゴリーを JavaScript に渡すための hidden input -->
 		<input type="hidden" id="initial-selected-category" value="${selectedCategory}">
 		
 		<div class="tab">
 			<!-- ラジオボタン（表示制御のキーになる） -->
+			<!-- 直前に押されていたボタンを呼び出す -->
 			<c:forEach var="category" items="${categoryList}" varStatus="category_">
 				<input type="radio" name="tab" class="tab-item" id="tab${category_.index + 1}" ${category_.index == 0 ? "checked" : ""}
 				<c:if test="${category == selectedCategory}">checked</c:if>>
@@ -53,6 +54,7 @@
 			</div>
 			<div class="product-box">
 				<c:forEach var="product" items="${productInfo}">
+					<!-- data-categoryに現在のカテゴリー情報を保存 -->
 					<div class="product-row hidden-row" data-category="${product.category}">
 						<div class="product-name">${product.name}</div>
 						<div class="product-price">${product.price}円</div>
@@ -113,8 +115,6 @@
 			</c:forEach>
 			];
 	</script>
-	<script
-		src="<%=request.getContextPath()%>/JavaScript/Product/productList.js"></script>
-
+	<script src="<%=request.getContextPath()%>/JavaScript/Product/productList.js"></script>
 </body>
 </html>
