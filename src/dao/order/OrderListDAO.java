@@ -38,7 +38,7 @@ public class OrderListDAO {
                      + "LEFT JOIN\n"
                      + "topping t ON m.topping_id = t.topping_id\n"
                      + "WHERE\n"
-                     + "o.order_flag = 0")) {
+                     + "o.order_flag = 0 AND o.accounting_flag=0")) {
 
             while (rs.next()) {
                 // 商品情報
