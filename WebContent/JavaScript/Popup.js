@@ -97,9 +97,9 @@ function openProductDisplayTogglePopup(productId,visibleFlag,productName){
 	}
 	
 	if (visibleFlag === '1') {
-		popupMessage.innerHTML = 'この商品を<span style="color: red;">非表示</span>にしますか？';
+		popupMessage.innerHTML = 'この商品を<span style="color: red;">非表示</span>にします。';
 	} else {
-		popupMessage.innerHTML = 'この商品を<span style="color: blue;">表示</span>にしますか？';
+		popupMessage.innerHTML = 'この商品を<span style="color: blue;">表示</span>にします。';
 	}
 
 	confirmButton.dataset.action = 'productDisplayHide';
@@ -110,6 +110,53 @@ function openProductDisplayTogglePopup(productId,visibleFlag,productName){
 	popupVisibleFlag.value=visibleFlag;
 
 	showDisplayHidePopup();
+}
+
+//商品新規作成・編集画面で使うポップアップ処理
+function openProductFormDisplayTogglePopup(){
+ // 入力値の取得
+  const category = document.getElementById('category_name').value;
+  const productName = document.getElementById('product_name').value;
+  const productPrice = document.getElementById('product_price').value;
+
+  // チェック済みトッピングの取得
+  const toppingCheckboxes = document.querySelectorAll('input[name="topping_id"]:checked');
+  const toppingNames = Array.from(toppingCheckboxes).map(cb => cb.parentElement.textContent.trim());
+
+  // ポップアップに値をセット
+  document.getElementById('popup-category').textContent = category || '(未選択)';
+  document.getElementById('popup-name').textContent = productName;
+  // トッピングを1行3つずつ「・」付きで表示
+  let toppingHtml = '';
+  toppingNames.forEach((name, index) => {
+  if (index % 3 === 0) {
+    toppingHtml += '<div>'; // 新しい行
+  }
+  toppingHtml += `<span style="margin-right: 20px;">・${name}</span>`;
+  if (index % 3 === 2 || index === toppingNames.length - 1) {
+    toppingHtml += '</div>'; // 行を閉じる
+  }
+  });
+  document.getElementById('popup-toppings').innerHTML = toppingNames.length > 0 ? toppingHtml : '(なし)';
+  document.getElementById('popup-price').textContent = productPrice;
+
+  // メッセージの切り替え
+  const formButton = document.querySelector('.create-btn') ? 'ProductCreate' : 'ProductEdit';
+  const actionMessage = formButton === 'ProductCreate'
+    ? 'この内容で作成しますか？'
+    : 'この内容で変更しますか？';
+
+  document.getElementById('popup-action-message').textContent = actionMessage;
+
+  // 表示
+  showDisplayHidePopup();
+
+  // 「はい」ボタンで form を submit
+  const confirmButton = document.getElementById('confirm-button');
+  confirmButton.dataset.action = 'setupConfirmHidePopup';
+  confirmButton.onclick = function () {
+    document.getElementById('productForm').submit();
+  };
 }
 
 //トッピング一覧画面で使うポップアップ処理
@@ -145,9 +192,9 @@ function openToppingDisplayTogglePopup(toppingId,visibleFlag,toppingName){
 	}
 
 	if (visibleFlag === '1') {
-		popupMessage.innerHTML = 'このトッピングを<span style="color: red;">非表示</span>にしますか？';
+		popupMessage.innerHTML = 'このトッピングを<span style="color: red;">非表示</span>にします。';
 	} else {
-		popupMessage.innerHTML = 'このトッピングを<span style="color: blue;">表示</span>にしますか？';
+		popupMessage.innerHTML = 'このトッピングを<span style="color: blue;">表示</span>にします。';
 	}
 
 	confirmButton.dataset.action = 'toppingDisplayHide';

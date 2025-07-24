@@ -79,7 +79,7 @@ public class ProductListServlet extends HttpServlet {
 				
 				
 				ProductListDAO dao = new ProductListDAO();
-				dao.updateProductList(productId,visibleFlag);
+				dao.updateProductFlag(productId,visibleFlag);
 			}
 			
 			

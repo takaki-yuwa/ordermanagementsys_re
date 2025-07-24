@@ -10,6 +10,7 @@
 <title>Home</title>
 <!--.cssの呼び出し-->
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/popup.css">
 <link rel="stylesheet" href="css/Home/home.css">
 <!-- .jsの呼び出し -->
 <script src="JavaScript/Popup.js"></script>

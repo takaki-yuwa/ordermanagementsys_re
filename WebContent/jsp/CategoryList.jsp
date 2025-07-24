@@ -11,6 +11,8 @@
 <title>CategoryList</title>
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/Category/categorylist.css">
+<!-- ファビコン非表示 -->
+<link rel="icon" href="data:," />
 </head>
 <body>
 	<main>

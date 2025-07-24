@@ -11,10 +11,13 @@
 <title>ToppingList</title>
 <!-- .cssの呼び出し -->
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/popup.css">
 <link rel="stylesheet" href="css/Topping/toppinglist.css">
 <!-- .jsの呼び出し -->
 <script src="JavaScript/Popup.js"></script>
 <script src="JavaScript/setTabContent.js"></script>
+<!-- ファビコン非表示 -->
+<link rel="icon" href="data:," />
 </head>
 <body>
 	<main>

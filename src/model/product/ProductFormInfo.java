@@ -2,28 +2,25 @@ package model.product;
 
 /*
  * 商品情報を保持するモデルクラス
- * 商品ID、名前、カテゴリー、価格、在庫、表示フラグ
+ * 商品ID、名前、カテゴリー、価格
  */
 public class ProductFormInfo {
 	private int id;
 	private String name;
 	private String category;
 	private int price;
-	private int stock;
-	private int visible_flag;
 
-	public ProductFormInfo(int id, String name, String category, int price, int stock, int visible_flag) {
+
+	public ProductFormInfo(int id, String name, String category, int price) {
 		this.setId(id);
 		this.setName(name);
 		this.setCategory(category);
 		this.setPrice(price);
-		this.setStock(stock);
-		this.setVisible_flag(visible_flag);
 	}
 	
 	//空の情報
 	public static ProductFormInfo createEmpty() {
-		return new ProductFormInfo(0,"","",0,0,0);
+		return new ProductFormInfo(0,"","",0);
 	}
 
 	public int getId() {
@@ -42,14 +39,6 @@ public class ProductFormInfo {
 		return price;
 	}
 
-	public int getStock() {
-		return stock;
-	}
-
-	public int getVisible_flag() {
-		return visible_flag;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -64,13 +53,5 @@ public class ProductFormInfo {
 
 	public void setPrice(int price) {
 		this.price = price;
-	}
-
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-
-	public void setVisible_flag(int visible_flag) {
-		this.visible_flag = visible_flag;
 	}
 }

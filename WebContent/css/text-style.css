@@ -30,3 +30,8 @@ html,body{
 .text-underline{
 	text-decoration: underline;
 }
+
+/*エラーテキストの色*/
+.text-error{
+	color:red;
+}
