@@ -18,14 +18,13 @@
 	<main>
 		<!-- 選択されたカテゴリーを JavaScript に渡すための hidden input -->
 		<input type="hidden" id="initial-selected-category"
-			value="${sessionScope.selectedCategory}">
+			value="${selectedCategory}">
 		<div class="tab">
 			<!-- ラジオボタン（表示制御のキーになる） -->
 			<!-- 直前に押されていたボタンを呼び出す -->
 			<c:forEach var="category" items="${categoryList}" varStatus="status">
-				<input type="radio" name="tab" class="tab-item"
-					id="tab${status.index}"
-					${category eq sessionScope.selectedCategory ? "checked" : ""}>
+				<input type="radio" name="tab" class="tab-item" id="tab${status.index}" ${status.index == 0 ? "checked" : ""}
+				<c:if test="${category == selected_category}">checked</c:if>>
 			</c:forEach>
 
 			<div class="tab-wrapper">
@@ -102,7 +101,7 @@
 								</td>
 								<td>
 									<!--提供済みフラグの更新-->
-									<form action="ProvidedHistory" method="post">
+									<form action="ProvidedHistory" method="get">
 										<input type="hidden" name="order_id" value="${order.orderId}">
 										<input type="hidden" name="order_flag"
 											value="${order.orderFlag}">
