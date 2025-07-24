@@ -100,8 +100,8 @@
 														<span></span>
 													</c:if>
 												</ul>
-											</c:if> <!-- order.orderTopping が空の場合も表示しない --> <c:if
-												test="${empty order.orderTopping}">
+											</c:if> <!-- order.orderTopping が空の場合も表示しない -->
+											<c:if test="${empty order.orderTopping}">
 												<span></span>
 											</c:if>
 
@@ -109,13 +109,10 @@
 										<td>
 											<!--提供済みフラグの更新-->
 											<form action="OrderList" method="post">
-												<input type="hidden" name="order_id"
-													value="${order.orderId}"> <input type="hidden"
-													name="order_flag" value="${order.orderFlag}"> <input
-													type="hidden" name="selected_category"
-													class="selected-category">
-												<button class="order_flag">${order.tableNumber}卓<br>提供
-												</button>
+												<input type="hidden" name="order_id" value="${order.orderId}">
+												<input type="hidden" name="order_flag" value="${order.orderFlag}">
+												<input type="hidden" name="selected_category" class="selected-category">
+												<button class="order_flag">${order.tableNumber}卓<br>提供</button>
 											</form>
 										</td>
 									</tr>

@@ -45,9 +45,7 @@ public class OrderListServlet extends HttpServlet {
 			request.getRequestDispatcher("/jsp/OrderList.jsp").forward(request, response);
 
 			//例外処理
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			request.getRequestDispatcher("/jsp/Error.jsp").forward(request, response);
 		}
