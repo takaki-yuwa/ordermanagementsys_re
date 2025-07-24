@@ -17,13 +17,15 @@
 <!--<script src="JavaScript/OrderList.js"></script>-->
 <body>
 	<main>
+		<!-- 選択されたカテゴリーを JavaScript に渡すための hidden input -->
+		<input type="hidden" id="initial-selected-category"
+			value="${selectedCategory}">
 		<div class="tab">
 			<!-- ラジオボタン（表示制御のキーになる） -->
 			<!-- 直前に押されていたボタンを呼び出す -->
 			<c:forEach var="category" items="${categoryList}" varStatus="status">
-				<input type="radio" name="tab" class="tab-item"
-					id="tab${status.index}" ${status.index == 0 ? 'checked' : ''}>
-				<c:if test="${category == selectedCategory}">checked</c:if>
+				<input type="radio" name="tab" class="tab-item" id="tab${status.index}" ${status.index == 0 ? "checked" : ""}
+				<c:if test="${category == selected_category}">checked</c:if>>
 			</c:forEach>
 
 			<div class="tab-wrapper">
@@ -55,7 +57,8 @@
 						</tr>
 						<!-- orderinfo リストをループして表示 -->
 						<c:forEach var="order" items="${orderinfo}">
-							<tr class="order_row" data-table="${order.tableNumber}卓"
+						<!-- data-categoryに現在のカテゴリ情報を保存 -->
+							<tr class="order_row hidden-row" data-table="${order.tableNumber}卓"
 								data-category="${order.categoryName}">
 								<td>
 									<form action="OrderEditForm" method="post">
@@ -103,6 +106,7 @@
 										<input type="hidden" name="order_id" value="${order.orderId}">
 										<input type="hidden" name="order_flag"
 											value="${order.orderFlag}">
+										<input type="hidden" name="selected_category" class="selected-category">
 										<button class="order_flag">${order.tableNumber}卓<br>提供
 										</button>
 									</form>
@@ -115,7 +119,7 @@
 		</div>
 		<div class="fixed-row">
 			<form action="ProvidedHistory" class="order_history-form"
-				method="post">
+				method="get">
 				※注文番号を押下することで注文内容の変更・取り消しが可能です
 				<button class="order_history">履歴</button>
 			</form>

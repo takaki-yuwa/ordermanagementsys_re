@@ -124,13 +124,13 @@ button:active {
 	height: 70vh;
 	padding: 20px 10px 50px 10px;
 	margin: 0 auto;
-	width: max-content;
 	color: #555;
 }
 
 /*テーブルデザイン*/
 table {
-	width: 90vw;
+	box-sizing: border-box;
+	width: 100%;
 	border-collapse: collapse;
 	border: 1px solid #333;
 	text-align: center;
