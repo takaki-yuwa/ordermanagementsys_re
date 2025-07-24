@@ -101,7 +101,7 @@
 								</td>
 								<td>
 									<!--提供済みフラグの更新-->
-									<form action="ProvidedHistory" method="get">
+									<form action="ProvidedHistory" method="post">
 										<input type="hidden" name="order_id" value="${order.orderId}">
 										<input type="hidden" name="order_flag"
 											value="${order.orderFlag}">
@@ -116,7 +116,7 @@
 			</div>
 		</div>
 		<div class="fixed-row">
-			<form action="OrderList" class="order_history-form" method="post">
+			<form action="OrderList" class="order_history-form" method="get">
 				※注文番号を押下することで注文内容の変更・取り消しが可能です
 				<button class="order_history">注文</button>
 			</form>
