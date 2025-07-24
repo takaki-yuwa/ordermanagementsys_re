@@ -20,7 +20,7 @@
 		<!-- 選択されたカテゴリーを JavaScript に渡すための hidden input -->
 		<input type="hidden" id="initial-selected-category"
 			value="${selectedCategory}">
-		<c:if test="${not empty historyinfo}">
+		<c:if test="${not empty orderinfo}">
 			<div class="tab">
 				<!-- ラジオボタン（表示制御のキーになる） -->
 				<!-- 直前に押されていたボタンを呼び出す -->
@@ -127,7 +127,7 @@
 			</div>
 		</c:if>
 		<!-- historyinfoが空のときはメッセージだけ表示 -->
-		<c:if test="${empty historyinfo}">
+		<c:if test="${empty orderinfo}">
 			<!--ホームボタン-->
 			<form action="Home" style="margin-left: 25px;">
 				<input type="image" src="image/homeButton.png" alt="ホームボタン"
