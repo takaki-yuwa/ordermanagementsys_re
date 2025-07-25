@@ -21,6 +21,11 @@ import model.topping.ToppingInfo;
 @WebServlet("/ProductEdit")
 public class ProductEditServlet extends HttpServlet {
 
+	// 全角数字チェック関数
+	private boolean containsFullWidthDigit(String input) {
+		return input != null && input.matches(".*[０-９]+.*");
+	}
+
 	//商品一覧画面へ遷移
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -60,7 +65,7 @@ public class ProductEditServlet extends HttpServlet {
 		}
 	}
 
-	//テーブルの内容を変更して商品一覧画面へ遷移
+	//テーブルの内容を変更してdoGetに遷移する
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
@@ -117,27 +122,39 @@ public class ProductEditServlet extends HttpServlet {
 				hasError = true;
 			}
 
-			//金額が空の場合
+			// 金額が空の場合
 			if (productPriceStr == null || productPriceStr.trim().isEmpty()) {
 				request.setAttribute("productPriceError", "※入力してください");
 				hasError = true;
+
+			// 全角数字が含まれているかをチェック
+			} else if (containsFullWidthDigit(productPriceStr)) {
+				request.setAttribute("productPriceError", "※半角数字で入力してください");
+				hasError = true;
+
+			// 半角数字で構成されているかチェック（英字や記号混入を防止）
+			} else if (!productPriceStr.matches("^[0-9]+$")) {
+				request.setAttribute("productPriceError", "※半角数字で入力してください");
+				hasError = true;
+
+			// 正常な整数かつ5桁以内かのチェック
 			} else {
 				try {
 					productPrice = Integer.parseInt(productPriceStr);
-					//5桁より多い場合
 					if (productPrice >= 100000) {
 						request.setAttribute("productPriceError", "※5桁以内で入力してください");
 						hasError = true;
 					}
-
 				} catch (NumberFormatException e) {
+					// 理論上この時点では起こらないが、保険として例外処理
 					request.setAttribute("productPriceError", "※半角数字で入力してください");
 					hasError = true;
 				}
 			}
 
-			//エラーフラグがtrueの場合ログイン画面に遷移
+			//エラーフラグがtrueの場合商品新規作成・編集画面に遷移
 			if (hasError) {
+				//入力された情報を格納する
 				ProductFormInfo productFormInfo = new ProductFormInfo(productId, productName, categoryName, productPrice);
 				ToppingListDAO toppingDao = new ToppingListDAO();
 				ProductFormDAO productFormDao = new ProductFormDAO();

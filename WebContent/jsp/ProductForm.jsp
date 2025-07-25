@@ -111,20 +111,20 @@
 					</c:if>
 				</div>
 				<br> <br>
-
+				
+				<!-- 金額 -->
 				<div class="form-group">
-					<!-- 金額 -->
 					<label for="product_price" class="text-box-label">金額</label><span
 						class="note-text">※最大5桁</span><br>
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductCreate'}">
-						<input type="number" id="product_price" name="product_price"
+						<input type="text" id="product_price" name="product_price"
 							class="price-box" required>
 						<span class="text-bold">円</span>
 					</c:if>
 					<!-- 編集ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductEdit'}">
-						<input type="number" id="product_price" name="product_price"
+						<input type="text" id="product_price" name="product_price"
 							class="price-box" value="${productFormInfo.price}" required>
 						<span class="text-bold">円</span>
 						<span class="text-error"><%=request.getAttribute("productPriceError") != null ? request.getAttribute("productPriceError") : ""%></span><br>
