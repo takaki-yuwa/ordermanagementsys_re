@@ -169,7 +169,7 @@ public class ProductEditServlet extends HttpServlet {
 				request.setAttribute("categoryList", Constants.CATEGORY_LIST);
 				//トッピング情報をリクエスト属性にセット
 				request.setAttribute("toppingInfo", toppingInfo);
-				//商品トッピング情報を異rクエスト属性にセット
+				//商品トッピング情報をリクエスト属性にセット
 				request.setAttribute("productToppingInfo", productToppingInfo);
 				request.getRequestDispatcher("/jsp/ProductForm.jsp").forward(request, response);
 				return;

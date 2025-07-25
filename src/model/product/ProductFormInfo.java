@@ -18,6 +18,12 @@ public class ProductFormInfo {
 		this.setPrice(price);
 	}
 	
+	public ProductFormInfo(String name, String category, int price) {
+		this.setName(name);
+		this.setCategory(category);
+		this.setPrice(price);
+	}
+
 	//空の情報
 	public static ProductFormInfo createEmpty() {
 		return new ProductFormInfo(0,"","",0);

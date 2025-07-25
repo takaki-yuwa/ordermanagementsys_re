@@ -78,9 +78,9 @@
 						<input type="hidden" name="product_id"
 							value="${productFormInfo.id}">
 						<input type="text" id="product_name" name="product_name"
-							class="product-box" value="${productFormInfo.name}" required>
-						<span class="text-error"><%=request.getAttribute("productNameError") != null ? request.getAttribute("productNameError") : ""%></span><br> 
+							class="product-box" value="${productFormInfo.name}" required> 
 					</c:if>
+					<span class="text-error"><%=request.getAttribute("productNameError") != null ? request.getAttribute("productNameError") : ""%></span><br>
 				</div>
 				
 				<br>
@@ -127,8 +127,8 @@
 						<input type="text" id="product_price" name="product_price"
 							class="price-box" value="${productFormInfo.price}" required>
 						<span class="text-bold">円</span>
-						<span class="text-error"><%=request.getAttribute("productPriceError") != null ? request.getAttribute("productPriceError") : ""%></span><br>
 					</c:if>
+					<span class="text-error"><%=request.getAttribute("productPriceError") != null ? request.getAttribute("productPriceError") : ""%></span><br>
 				</div>
 				<br> <br>
 
