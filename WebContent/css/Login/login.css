@@ -59,7 +59,3 @@ main {
   background-color: rgb(0, 100, 0);
 }
 
-/*エラーテキストの色*/
-.text-error{
-	color:red;
-}

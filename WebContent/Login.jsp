@@ -10,6 +10,7 @@
 <title>Login</title>
 <!-- .cssの呼び出し -->
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/popup.css">
 <link rel="stylesheet" href="css/Login/login.css">
 <!-- ファビコン非表示 -->
 <link rel="icon" href="data:," />
