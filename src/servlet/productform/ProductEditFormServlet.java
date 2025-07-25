@@ -67,7 +67,7 @@ public class ProductEditFormServlet extends HttpServlet {
 			//商品トッピング情報を異rクエスト属性にセット
 			request.setAttribute("productToppingInfo", productToppingInfo);
 
-			//トッピング一覧画面に遷移
+			//商品新規作成・編集画面に遷移
 			request.getRequestDispatcher("/jsp/ProductForm.jsp").forward(request, response);
 
 		} catch (Exception e) {

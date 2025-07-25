@@ -1,6 +1,20 @@
 /**
  * 
  */
+// HTMLエスケープ関数（安全対策）
+function escapeHtml(str) {
+	if (!str) return '';
+	return str.replace(/[&<>"']/g, function (match) {
+		return ({
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			'"': '&quot;',
+			"'": '&#39;',
+		})[match];
+	});
+}
+
 //ポップアップ処理
 function showDisplayHidePopup() {
 	const popupOverlay = document.getElementById('popup-overlay');
@@ -179,6 +193,15 @@ function toppingDisplayHidePopup(toppingId) {
 	}
 }
 
+//トッピング一覧画面XSS対策
+function handleToppingToggle(button) {
+	const id = button.dataset.id;
+	const visibleFlag = button.dataset.visibleFlag;
+	const name = button.dataset.name;
+
+	openToppingDisplayTogglePopup(id, visibleFlag, name);
+}
+
 //トッピング一覧画面で使うポップアップメッセージ処理
 function openToppingDisplayTogglePopup(toppingId,visibleFlag,toppingName){
 	const popupToppingName=document.getElementById('popup-topping-name');
@@ -206,4 +229,33 @@ function openToppingDisplayTogglePopup(toppingId,visibleFlag,toppingName){
 	popupVisibleFlag.value=visibleFlag;
 	
 	showDisplayHidePopup();
+}
+
+//トッピング新規作成・編集画面で使うポップアップ処理
+function openToppingFormDisplayTogglePopup(){
+ // 入力値の取得
+  const toppingName = document.getElementById('topping_name').value;
+  const toppingPrice = document.getElementById('topping_price').value;
+
+  // ポップアップに値をセット
+  document.getElementById('popup-name').textContent = toppingName;
+  document.getElementById('popup-price').textContent = toppingPrice;
+
+  // メッセージの切り替え
+  const formButton = document.querySelector('.create-btn') ? 'ToppingCreate' : 'ToppingEdit';
+  const actionMessage = formButton === 'ToppingCreate'
+    ? 'この内容で作成しますか？'
+    : 'この内容で変更しますか？';
+
+  document.getElementById('popup-action-message').textContent = actionMessage;
+
+  // 表示
+  showDisplayHidePopup();
+
+  // 「はい」ボタンで form を submit
+  const confirmButton = document.getElementById('confirm-button');
+  confirmButton.dataset.action = 'setupConfirmHidePopup';
+  confirmButton.onclick = function () {
+    document.getElementById('toppingForm').submit();
+  };
 }

@@ -56,7 +56,7 @@ main {
   font-size: 12px;
 }
 
-/*フォームボックス内の商品名のテキストボックス設定*/
+/*フォームボックス内のトッピング名のテキストボックス設定*/
 .form-box input[type="text"]{
   padding: 8px;
   font-size: 16px;
@@ -65,41 +65,15 @@ main {
   margin-bottom: 15px;
 }
 
-/*フォームボックス内の金額のテキストボックス設定*/
-.form-box select{
-  padding: 8px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-bottom: 15px;
-}
 
-/*カテゴリーテキストボックス*/
-.category-box{
-	width:180px;
-}
-
-/*商品名テキストボックス*/
-.product-box{
+/*トッピング名テキストボックス*/
+.topping-box{
 	width:250px;
 }
 
 /*金額テキストボックス*/
 .price-box{
 	width:60px;
-}
-
-/*チェックボックス設定*/
-.checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 600px; /* 必要に応じて調整 */
-}
-
-.checkbox-group label {
-  width: 33.33%;  /* 3つで1行になるように */
-  box-sizing: border-box;
-  padding: 5px 0;
 }
 
 /*フォームボックス内のボタン設定*/
@@ -128,19 +102,19 @@ main {
 
 /*作成ボタン設定*/
 .create-btn{
-	width:150px;
+	width:200px;
 	background-color: rgb(0, 128, 0);
 }
 
 /*変更ボタン設定*/
 .edit-btn{
-	width:150px;
+	width:200px;
 	background-color: rgb(0, 128, 0);
 }
 
 /*一覧へ戻るボタン設定*/
 .return-btn{
-	width:150px;
+	width:200px;
 	background-color:gray;
 }
 

@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/formpopup.css">
 <link rel="stylesheet" href="css/Product/productform.css">
-
 <!-- ファビコン非表示 -->
 <link rel="icon" href="data:," />
 </head>
@@ -36,19 +35,22 @@
 			</c:if>
 		</div>
 		<!-- 元のフォーム全体を囲む form -->
-		<form id="productForm" method="post"
-			action="<c:out value='${formButton == "ProductCreate" ? "ProductCreate" : "ProductEdit"}'/>">
+		<c:set var="actionUrl"
+			value="${formButton == 'ProductCreate' ? 'ProductCreate' : 'ProductEdit'}" />
+		<form id="productForm" method="post" action="${actionUrl}">
 			<div class="form-box">
 				<div class="form-group">
 					<!-- カテゴリー -->
 					<label for="category_name" class="text-box-label">カテゴリー</label><br>
-					<select name="category_name" id="category_name" class="category-box">
+					<select name="category_name" id="category_name"
+						class="category-box">
 						<option value="">-選択してください-</option>
 						<c:forEach var="category" items="${categoryList}">
 							<!-- 新規作成ボタンからの場合 -->
 							<c:if test="${formButton == 'ProductCreate'}">
 								<!-- カテゴリー情報を格納する -->
-								<option value="${category}">${category}</option>
+								<option value="${category}"
+									<c:if test="${category == productFormInfo.category}">selected</c:if>>${category}</option>
 							</c:if>
 							<!-- 編集ボタンからの場合 -->
 							<c:if test="${formButton == 'ProductEdit'}">
@@ -57,10 +59,11 @@
 									<c:if test="${category == productFormInfo.category}">selected</c:if>>${category}</option>
 							</c:if>
 						</c:forEach>
-					</select>
-					<span class="text-error"><%=request.getAttribute("categoryNameError") != null ? request.getAttribute("categoryNameError") : ""%></span><br>
+					</select> <br> <span class="text-error"> <c:if
+							test="${not empty categoryNameError}">${categoryNameError}</c:if>
+					</span>
 				</div>
-				 
+
 				<br>
 
 				<div class="form-group">
@@ -70,7 +73,7 @@
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductCreate'}">
 						<input type="text" id="product_name" name="product_name"
-							class="product-box" required>
+							class="product-box" value="${productFormInfo.name}" required>
 					</c:if>
 					<!-- 編集ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductEdit'}">
@@ -78,11 +81,13 @@
 						<input type="hidden" name="product_id"
 							value="${productFormInfo.id}">
 						<input type="text" id="product_name" name="product_name"
-							class="product-box" value="${productFormInfo.name}" required> 
+							class="product-box" value="${productFormInfo.name}" required>
 					</c:if>
-					<span class="text-error"><%=request.getAttribute("productNameError") != null ? request.getAttribute("productNameError") : ""%></span><br>
+					<br> <span class="text-error"> <c:if
+							test="${not empty productNameError}">${productNameError}</c:if>
+					</span>
 				</div>
-				
+
 				<br>
 
 				<!-- トッピング -->
@@ -91,16 +96,18 @@
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductCreate'}">
 						<c:forEach var="topping" items="${toppingInfo}">
-							<label><input type="checkbox" name="topping_id"
-								value="${topping.id}">${topping.name}</label>
+							<c:set var="checkboxId" value="topping_${topping.id}" />
+							<label for="${checkboxId}"><input type="checkbox"
+								name="topping_id" id="${checkboxId}" value="${topping.id}">${topping.name}</label>
 						</c:forEach>
 					</c:if>
 					<!-- 編集ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductEdit'}">
 						<c:forEach var="topping" items="${toppingInfo}">
+							<c:set var="checkboxId" value="topping_${topping.id}" />
 							<!-- すでに登録されているトッピングにはチェックをつけておく -->
-							<label><input type="checkbox" name="topping_id"
-								value="${topping.id}"
+							<label for="${checkboxId}"><input type="checkbox"
+								name="topping_id" id="${checkboxId}" value="${topping.id}"
 								<c:forEach var="pt" items="${productToppingInfo}">
 								<c:if test="${pt.topping_id == topping.id}">
 									checked
@@ -111,15 +118,24 @@
 					</c:if>
 				</div>
 				<br> <br>
-				
+
 				<!-- 金額 -->
 				<div class="form-group">
 					<label for="product_price" class="text-box-label">金額</label><span
 						class="note-text">※最大5桁</span><br>
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductCreate'}">
-						<input type="text" id="product_price" name="product_price"
-							class="price-box" required>
+						<c:choose>
+							<c:when
+								test="${productFormInfo.price == 0 || empty productFormInfo.price}">
+								<input type="text" id="product_price" name="product_price"
+									class="price-box" value="" required>
+							</c:when>
+							<c:otherwise>
+								<input type="text" id="product_price" name="product_price"
+									class="price-box" value="${productFormInfo.price}" required>
+							</c:otherwise>
+						</c:choose>
 						<span class="text-bold">円</span>
 					</c:if>
 					<!-- 編集ボタンからの場合 -->
@@ -128,7 +144,10 @@
 							class="price-box" value="${productFormInfo.price}" required>
 						<span class="text-bold">円</span>
 					</c:if>
-					<span class="text-error"><%=request.getAttribute("productPriceError") != null ? request.getAttribute("productPriceError") : ""%></span><br>
+					<br>
+					<span class="text-error"> <c:if
+							test="${not empty productPriceError}">${productPriceError}</c:if>
+					</span>
 				</div>
 				<br> <br>
 
@@ -158,25 +177,25 @@
 		<p id="popup-action-message" class="text-bold"></p>
 		<!-- カテゴリー -->
 		<div class="popup-info-row">
-			<div class="popup-label popup-text">カテゴリー｜</div>
+			<div class="popup-product-label popup-text">カテゴリー｜</div>
 			<div class="popup-value" id="popup-category"></div>
 		</div>
 
 		<!-- 商品名 -->
 		<div class="popup-info-row">
-			<div class="popup-label popup-text">商品名｜</div>
+			<div class="popup-product-label popup-text">商品名｜</div>
 			<div class="popup-value" id="popup-name"></div>
 		</div>
 
 		<!-- トッピング -->
 		<div class="popup-info-row">
-			<div class="popup-label popup-text">トッピング｜</div>
+			<div class="popup-product-label popup-text">トッピング｜</div>
 			<div class="popup-value" id="popup-toppings"></div>
 		</div>
 
 		<!-- 金額 -->
 		<div class="popup-info-row">
-			<div class="popup-label popup-text">金額｜</div>
+			<div class="popup-product-label popup-text">金額｜</div>
 			<div class="popup-value">
 				<span id="popup-price"></span> 円
 			</div>
