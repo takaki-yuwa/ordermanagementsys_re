@@ -67,28 +67,15 @@
 										data-table="${order.tableNumber}卓"
 										data-category="${order.categoryName}">
 										<td>
-											<!--注文情報を注文編集へ送信-->
 											<form action="OrderEditForm" method="post">
-												<input type="hidden" name="screen" value="OrderList.jsp">
-												<input type="hidden" name="order_id" value="${order.orderId}">
-												<input type="hidden" name="table_number" value="${order.tableNumber}">
-												<input type="hidden" name="product_id" value="${order.productId}">
-												<input type="hidden" name="product_name" value="${order.productName}">
-												<input type="hidden" name="product_quantity" value="${order.productQuantity}">
-												<input type="hidden" name="product_stock" value="${order.productStock}">
-												<c:forEach var="topping" items="${order.orderTopping}">
-												    <input type="hidden" name="topping_name[]" value="${topping.toppingName}">
-												    <input type="hidden" name="topping_quantity[]" value="${topping.toppingQuantity}">
-												    <input type="hidden" name="topping_stock[]" value="${topping.toppingStock}">
-												</c:forEach>
 												<button class="order_num">${order.orderId}</button>
 											</form>
 										</td>
 										<td>${order.productQuantity}個</td>
 										<td>${order.productName}</td>
 										<td class="topping">
-											<!-- トッピングが複数ある場合、カンマで区切ってリスト表示 -->
-											<c:if test="${not empty order.orderTopping}">
+											<!-- トッピングが複数ある場合、カンマで区切ってリスト表示 --> <c:if
+												test="${not empty order.orderTopping}">
 												<ul class="list">
 													<c:set var="toppingString" value="" />
 													<!-- トッピングの文字列を格納する変数 -->

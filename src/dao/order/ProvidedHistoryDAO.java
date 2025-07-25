@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.order.OrderInfo;
-import model.order.OrderToppingInfo;
+import model.order.ProvidedHistoryInfo;
+import model.order.ProvidedHistoryToppingInfo;
 import util.DBUtil;
 
 public class ProvidedHistoryDAO {
-    public List<OrderInfo> getAllOrderList() {
+    public List<ProvidedHistoryInfo> getAllProvidedHistoryList() {
         // 注文情報を保持するマップ
-        Map<Integer, OrderInfo> orderMap = new HashMap<>();
+        Map<Integer, ProvidedHistoryInfo> orderMap = new HashMap<>();
 
         try (Connection con = util.DBUtil.getConnection();
              Statement st = con.createStatement();
@@ -47,7 +47,6 @@ public class ProvidedHistoryDAO {
                 int product_quantity = rs.getInt("product_quantity");
                 int table_number = rs.getInt("table_number");
                 int order_flag = rs.getInt("order_flag");
-                int product_id = rs.getInt("product_id");
                 String product_name = rs.getString("product_name");
                 String category_name = rs.getString("category_name");
                 int product_price = rs.getInt("product_price");
@@ -61,22 +60,22 @@ public class ProvidedHistoryDAO {
                 int topping_stock = rs.getInt("topping_stock");
 
                 // トッピング情報を保持するオブジェクト
-                OrderToppingInfo toppingInfo = new OrderToppingInfo(
+                ProvidedHistoryToppingInfo toppingInfo = new ProvidedHistoryToppingInfo(
                     topping_id, topping_quantity, topping_name, topping_price, topping_stock
                 );
 
                 // 注文がすでに存在する場合はトッピングを追加、存在しない場合は新規に注文を作成
-                OrderInfo orderInfo = orderMap.get(order_id);
+                ProvidedHistoryInfo orderInfo = orderMap.get(order_id);
                 if (orderInfo != null) {
                     // 既存の注文にトッピングを追加
-                    orderInfo.getOrderTopping().add(toppingInfo);
+                    orderInfo.getHistoryTopping().add(toppingInfo);
                 } else {
                     // 新しい注文を作成し、トッピング情報も追加
-                    List<OrderToppingInfo> toppingList = new ArrayList<>();
+                    List<ProvidedHistoryToppingInfo> toppingList = new ArrayList<>();
                     toppingList.add(toppingInfo);
 
-                    orderInfo = new OrderInfo(
-                        order_id, order_time, product_quantity, table_number, order_flag, product_id, product_name, category_name, product_price, product_stock, toppingList
+                    orderInfo = new ProvidedHistoryInfo(
+                        order_id, order_time, product_quantity, table_number, order_flag, product_name, category_name, product_price, product_stock, toppingList
                     );
 
                     // マップに追加
