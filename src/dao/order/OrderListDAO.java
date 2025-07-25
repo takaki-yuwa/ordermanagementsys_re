@@ -47,6 +47,7 @@ public class OrderListDAO {
                 int product_quantity = rs.getInt("product_quantity");
                 int table_number = rs.getInt("table_number");
                 int order_flag = rs.getInt("order_flag");
+                int product_id = rs.getInt("product_id");
                 String product_name = rs.getString("product_name");
                 String category_name = rs.getString("category_name");
                 int product_price = rs.getInt("product_price");
@@ -75,8 +76,8 @@ public class OrderListDAO {
                     toppingList.add(toppingInfo);
 
                     orderInfo = new OrderInfo(
-                        order_id, order_time, product_quantity, table_number, order_flag, product_name, category_name, product_price, product_stock, toppingList
-                    );
+                            order_id, order_time, product_quantity, table_number, order_flag, product_id, product_name, category_name, product_price, product_stock, toppingList
+                        );
 
                     // マップに追加
                     orderMap.put(order_id, orderInfo);

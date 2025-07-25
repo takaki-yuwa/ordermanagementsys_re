@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import constants.Constants;
 import dao.order.ProvidedHistoryDAO;
-import model.order.ProvidedHistoryInfo;
+import model.order.OrderInfo;
 
 @WebServlet("/ProvidedHistory")
 public class ProvidedHistoryServlet extends HttpServlet {
@@ -36,10 +36,10 @@ public class ProvidedHistoryServlet extends HttpServlet {
 			ProvidedHistoryDAO dao = new ProvidedHistoryDAO();
 			
 			// 注文リストを取得
-			List<ProvidedHistoryInfo> historyList = dao.getAllProvidedHistoryList();
-			System.out.println(historyList); // デバッグ表示
+			List<OrderInfo> orderList = dao.getAllOrderList();
+			System.out.println(orderList); // デバッグ表示
 
-			request.setAttribute("historyinfo", historyList);
+			request.setAttribute("orderinfo", orderList);
 			request.setAttribute("categoryList", Constants.HISTORY_TABLE_LIST);
 			
 			request.getRequestDispatcher("/jsp/ProvidedHistory.jsp").forward(request, response);
