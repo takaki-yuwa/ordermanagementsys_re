@@ -99,37 +99,37 @@
 				<br>
 
 				<!-- トッピング -->
-				<label for="topping" class="text-box-label">トッピング</label><br>
-				<div class="checkbox-group">
+				<fieldset class="checkbox-group">
+					<legend class="text-box-label">トッピング</legend>
+					<br>
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductCreate'}">
 						<c:forEach var="topping" items="${toppingInfo}">
 							<c:set var="checkboxId" value="topping_${topping.id}" />
-							<label for="<c:out value='${checkboxId}'/>"><input
-								type="checkbox" name="topping_id"
-								id="<c:out value='${checkboxId}'/>"
-								value="<c:out value='${topping.id}'/>"> <c:out
-									value="${topping.name}" /></label>
+							<label for="${checkboxId}"> <input type="checkbox"
+								name="topping_id" id="${checkboxId}" value="${topping.id}">
+								${topping.name}
+							</label>
 						</c:forEach>
 					</c:if>
+
 					<!-- 編集ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductEdit'}">
 						<c:forEach var="topping" items="${toppingInfo}">
 							<c:set var="checkboxId" value="topping_${topping.id}" />
-							<!-- すでに登録されているトッピングにはチェックをつけておく -->
-							<label for="<c:out value='${checkboxId}'/>"><input
-								type="checkbox" name="topping_id"
-								id="<c:out value='${checkboxId}'/>"
-								value="<c:out value='${topping.id}'/>"
-								<c:forEach var="pt" items="${productToppingInfo}">
+							<c:set var="checked" value="false" />
+							<c:forEach var="pt" items="${productToppingInfo}">
 								<c:if test="${pt.topping_id == topping.id}">
-									checked
+									<c:set var="checked" value="true" />
 								</c:if>
-							</c:forEach>>
-								<c:out value="${topping.name}" /> </label>
+							</c:forEach>
+							<label for="${checkboxId}"> <input type="checkbox"
+								name="topping_id" id="${checkboxId}" value="${topping.id}"
+								<c:if test="${checked}">checked</c:if>> ${topping.name}
+							</label>
 						</c:forEach>
 					</c:if>
-				</div>
+				</fieldset>
 				<br> <br>
 
 				<!-- 金額 -->
