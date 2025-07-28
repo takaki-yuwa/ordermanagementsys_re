@@ -24,19 +24,19 @@
 				<label for="userid">ID</label><br> 
 				<input type="text" id="userid" name="userid" required><br>
 				<!-- IDが空の場合JavaScriptでエラーテキスト表示 -->
-				<span class="text-error"><%=request.getAttribute("useridError") != null ? request.getAttribute("useridError") : ""%></span><br>
+				<span class="text-error"> <c:if test="${not empty useridError}">${useridError}</c:if></span><br>
 				<br>
 				<!-- パスワード入力 -->
 				<label for="password" method="post">パスワード</label><br> 
 				<input type="password" id="password" name="password" required><br>
 				<!-- パスワードが空の場合JavaScriptでエラーテキスト表示 -->
-				<span class="text-error"><%=request.getAttribute("passwordError") != null ? request.getAttribute("passwordError") : ""%></span><br>
+				<span class="text-error"> <c:if test="${not empty passwordError}">${passwordError}</c:if></span><br>
 				<br>
 				<button type="submit">ログイン</button>
 				<br>
 				<!-- IDまたはパスワードを間違えている場合エラーテキスト表示 -->
-				<span class="text-error"><%=request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage") : ""%></span><br>
-				<span class="text-error"><%=request.getAttribute("noLoginMessage") != null ? request.getAttribute("noLoginMessage") : ""%></span><br>
+				<span class="text-error"> <c:if test="${not empty errorMessage}">${errorMessage}</c:if></span><br>
+				<span class="text-error"> <c:if test="${not empty noLoginMessage}">${noLoginMessage}</c:if></span><br>
 				<br>
 			</form>
 		</div>
