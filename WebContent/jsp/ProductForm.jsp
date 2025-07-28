@@ -61,8 +61,8 @@
 										value="${category}" /></option>
 							</c:if>
 						</c:forEach>
-					</select> <br> <span class="text-error"> <c:if
-							test="${not empty categoryNameError}">
+					</select> <br> <span class="text-error" id="categoryNameError">
+						<c:if test="${not empty categoryNameError}">
 							<c:out value="${categoryNameError}" />
 						</c:if>
 					</span>
@@ -89,7 +89,7 @@
 							class="product-box"
 							value="<c:out value='${productFormInfo.name}'/>" required>
 					</c:if>
-					<br> <span class="text-error"> <c:if
+					<br> <span class="text-error" id="productNameError"> <c:if
 							test="${not empty productNameError}">
 							<c:out value="${productNameError}" />
 						</c:if>
@@ -159,7 +159,7 @@
 							value="<c:out value='${productFormInfo.price}'/>" required>
 						<span class="text-bold">円</span>
 					</c:if>
-					<br> <span class="text-error"> <c:if
+					<br> <span class="text-error" id="productPriceError"> <c:if
 							test="${not empty productPriceError}">
 							<c:out value="${productPriceError}" />
 						</c:if>

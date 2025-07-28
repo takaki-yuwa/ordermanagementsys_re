@@ -138,10 +138,42 @@ function handleProductToggle(button) {
 
 //商品新規作成・編集画面で使うポップアップ処理
 function openProductFormDisplayTogglePopup(){
- // 入力値の取得
-  const category = document.getElementById('category_name').value;
-  const productName = document.getElementById('product_name').value;
-  const productPrice = document.getElementById('product_price').value;
+  // 画面のエラー表示をクリアする関数を用意しておく
+  clearErrors(); 
+	
+  // 入力値の取得
+  const category = document.getElementById('category_name').value.trim();
+  const productName = document.getElementById('product_name').value.trim();
+  const productPrice = document.getElementById('product_price').value.trim();
+  
+  // 簡易バリデーション
+  let hasError = false;
+  if (!category) {
+    showError('categoryNameError', '※選択してください');
+    hasError = true;
+  }
+  if (!productName) {
+    showError('productNameError', '※入力してください');
+    hasError = true;
+  } else if (productName.length > 18) {
+    showError('productNameError', '※18文字以内で入力してください');
+    hasError = true;
+  }
+  if (!productPrice) {
+    showError('productPriceError', '※入力してください');
+    hasError = true;
+  } else if (!/^[0-9]+$/.test(productPrice)) {
+    showError('productPriceError', '※半角数字で入力してください');
+    hasError = true;
+  } else if (productPrice.length > 5) {
+    showError('productPriceError', '※5桁以内で入力してください');
+    hasError = true;
+  }
+
+  if (hasError) {
+    // エラーがあればポップアップは表示しない
+    return;
+  }
 
   // チェック済みトッピングの取得
   const toppingCheckboxes = document.querySelectorAll('input[name="topping_id"]:checked');
@@ -241,10 +273,38 @@ function openToppingDisplayTogglePopup(toppingId,visibleFlag,toppingName){
 
 //トッピング新規作成・編集画面で使うポップアップ処理
 function openToppingFormDisplayTogglePopup(){
- // 入力値の取得
+  // 画面のエラー表示をクリアする関数を用意しておく
+  clearErrors(); 	
+	
+  // 入力値の取得
   const toppingName = document.getElementById('topping_name').value;
   const toppingPrice = document.getElementById('topping_price').value;
 
+  // 簡易バリデーション
+  let hasError = false;
+  if (!toppingName) {
+    showError('toppingNameError', '※入力してください');
+    hasError = true;
+  } else if (toppingName.length > 18) {
+    showError('toppingNameError', '※18文字以内で入力してください');
+    hasError = true;
+  }
+  if (!toppingPrice) {
+    showError('toppingPriceError', '※入力してください');
+    hasError = true;
+  } else if (!/^[0-9]+$/.test(toppingPrice)) {
+    showError('toppingPriceError', '※半角数字で入力してください');
+    hasError = true;
+  } else if (toppingPrice.length > 5) {
+    showError('toppingPriceError', '※5桁以内で入力してください');
+    hasError = true;
+  }
+
+  if (hasError) {
+    // エラーがあればポップアップは表示しない
+    return;
+  }
+  
   // ポップアップに値をセット
   //XSS対策（値を表示に使う前に escape）
   document.getElementById('popup-name').textContent = escapeHtml(toppingName);
@@ -267,4 +327,28 @@ function openToppingFormDisplayTogglePopup(){
   confirmButton.onclick = function () {
     document.getElementById('toppingForm').submit();
   };
+}
+
+// エラーメッセージ表示用の関数例
+function showError(id, message) {
+	const span = document.getElementById(id);
+	if (span) {
+		span.textContent = message;
+		span.classList.add('text-error');
+	}
+}
+
+//エラー表示をクリアにする
+function clearErrors() {
+  const errorIds = [
+    'categoryNameError',
+    'productNameError',
+    'productPriceError',
+    'toppingNameError',
+    'toppingPriceError'
+  ];
+  errorIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = '';
+  });
 }

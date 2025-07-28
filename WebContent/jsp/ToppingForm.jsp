@@ -56,7 +56,7 @@
 						<input type="text" id="topping_name" name="topping_name"
 							class="topping-box" value="<c:out value='${toppingFormInfo.name}'/>" required>
 					</c:if>
-					<br> <span class="text-error"> <c:if
+					<br> <span class="text-error" id="toppingNameError"> <c:if
 							test="${not empty toppingNameError}">
 							<c:out value="${toppingNameError}" />
 						</c:if></span>
@@ -91,7 +91,7 @@
 							value="<c:out value='${toppingFormInfo.price}'/>" required>
 						<span class="text-bold">円</span>
 					</c:if>
-					<br> <span class="text-error"> <c:if
+					<br> <span class="text-error" id="toppingPriceError"> <c:if
 							test="${not empty toppingPriceError}">
 							<c:out value="${toppingPriceError}" />
 						</c:if></span>
