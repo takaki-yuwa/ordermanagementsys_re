@@ -106,15 +106,16 @@ function openProductDisplayTogglePopup(productId,visibleFlag,productName){
 	const selectedIndex=Array.from(document.querySelectorAll('input[name="tab"]')).indexOf(selectedRadio);
 	document.getElementById('popup-selected-category').value = categoryList[selectedIndex];
 	
+	//XSS対策：ユーザー入力をエスケープ
 	if(popupProductName && productName != null){
-		popupProductName.textContent=productName;
+		popupProductName.textContent=escapeHtml(productName);
 	}
 	
-	if (visibleFlag === '1') {
-		popupMessage.innerHTML = 'この商品を<span style="color: red;">非表示</span>にします。';
-	} else {
-		popupMessage.innerHTML = 'この商品を<span style="color: blue;">表示</span>にします。';
-	}
+	//メッセージもHTML構文を含むため、固定部分だけHTML、変数はエスケープ
+	const actionColor = visibleFlag === '1' ? 'red' : 'blue';
+	const actionText = visibleFlag === '1' ? '非表示' : '表示';
+	
+	popupMessage.innerHTML = `この商品を<span style="color: ${actionColor};">${escapeHtml(actionText)}</span>にします。`;
 
 	confirmButton.dataset.action = 'productDisplayHide';
 	confirmButton.dataset.targetProductId = `toggle-btn-${productId}`;
@@ -147,21 +148,18 @@ function openProductFormDisplayTogglePopup(){
   const toppingNames = Array.from(toppingCheckboxes).map(cb => cb.parentElement.textContent.trim());
 
   // ポップアップに値をセット
-  document.getElementById('popup-category').textContent = category || '(未選択)';
-  document.getElementById('popup-name').textContent = productName;
-  // トッピングを1行3つずつ「・」付きで表示
+  //XSS対策（値を表示に使う前に escape）
+  document.getElementById('popup-category').textContent = escapeHtml(category || '(未選択)');
+  document.getElementById('popup-name').textContent = escapeHtml(productName);
+  document.getElementById('popup-price').textContent = escapeHtml(productPrice);
+
   let toppingHtml = '';
   toppingNames.forEach((name, index) => {
-  if (index % 3 === 0) {
-    toppingHtml += '<div>'; // 新しい行
-  }
-  toppingHtml += `<span style="margin-right: 20px;">・${name}</span>`;
-  if (index % 3 === 2 || index === toppingNames.length - 1) {
-    toppingHtml += '</div>'; // 行を閉じる
-  }
-  });
+    if (index % 3 === 0) toppingHtml += '<div>';
+		toppingHtml += `<span style="margin-right: 20px;">・${escapeHtml(name)}</span>`;
+	if (index % 3 === 2 || index === toppingNames.length - 1) toppingHtml += '</div>';
+	});
   document.getElementById('popup-toppings').innerHTML = toppingNames.length > 0 ? toppingHtml : '(なし)';
-  document.getElementById('popup-price').textContent = productPrice;
 
   // メッセージの切り替え
   const formButton = document.querySelector('.create-btn') ? 'ProductCreate' : 'ProductEdit';
@@ -219,15 +217,16 @@ function openToppingDisplayTogglePopup(toppingId,visibleFlag,toppingName){
 	const popupToppingId=document.getElementById('popup-topping-id');
 	const popupVisibleFlag=document.getElementById('popup-topping-visible-flag');
 	
+	//XSS対策：ユーザー入力をエスケープ
 	if(popupToppingName && toppingName != null){
-		popupToppingName.textContent=toppingName;
+		popupToppingName.textContent=escapeHtml(toppingName);
 	}
 
-	if (visibleFlag === '1') {
-		popupMessage.innerHTML = 'このトッピングを<span style="color: red;">非表示</span>にします。';
-	} else {
-		popupMessage.innerHTML = 'このトッピングを<span style="color: blue;">表示</span>にします。';
-	}
+	//メッセージもHTML構文を含むため、固定部分だけHTML、変数はエスケープ
+	const actionColor = visibleFlag === '1' ? 'red' : 'blue';
+	const actionText = visibleFlag === '1' ? '非表示' : '表示';
+	
+	popupMessage.innerHTML = `このトッピングを<span style="color: ${actionColor};">${escapeHtml(actionText)}</span>にします。`;
 
 	confirmButton.dataset.action = 'toppingDisplayHide';
 	confirmButton.dataset.targetToppingId = `toggle-btn-${toppingId}`;
@@ -247,8 +246,9 @@ function openToppingFormDisplayTogglePopup(){
   const toppingPrice = document.getElementById('topping_price').value;
 
   // ポップアップに値をセット
-  document.getElementById('popup-name').textContent = toppingName;
-  document.getElementById('popup-price').textContent = toppingPrice;
+  //XSS対策（値を表示に使う前に escape）
+  document.getElementById('popup-name').textContent = escapeHtml(toppingName);
+  document.getElementById('popup-price').textContent = escapeHtml(toppingPrice);
 
   // メッセージの切り替え
   const formButton = document.querySelector('.create-btn') ? 'ToppingCreate' : 'ToppingEdit';

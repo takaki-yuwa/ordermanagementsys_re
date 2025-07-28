@@ -94,6 +94,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   max-width: 600px; /* 必要に応じて調整 */
+  border-radius: 10px;
 }
 
 .checkbox-group label {
