@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/OrderDetailsDeleteServlet")
+@WebServlet("/OrderDetailsDelete")
 public class OrderDetailsDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class OrderDetailsDeleteServlet extends HttpServlet {
 			System.out.println("order_id: " + orderId);
 			
 
-			response.sendRedirect(request.getContextPath() + "/" + URLEncoder.encode(screen, "UTF-8") + "&lang=ja");
+			response.sendRedirect(request.getContextPath() + "/" + URLEncoder.encode(screen, "UTF-8"));
 		} catch (Exception e) {
             e.printStackTrace();
             request.getRequestDispatcher("/jsp/Error.jsp").forward(request, response);
