@@ -74,6 +74,7 @@
 												<input type="hidden" name="table_number" value="${order.tableNumber}">
 												<input type="hidden" name="product_id" value="${order.productId}">
 												<input type="hidden" name="product_name" value="${order.productName}">
+												<input type="hidden" name="product_price" value="${order.productPrice}">
 												<input type="hidden" name="product_quantity" value="${order.productQuantity}">
 												<input type="hidden" name="product_stock" value="${order.productStock}">
 												<c:forEach var="topping" items="${order.orderTopping}">
