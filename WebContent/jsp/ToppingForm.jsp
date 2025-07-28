@@ -46,7 +46,7 @@
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ToppingCreate'}">
 						<input type="text" id="topping_name" name="topping_name"
-							class="topping-box" value="${toppingFormInfo.name}" required>
+							class="topping-box" value="<c:out value='${toppingFormInfo.name}'/>" required>
 					</c:if>
 					<!-- 編集ボタンからの場合 -->
 					<c:if test="${formButton == 'ToppingEdit'}">
@@ -54,10 +54,12 @@
 						<input type="hidden" name="topping_id"
 							value="${toppingFormInfo.id}">
 						<input type="text" id="topping_name" name="topping_name"
-							class="topping-box" value="${toppingFormInfo.name}" required>
+							class="topping-box" value="<c:out value='${toppingFormInfo.name}'/>" required>
 					</c:if>
 					<br> <span class="text-error"> <c:if
-							test="${not empty toppingNameError}">${toppingNameError}</c:if></span>
+							test="${not empty toppingNameError}">
+							<c:out value="${toppingNameError}" />
+						</c:if></span>
 				</div>
 				<br>
 
@@ -77,7 +79,7 @@
 							<c:otherwise>
 								<input type="text" id="topping_price" name="topping_price"
 									aria-describedby="topping_price_note" class="price-box"
-									value="${toppingFormInfo.price}" required>
+									value="<c:out value='${toppingFormInfo.price}'/>" required>
 							</c:otherwise>
 						</c:choose>
 						<span class="text-bold">円</span>
@@ -86,11 +88,13 @@
 					<c:if test="${formButton == 'ToppingEdit'}">
 						<input type="text" id="topping_price" name="topping_price"
 							aria-describedby="topping_price_note" class="price-box"
-							value="${toppingFormInfo.price}" required>
+							value="<c:out value='${toppingFormInfo.price}'/>" required>
 						<span class="text-bold">円</span>
 					</c:if>
 					<br> <span class="text-error"> <c:if
-							test="${not empty toppingPriceError}">${toppingPriceError}</c:if></span>
+							test="${not empty toppingPriceError}">
+							<c:out value="${toppingPriceError}" />
+						</c:if></span>
 				</div>
 				<br> <br>
 

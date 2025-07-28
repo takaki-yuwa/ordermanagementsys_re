@@ -49,18 +49,22 @@
 							<!-- 新規作成ボタンからの場合 -->
 							<c:if test="${formButton == 'ProductCreate'}">
 								<!-- カテゴリー情報を格納する -->
-								<option value="${category}"
-									<c:if test="${category == productFormInfo.category}">selected</c:if>>${category}</option>
+								<option value="<c:out value='${category}'/>"
+									<c:if test="${category == productFormInfo.category}">selected</c:if>><c:out
+										value="${category}" /></option>
 							</c:if>
 							<!-- 編集ボタンからの場合 -->
 							<c:if test="${formButton == 'ProductEdit'}">
 								<!-- 取得したカテゴリー情報を格納しておく -->
-								<option value="${category}"
-									<c:if test="${category == productFormInfo.category}">selected</c:if>>${category}</option>
+								<option value="<c:out value='${category}'/>"
+									<c:if test="${category == productFormInfo.category}">selected</c:if>><c:out
+										value="${category}" /></option>
 							</c:if>
 						</c:forEach>
 					</select> <br> <span class="text-error"> <c:if
-							test="${not empty categoryNameError}">${categoryNameError}</c:if>
+							test="${not empty categoryNameError}">
+							<c:out value="${categoryNameError}" />
+						</c:if>
 					</span>
 				</div>
 
@@ -73,7 +77,8 @@
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductCreate'}">
 						<input type="text" id="product_name" name="product_name"
-							class="product-box" value="${productFormInfo.name}" required>
+							class="product-box"
+							value="<c:out value='${productFormInfo.name}'/>" required>
 					</c:if>
 					<!-- 編集ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductEdit'}">
@@ -81,10 +86,13 @@
 						<input type="hidden" name="product_id"
 							value="${productFormInfo.id}">
 						<input type="text" id="product_name" name="product_name"
-							class="product-box" value="${productFormInfo.name}" required>
+							class="product-box"
+							value="<c:out value='${productFormInfo.name}'/>" required>
 					</c:if>
 					<br> <span class="text-error"> <c:if
-							test="${not empty productNameError}">${productNameError}</c:if>
+							test="${not empty productNameError}">
+							<c:out value="${productNameError}" />
+						</c:if>
 					</span>
 				</div>
 
@@ -97,8 +105,11 @@
 					<c:if test="${formButton == 'ProductCreate'}">
 						<c:forEach var="topping" items="${toppingInfo}">
 							<c:set var="checkboxId" value="topping_${topping.id}" />
-							<label for="${checkboxId}"><input type="checkbox"
-								name="topping_id" id="${checkboxId}" value="${topping.id}">${topping.name}</label>
+							<label for="<c:out value='${checkboxId}'/>"><input
+								type="checkbox" name="topping_id"
+								id="<c:out value='${checkboxId}'/>"
+								value="<c:out value='${topping.id}'/>"> <c:out
+									value="${topping.name}" /></label>
 						</c:forEach>
 					</c:if>
 					<!-- 編集ボタンからの場合 -->
@@ -106,14 +117,16 @@
 						<c:forEach var="topping" items="${toppingInfo}">
 							<c:set var="checkboxId" value="topping_${topping.id}" />
 							<!-- すでに登録されているトッピングにはチェックをつけておく -->
-							<label for="${checkboxId}"><input type="checkbox"
-								name="topping_id" id="${checkboxId}" value="${topping.id}"
+							<label for="<c:out value='${checkboxId}'/>"><input
+								type="checkbox" name="topping_id"
+								id="<c:out value='${checkboxId}'/>"
+								value="<c:out value='${topping.id}'/>"
 								<c:forEach var="pt" items="${productToppingInfo}">
 								<c:if test="${pt.topping_id == topping.id}">
 									checked
 								</c:if>
-							</c:forEach>>${topping.name}
-							</label>
+							</c:forEach>>
+								<c:out value="${topping.name}" /> </label>
 						</c:forEach>
 					</c:if>
 				</div>
@@ -133,7 +146,8 @@
 							</c:when>
 							<c:otherwise>
 								<input type="text" id="product_price" name="product_price"
-									class="price-box" value="${productFormInfo.price}" required>
+									class="price-box"
+									value="<c:out value='${productFormInfo.price}'/>" required>
 							</c:otherwise>
 						</c:choose>
 						<span class="text-bold">円</span>
@@ -141,12 +155,14 @@
 					<!-- 編集ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductEdit'}">
 						<input type="text" id="product_price" name="product_price"
-							class="price-box" value="${productFormInfo.price}" required>
+							class="price-box"
+							value="<c:out value='${productFormInfo.price}'/>" required>
 						<span class="text-bold">円</span>
 					</c:if>
-					<br>
-					<span class="text-error"> <c:if
-							test="${not empty productPriceError}">${productPriceError}</c:if>
+					<br> <span class="text-error"> <c:if
+							test="${not empty productPriceError}">
+							<c:out value="${productPriceError}" />
+						</c:if>
 					</span>
 				</div>
 				<br> <br>

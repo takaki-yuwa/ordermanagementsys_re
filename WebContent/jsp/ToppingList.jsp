@@ -34,15 +34,22 @@
 		<div class="topping-box">
 			<c:forEach var="topping" items="${toppingInfo}">
 				<div class="topping-row">
-					<div class="topping-name"><c:out value="${topping.name}" /></div>
-					<div class="topping-price"><c:out value="${topping.price}" />円</div>
+					<div class="topping-name">
+						<c:out value="${topping.name}" />
+					</div>
+					<div class="topping-price">
+						<c:out value="${topping.price}" />
+						円
+					</div>
 
 					<!-- 編集ボタンで商品新規作成・編集画面へ遷移する -->
 					<form action="ToppingEditForm" method="post">
 						<input type="hidden" name="form" value="ToppingEdit"> <input
 							type="hidden" name="topping_id" value="${topping.id}"> <input
-							type="hidden" name="topping_name" value="<c:out value='${topping.name}' />">
-						<input type="hidden" name="topping_price" value="<c:out value='${topping.price}' />">
+							type="hidden" name="topping_name"
+							value="<c:out value='${topping.name}' />"> <input
+							type="hidden" name="topping_price"
+							value="<c:out value='${topping.price}' />">
 						<button class="btn-edit" type="submit">編集</button>
 					</form>
 
@@ -50,8 +57,8 @@
 					<button type="button"
 						class="btn-toggle ${topping.visible_flag == 1 ? 'btn-hide' : 'btn-display'}"
 						id="toggle-btn-${topping.id}"
-						data-id="${topping.id}"
-						data-visible-flag="${topping.visible_flag}"
+						data-id="<c:out value='${topping.id}'/>"
+						data-visible-flag="<c:out value='${topping.visible_flag}'/>"
 						data-name="<c:out value='${topping.name}'/>"
 						onclick="handleToppingToggle(this)">${topping.visible_flag == 1 ? '非表示にする' : '表示にする'}</button>
 				</div>

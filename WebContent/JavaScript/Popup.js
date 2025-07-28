@@ -126,6 +126,15 @@ function openProductDisplayTogglePopup(productId,visibleFlag,productName){
 	showDisplayHidePopup();
 }
 
+//商品一覧画面XSS対策
+function handleProductToggle(button) {
+	const id = button.dataset.id;
+	const visibleFlag = button.dataset.visibleFlag;
+	const name = button.dataset.name;
+
+	openProductDisplayTogglePopup(id, visibleFlag, name);
+}
+
 //商品新規作成・編集画面で使うポップアップ処理
 function openProductFormDisplayTogglePopup(){
  // 入力値の取得
