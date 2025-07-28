@@ -69,7 +69,7 @@
 										<td>
 											<!--注文情報を注文編集へ送信-->
 											<form action="OrderEditForm" method="post">
-												<input type="hidden" name="screen" value="OrderList.jsp">
+												<input type="hidden" name="screen" value="OrderList">
 												<input type="hidden" name="order_id" value="${order.orderId}">
 												<input type="hidden" name="table_number" value="${order.tableNumber}">
 												<input type="hidden" name="product_id" value="${order.productId}">
