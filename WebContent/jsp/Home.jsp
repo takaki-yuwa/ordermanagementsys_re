@@ -12,8 +12,6 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/popup.css">
 <link rel="stylesheet" href="css/Home/home.css">
-<!-- .jsの呼び出し -->
-<script src="JavaScript/Popup.js"></script>
 <!-- ファビコン非表示 -->
 <link rel="icon" href="data:," />
 </head>
@@ -60,10 +58,12 @@
 		<!-- 商品の表示変更 -->
 		<form action="Logout" method="post">
 			<button type="submit" class="popup-proceed" id="confirm-button"
-				data-action="setupConfirmHidePopup">は　い</button>
+				data-action="setupConfirmHidePopup">は い</button>
 		</form>
 
 		<button class="popup-close" id="close-popup">いいえ</button>
 	</div>
+	<!-- .jsの呼び出し -->
+	<script src="JavaScript/Popup.js"></script>
 </body>
 </html>

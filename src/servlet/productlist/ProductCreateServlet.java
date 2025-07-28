@@ -175,7 +175,7 @@ public class ProductCreateServlet extends HttpServlet {
 			}
 
 			// 更新後は一覧画面にリダイレクト（PRGパターン推奨）
-			response.sendRedirect(request.getContextPath() + "/ProductEdit");
+			response.sendRedirect(request.getContextPath() + "/ProductCreate");
 
 		} catch (Exception e) {
 			// ログに出力（開発時）

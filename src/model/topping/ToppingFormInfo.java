@@ -2,26 +2,27 @@ package model.topping;
 
 /*
  * トッピング情報を保持するモデルクラス
- * トッピングID、名前、価格、在庫、表示フラグ
+ * トッピングID、名前、価格
  */
 public class ToppingFormInfo {
 	private int id;
 	private String name;
 	private int price;
-	private int stock;
-	private int visible_flag;
 
-	public ToppingFormInfo(int id, String name, int price, int stock, int visible_flag) {
+	public ToppingFormInfo(int id, String name, int price) {
 		this.setId(id);
 		this.setName(name);
 		this.setPrice(price);
-		this.setStock(stock);
-		this.setVisible_flag(visible_flag);
+	}
+
+	public ToppingFormInfo(String name, int price) {
+		this.setName(name);
+		this.setPrice(price);
 	}
 
 	//空の情報
 	public static ToppingFormInfo createEmpty() {
-		return new ToppingFormInfo(0, "", 0, 0, 0);
+		return new ToppingFormInfo(0, "", 0);
 	}
 
 	public int getId() {
@@ -36,14 +37,6 @@ public class ToppingFormInfo {
 		return price;
 	}
 
-	public int getStock() {
-		return stock;
-	}
-
-	public int getVisible_flag() {
-		return visible_flag;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -56,11 +49,4 @@ public class ToppingFormInfo {
 		this.price = price;
 	}
 
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-
-	public void setVisible_flag(int visible_flag) {
-		this.visible_flag = visible_flag;
-	}
 }

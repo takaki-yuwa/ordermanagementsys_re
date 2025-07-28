@@ -64,7 +64,7 @@ public class ToppingListServlet extends HttpServlet {
 				visibleFlag = (visibleFlag == 0) ? 1 : 0;
 
 				ToppingListDAO dao = new ToppingListDAO();
-				dao.updateToppingList(toppingId, visibleFlag);
+				dao.updateToppingFlag(toppingId, visibleFlag);
 			}
 
 			// 更新後は一覧画面にリダイレクト（PRGパターン推奨）

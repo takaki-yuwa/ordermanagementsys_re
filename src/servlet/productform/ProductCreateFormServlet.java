@@ -48,7 +48,7 @@ public class ProductCreateFormServlet extends HttpServlet {
 			//トッピング情報をリクエスト属性にセット
 			request.setAttribute("toppingInfo", toppingInfo);
 
-			//トッピング一覧画面に遷移
+			//商品新規作成・編集画面に遷移
 			request.getRequestDispatcher("/jsp/ProductForm.jsp").forward(request, response);
 
 		} catch (Exception e) {

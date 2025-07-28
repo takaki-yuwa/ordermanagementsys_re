@@ -13,9 +13,6 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/popup.css">
 <link rel="stylesheet" href="css/Topping/toppinglist.css">
-<!-- .jsの呼び出し -->
-<script src="JavaScript/Popup.js"></script>
-<script src="JavaScript/setTabContent.js"></script>
 <!-- ファビコン非表示 -->
 <link rel="icon" href="data:," />
 </head>
@@ -30,28 +27,29 @@
 			</form>
 			<!-- 新規作成ボタン -->
 			<form action="ToppingCreateForm" method="post">
+				<input type="hidden" name="form" value="ToppingCreate">
 				<button type="submit" class="btn-create">新規作成</button>
 			</form>
 		</div>
 		<div class="topping-box">
 			<c:forEach var="topping" items="${toppingInfo}">
 				<div class="topping-row">
-					<div class="topping-name">${topping.name}</div>
-					<div class="topping-price">${topping.price}円</div>
-					<c:if test="${topping.visible_flag == 1}">
-						<div>　表示中　</div>
-					</c:if>
-					<c:if test="${topping.visible_flag == 0}">
-						<div>非表示中　</div>
-					</c:if>
+					<div class="topping-name">
+						<c:out value="${topping.name}" />
+					</div>
+					<div class="topping-price">
+						<c:out value="${topping.price}" />
+						円
+					</div>
 
 					<!-- 編集ボタンで商品新規作成・編集画面へ遷移する -->
-					<form action="ToppingEditForm" method="get">
-						<input type="hidden" name="topping_id" value="${topping.id}">
-						<input type="hidden" name="topping_name" value="${topping.name}">
-						<input type="hidden" name="topping_price" value="${topping.price}">
-						<input type="hidden" name="topping_stock" value="${topping.stock}">
-						<input type="hidden" name="topping_visible_flag" value="${topping.visible_flag}">
+					<form action="ToppingEditForm" method="post">
+						<input type="hidden" name="form" value="ToppingEdit"> <input
+							type="hidden" name="topping_id" value="${topping.id}"> <input
+							type="hidden" name="topping_name"
+							value="<c:out value='${topping.name}' />"> <input
+							type="hidden" name="topping_price"
+							value="<c:out value='${topping.price}' />">
 						<button class="btn-edit" type="submit">編集</button>
 					</form>
 
@@ -59,8 +57,10 @@
 					<button type="button"
 						class="btn-toggle ${topping.visible_flag == 1 ? 'btn-hide' : 'btn-display'}"
 						id="toggle-btn-${topping.id}"
-						data-visible-flag="${topping.visible_flag}"
-						onclick="openToppingDisplayTogglePopup('${topping.id}','${topping.visible_flag}','${topping.name}')">${topping.visible_flag == 1 ? '非表示にする' : '表示にする'}</button>
+						data-id="<c:out value='${topping.id}'/>"
+						data-visible-flag="<c:out value='${topping.visible_flag}'/>"
+						data-name="<c:out value='${topping.name}'/>"
+						onclick="handleToppingToggle(this)">${topping.visible_flag == 1 ? '非表示にする' : '表示にする'}</button>
 				</div>
 			</c:forEach>
 		</div>
@@ -79,11 +79,14 @@
 			<input type="hidden" name="topping_visible_flag"
 				id="popup-topping-visible-flag">
 			<button type="submit" class="popup-proceed" id="confirm-button"
-				data-action="" data-target-topping-id="">は　い</button>
+				data-action="" data-target-topping-id="">は い</button>
 		</form>
 
 		<button class="popup-close" id="close-popup">いいえ</button>
 	</div>
 	</main>
+	<!-- .jsの呼び出し -->
+	<script src="JavaScript/Popup.js"></script>
+	<script src="JavaScript/setTabContent.js"></script>
 </body>
 </html>

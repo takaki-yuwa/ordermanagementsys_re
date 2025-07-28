@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +27,7 @@
 		<div class="category-box">
 			<c:forEach var="category" items="${categoryList}">
 				<div class="category-row">
-					<div class="category-name">${category}</div>
+					<div class="category-name"><c:out value="${category}"/></div>
 				</div>
 			</c:forEach>
 		</div>

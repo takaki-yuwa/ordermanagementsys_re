@@ -54,8 +54,16 @@
 }
 
 /* 左ラベル（項目名） */
-.popup-label {
+.popup-product-label {
   width: 100px;         /* ←ラベル幅を固定（必要に応じて調整） */
+  text-align: right;     /* ←ラベルを右寄せで「:」を揃える */
+  font-weight: bold;
+  color: green;
+  padding-right: 10px;   /* ラベルと値の間に少し余白 */
+}
+
+.popup-topping-label {
+  width: 120px;         /* ←ラベル幅を固定（必要に応じて調整） */
   text-align: right;     /* ←ラベルを右寄せで「:」を揃える */
   font-weight: bold;
   color: green;

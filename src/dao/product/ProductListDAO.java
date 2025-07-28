@@ -15,20 +15,21 @@ public class ProductListDAO {
 	//情報取得
 	public List<ProductInfo> selectProductList() {
 		List<ProductInfo> productInfo = new ArrayList<>();
-
+		String sql = "SELECT * FROM product";
 		try (Connection con = DBUtil.getConnection();
-				Statement st = con.createStatement();
-				ResultSet rs = st.executeQuery("SELECT * FROM product")) {
+				PreparedStatement ps = con.prepareStatement(sql)) {
 
-			while (rs.next()) {
-				int id = rs.getInt("product_id");
-				String name = rs.getString("product_name");
-				String category = rs.getString("category_name");
-				int price = rs.getInt("product_price");
-				int stock = rs.getInt("product_stock");
-				int display_flag = rs.getInt("product_display_flag");
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					int id = rs.getInt("product_id");
+					String name = rs.getString("product_name");
+					String category = rs.getString("category_name");
+					int price = rs.getInt("product_price");
+					int stock = rs.getInt("product_stock");
+					int display_flag = rs.getInt("product_display_flag");
 
-				productInfo.add(new ProductInfo(id, name, category, price, stock, display_flag));
+					productInfo.add(new ProductInfo(id, name, category, price, stock, display_flag));
+				}
 			}
 
 		} catch (SQLException e) {

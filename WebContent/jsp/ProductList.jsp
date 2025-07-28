@@ -14,23 +14,24 @@
 <link rel="stylesheet" href="css/popup.css">
 <link rel="stylesheet" href="css/Product/productlist.css">
 <link rel="stylesheet" href="css/Product/productlisttab.css">
-<!-- .jsの呼び出し -->
-<script src="JavaScript/Popup.js"></script>
-<script src="JavaScript/setTabContent.js"></script>
 <!-- ファビコン非表示 -->
 <link rel="icon" href="data:," />
 </head>
 <body>
 	<main>
 		<!-- 選択されたカテゴリーを JavaScript に渡すための hidden input -->
-		<input type="hidden" id="initial-selected-category" value="${selectedCategory}">
-		
+		<input type="hidden" id="initial-selected-category"
+			value="${selectedCategory}">
+
 		<div class="tab">
 			<!-- ラジオボタン（表示制御のキーになる） -->
 			<!-- 直前に押されていたボタンを呼び出す -->
-			<c:forEach var="category" items="${categoryList}" varStatus="category_">
-				<input type="radio" name="tab" class="tab-item" id="tab${category_.index + 1}" ${category_.index == 0 ? "checked" : ""}
-				<c:if test="${category == selectedCategory}">checked</c:if>>
+			<c:forEach var="category" items="${categoryList}"
+				varStatus="category_">
+				<input type="radio" name="tab" class="tab-item"
+					id="tab${category_.index + 1}"
+					${category_.index == 0 ? "checked" : ""}
+					<c:if test="${category_.index == 0 || category == selectedCategory}">checked</c:if>>
 			</c:forEach>
 
 			<div class="tab-wrapper">
@@ -52,32 +53,35 @@
 				<div class="tab-labels">
 					<c:forEach var="category" items="${categoryList}"
 						varStatus="category_">
-						<label for="tab${category_.index + 1}">${category}</label>
+						<label for="tab${category_.index + 1}"><c:out
+								value="${category}" /></label>
 					</c:forEach>
 				</div>
 			</div>
 			<div class="product-box">
 				<c:forEach var="product" items="${productInfo}">
 					<!-- data-categoryに現在のカテゴリー情報を保存 -->
-					<div class="product-row hidden-row" data-category="${product.category}">
-						<div class="product-name">${product.name}</div>
-						<div class="product-price">${product.price}円</div>
-						<c:if test="${product.visible_flag == 1}">
-							<div>　表示中　</div>
-						</c:if>
-						<c:if test="${product.visible_flag == 0}">
-							<div>非表示中　</div>
-						</c:if>
+					<div class="product-row hidden-row"
+						data-category="${product.category}">
+						<div class="product-name">
+							<c:out value="${product.name}" />
+						</div>
+						<div class="product-price">
+							<c:out value="${product.price}" />
+							円
+						</div>
 
 						<!-- 編集ボタンで商品新規作成・編集画面へ遷移する -->
 						<form action="ProductEditForm" method="post">
-							<input type="hidden" name="form" value="ProductEdit">
-							<input type="hidden" name="product_id" value="${product.id}">
-							<input type="hidden" name="product_name" value="${product.name}">
-							<input type="hidden" name="category_name" value="${product.category}"> 
-							<input type="hidden" name="product_price" value="${product.price}"> 
-							<input type="hidden" name="product_stock" value="${product.stock}">
-							<input type="hidden" name="product_visible_flag" value="${product.visible_flag}">
+							<input type="hidden" name="form" value="ProductEdit"> <input
+								type="hidden" name="product_id"
+								value="<c:out value='${product.id}'/>"> <input
+								type="hidden" name="product_name"
+								value="<c:out value='${product.name}' />"> <input
+								type="hidden" name="category_name"
+								value="<c:out value='${product.category}'/>"> <input
+								type="hidden" name="product_price"
+								value="<c:out value='${product.price}'/>">
 							<button class="btn-edit" type="submit">編集</button>
 						</form>
 
@@ -85,8 +89,10 @@
 						<button type="button"
 							class="btn-toggle ${product.visible_flag == 1 ? 'btn-hide' : 'btn-display'}"
 							id="toggle-btn-${product.id}"
-							data-visible-flag="${product.visible_flag}"
-							onclick="openProductDisplayTogglePopup('${product.id}','${product.visible_flag}','${product.name}')">${product.visible_flag == 1 ? '非表示にする' : '表示にする'}</button>
+							data-id="<c:out value='${product.id}'/>"
+							data-visible-flag="<c:out value='${product.visible_flag}'/>"
+							data-name="<c:out value='${product.name}'/>"
+							onclick="handleProductToggle(this)">${product.visible_flag == 1 ? '非表示にする' : '表示にする'}</button>
 					</div>
 				</c:forEach>
 			</div>
@@ -103,10 +109,11 @@
 		<!-- 商品の表示変更 -->
 		<form action="ProductList" method="post">
 			<input type="hidden" name="product_id" id="popup-product-id">
-			<input type="hidden" name="product_visible_flag" id="popup-product-visible-flag">
-			<input type="hidden" name="selected_category" id="popup-selected-category">
+			<input type="hidden" name="product_visible_flag"
+				id="popup-product-visible-flag"> <input type="hidden"
+				name="selected_category" id="popup-selected-category">
 			<button type="submit" class="popup-proceed" id="confirm-button"
-				data-action="" data-target-product-id="">は　い</button>
+				data-action="" data-target-product-id="">は い</button>
 		</form>
 
 		<button class="popup-close" id="close-popup">いいえ</button>
@@ -116,10 +123,15 @@
 	<script>
 		const categoryList=[
 			<c:forEach items="${categoryList}" var="cat" varStatus="category_">
-			'${cat}'<c:if test="${!category_.last}">,</c:if>
+			'<c:out value="${cat}"/>'<c:if test="${!category_.last}">,</c:if>
 			</c:forEach>
 			];
 	</script>
-	<script src="<%=request.getContextPath()%>/JavaScript/Product/productList.js"></script>
+
+	<!-- .jsの呼び出し -->
+	<script
+		src="<%=request.getContextPath()%>/JavaScript/Product/productList.js"></script>
+	<script src="JavaScript/Popup.js"></script>
+	<script src="JavaScript/setTabContent.js"></script>
 </body>
 </html>
