@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,7 @@
 	content="width=device-width,height=device-height,initial-scale=1.0">
 <!--.cssの呼び出し-->
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/popup.css">
 <link rel="stylesheet" href="css/Order/OrderEdit.css">
 <title>注文編集</title>
 </head>
@@ -20,24 +22,104 @@
 	</form>
 	<div class="box">
 		<div class="underline">
-			95番<span>1卓</span>
+			${orderId}番<span class="table">${tableNumber}卓</span>
 		</div>
 		<div class="underline">
-			豚玉お好み焼き
-			<button>注文取り消し</button>
+			<span class="item-name">${productName}</span>
+			<!-- 増減ボタンを追加 -->
+			<div class="quantity-buttons">
+				<button type="button" name="quantity"
+					class="decrease-btn" id="decrement-p${productId}">-</button>
+				<!-- 数量を表示する要素、変数にバインド -->
+				<span class="quantity" id="counter-p${productId}" data-stock="${productStock}">${productQuantity}</span>
+				<button type="button" name="quantity"
+					class="increase-btn" id="increment-p${productId}">+</button>
+			</div>
+			<div class="form-delet">
+				<button onclick="showhidePopup('OrderDetailsDelete','${orderId}')"  class="form-button delete">注文取り消し</button>
+			</div>
 		</div>
-		<div>
-			<ul>
-				<li>コーン</li>
-				<li>チーズ</li>
-				<li>もち</li>
-				<li>ベビースター</li>
-				<li>ツナ</li>
-				<li>カレー</li>
-			</ul>
-			<button>一覧へ戻る</button>
-			<button>変更</button>
+		<div class="list-padding">
+			<!-- トッピングが1つ以上ある場合だけ表示 -->
+			<c:if test="${not empty toppingList}">
+			    <ul class="list">
+			        <!-- トッピングのリストをループして表示 -->
+			        <c:forEach var="topping" items="${toppingList}" varStatus="status">
+			            <li class="menu-item">
+			                <span class="topping-name">${topping.toppingName}</span>
+			                <!-- 増減ボタンを追加 -->
+			                <div class="quantity-buttons">
+			                    <button type="button" name="quantity"
+			                        class="decrease-btn" id="decrement-t${topping.toppingId}">-</button>
+			                    <span class="quantity"
+								      id="counter-t${topping.toppingId}"
+								      data-stock="${topping.toppingStock}">
+								      ${empty toppingQuantity ? 0 : toppingQuantity}
+								</span>
+			                    <button type="button" name="quantity"
+			                        class="increase-btn" id="increment-t${topping.toppingId}">+</button>
+			                </div>
+			            </li>
+			        </c:forEach>
+			    </ul>
+			</c:if>
+			
+
+			<!-- トッピングが空のときは空要素（または非表示） -->
+			<c:if test="${empty toppingList}">
+				<span></span>
+			</c:if>
+		</div>
+			<div class="form">
+				<form action="${screen}" method="get">
+					<button class="form-button back">一覧へ戻る</button>
+				</form>
+			<button
+				onclick="showhidePopup('OrderDetailsEdit', '${order_id}', {
+				  order_price: '${order_price}',
+				  product_quantity: '${product_quantity}',
+				  topping_quantity: '${topping_quantity}',
+				  product_stock: '${product_stock}',
+				  topping_stock: '${topping_stock}'
+				})"
+				class="form-button change">変更</button>
 		</div>
 	</div>
+	<!--ポップアップの背景-->
+	<div class="popup-overlay" id="popup-overlay"></div>
+	<!--ポップアップの内容-->
+	<div class="popup-content" id="popup-content">
+		<p>この商品を削除します</p>
+		<p>よろしいですか？</p>
+		<button class="popup-close" id="close-popup">いいえ</button>
+		<!-- 注文を変更、削除 -->
+		<form id="popup-form" method="post">
+		  <input type="hidden" name="order_id" value="${orderId}">
+		  <input type="hidden" name="order_price" id="popup-order-price">
+		  <input type="hidden" name="product_quantity" id="popup-product-quantity">
+		  <input type="hidden" name="topping_quantity" id="popup-topping-quantity">
+		  <input type="hidden" name="product_stock" id="popup-product-stock">
+		  <input type="hidden" name="topping_stock" id="popup-topping-stock">
+		  <input type="hidden" name="screen" value="${screen}">
+		  <button type="submit" class="popup-proceed" id="confirm-button">は　い</button>
+		</form>
+	</div>
+<script>
+  // サーバーの配列をJSに渡す
+  const toppingNames = [
+    <c:forEach var="name" items="${toppingNames}">
+      "${name}"<c:if test="${!status.last}">,</c:if>
+    </c:forEach>
+  ];
+
+  const toppingQuantities = [
+    <c:forEach var="qty" items="${toppingQuantities}">
+      ${qty}<c:if test="${!status.last}">,</c:if>
+    </c:forEach>
+  ];
+</script>
+<script src="<%=request.getContextPath()%>/JavaScript/Order/orderEdit.js"></script>
+<script src="<%=request.getContextPath()%>/JavaScript/Order/OrderPopup.js"></script>
+<script src="<%=request.getContextPath()%>/JavaScript/Order/quantityControl.js"></script>
 </body>
 </html>
