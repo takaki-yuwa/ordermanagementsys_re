@@ -111,11 +111,11 @@ function handleCommonToggle(button) {
 	const type = button.dataset.type;
 	const label = button.dataset.label;
 
-	openCommonDisplayTogglePopup({ id, visibleFlag, name, type, label });
+	openCommonDisplayTogglePopup(id, visibleFlag, name, type, label);
 }
 
 //商品、トッピング一覧画面で使う共通ポップアップメッセージ処理
-function openCommonDisplayTogglePopup({ id, visibleFlag, name, type, label }) {
+function openCommonDisplayTogglePopup(id, visibleFlag, name, type, label) {
 	const popupNameElement = document.getElementById(`popup-${type}-name`);
 	const popupMessage = document.getElementById('popup-message');
 	const confirmButton = document.getElementById('confirm-button');
@@ -170,7 +170,7 @@ function commonDisplayHidePopup(buttonId) {
 function handleCommonFormToggle(button) {
 	const type = button.dataset.type;
 
-	openCommonFormDisplayTogglePopup({ type });
+	openCommonFormDisplayTogglePopup(type);
 }
 
 //商品新規作成・編集画面で使うカテゴリーとトッピング表示用
@@ -187,7 +187,7 @@ function handleProductExtras(category, toppingNames) {
 }
 
 // 商品・トッピング新規作成・編集画面で使う共通ポップアップ処理
-function openCommonFormDisplayTogglePopup({ type }) {
+function openCommonFormDisplayTogglePopup(type) {
   // エラー表示の初期化
   clearErrors();
 

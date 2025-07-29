@@ -22,31 +22,36 @@
 		<div class="login-box">
 			<form id="loginForm" action="Login" method="post" novalidate>
 				<!-- ID入力 -->
-				<label for="userid">ID</label><br> <input type="text"
-					id="userid" name="userid" required><br>
+				<label for="userid">ID</label><br> 
+				<input type="text" id="userid" name="userid" required><br>
 				<!-- IDが空の場合JavaScriptでエラーテキスト表示 -->
-				<span class="text-error"> <c:if
-						test="${not empty useridError}">
+				<span class="text-error"> 
+					<c:if test="${not empty useridError}">
 						<c:out value="${useridError}" />
-					</c:if></span><br> <br>
+					</c:if>
+				</span><br> <br>
 				<!-- パスワード入力 -->
-				<label for="password" method="post">パスワード</label><br> <input
-					type="password" id="password" name="password" required><br>
+				<label for="password" method="post">パスワード</label><br> 
+				<input type="password" id="password" name="password" required><br>
 				<!-- パスワードが空の場合JavaScriptでエラーテキスト表示 -->
-				<span class="text-error"> <c:if
-						test="${not empty passwordError}">
+				<span class="text-error"> 
+					<c:if test="${not empty passwordError}">
 						<c:out value="${passwordError}" />
-					</c:if></span><br> <br>
+					</c:if>
+				</span><br> <br>
 				<button type="submit">ログイン</button>
 				<br>
 				<!-- IDまたはパスワードを間違えている場合エラーテキスト表示 -->
-				<span class="text-error"> <c:if
-						test="${not empty errorMessage}">
+				<span class="text-error"> 
+					<c:if test="${not empty errorMessage}">
 						<c:out value="${errorMessage}" />
-					</c:if></span><br> <span class="text-error"> <c:if
-						test="${not empty noLoginMessage}">
+					</c:if>
+				</span><br> 
+				<span class="text-error"> 
+					<c:if test="${not empty noLoginMessage}">
 						<c:out value="${noLoginMessage}" />
-					</c:if></span><br> <br>
+					</c:if>
+				</span><br> <br>
 			</form>
 		</div>
 	</main>

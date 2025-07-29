@@ -55,7 +55,7 @@
 	<div class="popup-content" id="popup-content">
 		<p class="text-bold">ログアウトします</p>
 		<p>よろしいですか？</p>
-		<!-- 商品の表示変更 -->
+		<!-- ログアウト -->
 		<form action="Logout" method="post">
 			<button type="submit" class="popup-proceed" id="confirm-button"
 				data-action="setupConfirmHidePopup">は い</button>
