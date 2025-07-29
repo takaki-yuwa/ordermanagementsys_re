@@ -44,12 +44,10 @@
 
 					<!-- 編集ボタンで商品新規作成・編集画面へ遷移する -->
 					<form action="ToppingEditForm" method="post">
-						<input type="hidden" name="form" value="ToppingEdit"> <input
-							type="hidden" name="topping_id" value="${topping.id}"> <input
-							type="hidden" name="topping_name"
-							value="<c:out value='${topping.name}' />"> <input
-							type="hidden" name="topping_price"
-							value="<c:out value='${topping.price}' />">
+						<input type="hidden" name="form" value="ToppingEdit"> 
+						<input type="hidden" name="topping_id" value="${topping.id}"> 
+						<input type="hidden" name="topping_name" value="<c:out value='${topping.name}' />"> 
+						<input type="hidden" name="topping_price" value="<c:out value='${topping.price}' />">
 						<button class="btn-edit" type="submit">編集</button>
 					</form>
 
@@ -59,8 +57,10 @@
 						id="toggle-btn-${topping.id}"
 						data-id="<c:out value='${topping.id}'/>"
 						data-visible-flag="<c:out value='${topping.visible_flag}'/>"
-						data-name="<c:out value='${topping.name}'/>"
-						onclick="handleToppingToggle(this)">${topping.visible_flag == 1 ? '非表示にする' : '表示にする'}</button>
+						data-name="<c:out value='${topping.name}'/>" data-type="topping"
+						data-label="トッピング" onclick="handleCommonToggle(this)">
+						${topping.visible_flag == 1 ? '非表示にする' : '表示にする'}
+					</button>
 				</div>
 			</c:forEach>
 		</div>
@@ -70,16 +70,18 @@
 	<div class="popup-overlay" id="popup-overlay"></div>
 	<!--ポップアップの内容-->
 	<div class="popup-content" id="popup-content">
-		<p id="popup-product-name" class="text-bold"></p>
+		<p id="popup-topping-name" class="text-bold"></p>
 		<p id="popup-message"></p>
 		<p>よろしいですか？</p>
-		<!-- 商品の表示変更 -->
+		<!-- トッピングの表示変更 -->
 		<form action="ToppingList" method="post">
 			<input type="hidden" name="topping_id" id="popup-topping-id">
 			<input type="hidden" name="topping_visible_flag"
 				id="popup-topping-visible-flag">
 			<button type="submit" class="popup-proceed" id="confirm-button"
-				data-action="" data-target-topping-id="">は い</button>
+				data-action="" data-target-id="">
+				は い
+			</button>
 		</form>
 
 		<button class="popup-close" id="close-popup">いいえ</button>

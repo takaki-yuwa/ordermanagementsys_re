@@ -1,19 +1,50 @@
 /**
  * 
  */
-// HTMLエスケープ関数（安全対策）
+/* -------------------- 共通ユーティリティ関数 -------------------- */
+
+// HTMLエスケープ（XSS対策）
 function escapeHtml(str) {
-	if (!str) return '';
-	return str.replace(/[&<>"']/g, function (match) {
-		return ({
-			'&': '&amp;',
-			'<': '&lt;',
-			'>': '&gt;',
-			'"': '&quot;',
-			"'": '&#39;',
-		})[match];
-	});
+  if (!str) return '';
+  return str.replace(/[&<>"']/g, match => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  })[match]);
 }
+
+// 文字列の先頭を大文字に変換
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// エラーメッセージ表示
+function showError(id, message) {
+  const span = document.getElementById(id);
+  if (span) {
+    span.textContent = message;
+    span.classList.add('text-error');
+  }
+}
+
+// エラー表示クリア
+function clearErrors() {
+  const errorIds = [
+    'categoryNameError',
+    'productNameError',
+    'productPriceError',
+    'toppingNameError',
+    'toppingPriceError'
+  ];
+  errorIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = '';
+  });
+}
+
+/* -------------------- ポップアップ全般制御 -------------------- */
 
 //ポップアップ処理
 function showDisplayHidePopup() {
@@ -49,13 +80,9 @@ function confirmPopup() {
 				case 'setupConfirmHidePopup':
 					setupConfirmHidePopup();
 					break;
-				case 'productDisplayHide':
-					const productId = confirmButton.dataset.targetProductId;
-					productDisplayHidePopup(productId);
-					break;
-				case 'toppingDisplayHide':
-					const toppingId = confirmButton.dataset.targetToppingId;
-					toppingDisplayHidePopup(toppingId);
+				case 'commonDisplayHide':
+					const targetId = confirmButton.dataset.targetId;
+					commonDisplayHidePopup(targetId);
 					break;
 				default:
 			}
@@ -74,281 +101,158 @@ function setupConfirmHidePopup() {
 	hidePopup();
 }
 
-//商品一覧画面で使うポップアップ処理
-function productDisplayHidePopup(productId) {
-	const button = document.getElementById(productId);
-	if (!button) return;
-	
-	const currentFlag=button.dataset.visibleFlag;
-	
-	if(currentFlag === '1'){
-		button.textContent="非表示にする";
-		button.classList.remove("btn-display");
-		button.classList.add("btn-hide");
-		button.dataset.visibleFlag="0";
-	}else{
-		button.textContent="表示にする";
-		button.classList.remove("btn-hide");
-		button.classList.add("btn-display");
-		button.dataset.visibleFlag="1";
-	}
+/* -------------------- 商品・トッピング一覧画面向け -------------------- */
+
+//商品、トッピング一覧画面で使う共通XSS対策
+function handleCommonToggle(button) {
+	const id = button.dataset.id;
+	const visibleFlag = button.dataset.visibleFlag;
+	const name = button.dataset.name;
+	const type = button.dataset.type;
+	const label = button.dataset.label;
+
+	openCommonDisplayTogglePopup({ id, visibleFlag, name, type, label });
 }
 
-//商品一覧画面で使うポップアップメッセージ処理
-function openProductDisplayTogglePopup(productId,visibleFlag,productName){
-	const popupProductName=document.getElementById('popup-product-name');
+//商品、トッピング一覧画面で使う共通ポップアップメッセージ処理
+function openCommonDisplayTogglePopup({ id, visibleFlag, name, type, label }) {
+	const popupNameElement = document.getElementById(`popup-${type}-name`);
 	const popupMessage = document.getElementById('popup-message');
 	const confirmButton = document.getElementById('confirm-button');
-	const popupProductId=document.getElementById('popup-product-id');
-	const popupVisibleFlag=document.getElementById('popup-product-visible-flag');
-	
-	const selectedRadio=document.querySelector('input[name="tab"]:checked');
-	const selectedIndex=Array.from(document.querySelectorAll('input[name="tab"]')).indexOf(selectedRadio);
-	document.getElementById('popup-selected-category').value = categoryList[selectedIndex];
-	
-	//XSS対策：ユーザー入力をエスケープ
-	if(popupProductName && productName != null){
-		popupProductName.textContent=escapeHtml(productName);
+	const popupIdInput = document.getElementById(`popup-${type}-id`);
+	const popupFlagInput = document.getElementById(`popup-${type}-visible-flag`);
+
+	// 商品の場合のみカテゴリをセット
+	if (type === 'product') {
+		const selectedRadio = document.querySelector('input[name="tab"]:checked');
+		const selectedIndex = Array.from(document.querySelectorAll('input[name="tab"]')).indexOf(selectedRadio);
+		document.getElementById('popup-selected-category').value = categoryList[selectedIndex];
 	}
-	
-	//メッセージもHTML構文を含むため、固定部分だけHTML、変数はエスケープ
+
+	// XSS対策：ユーザー入力をエスケープ
+	if (popupNameElement && name != null) {
+		popupNameElement.textContent = name;
+	}
+
+	// 表示・非表示のメッセージ
 	const actionColor = visibleFlag === '1' ? 'red' : 'blue';
 	const actionText = visibleFlag === '1' ? '非表示' : '表示';
-	
-	popupMessage.innerHTML = `この商品を<span style="color: ${actionColor};">${escapeHtml(actionText)}</span>にします。`;
+	popupMessage.innerHTML = `この${label}を<span style="color: ${actionColor};">${escapeHtml(actionText)}</span>にします。`;
 
-	confirmButton.dataset.action = 'productDisplayHide';
-	confirmButton.dataset.targetProductId = `toggle-btn-${productId}`;
-	
-	//商品IDと表示フラグをhidden inputにセット
-	popupProductId.value=productId;
-	popupVisibleFlag.value=visibleFlag;
+	// データ属性の設定
+	confirmButton.dataset.action = 'commonDisplayHide';
+	confirmButton.dataset[`target${type}Id`] = `toggle-btn-${id}`;
+
+	// hidden inputにセット
+	popupIdInput.value = id;
+	popupFlagInput.value = visibleFlag;
 
 	showDisplayHidePopup();
 }
 
-//商品一覧画面XSS対策
-function handleProductToggle(button) {
-	const id = button.dataset.id;
-	const visibleFlag = button.dataset.visibleFlag;
-	const name = button.dataset.name;
+//商品、トッピング一覧画面で使う共通ポップアップ処理
+function commonDisplayHidePopup(buttonId) {
+	const button = document.getElementById(buttonId);
+	if (!button) return;
 
-	openProductDisplayTogglePopup(id, visibleFlag, name);
+	const currentFlag = button.dataset.visibleFlag;
+	const isVisible = currentFlag === '1';
+
+	button.textContent = isVisible ? "非表示にする" : "表示にする";
+	button.classList.toggle("btn-display", !isVisible);
+	button.classList.toggle("btn-hide", isVisible);
+	button.dataset.visibleFlag = isVisible ? "0" : "1";
 }
 
-//商品新規作成・編集画面で使うポップアップ処理
-function openProductFormDisplayTogglePopup(){
-  // 画面のエラー表示をクリアする関数を用意しておく
-  clearErrors(); 
-	
-  // 入力値の取得
-  const category = document.getElementById('category_name').value.trim();
-  const productName = document.getElementById('product_name').value.trim();
-  const productPrice = document.getElementById('product_price').value.trim();
-  
-  // 簡易バリデーション
-  let hasError = false;
-  if (!category) {
-    showError('categoryNameError', '※選択してください');
-    hasError = true;
-  }
-  if (!productName) {
-    showError('productNameError', '※入力してください');
-    hasError = true;
-  } else if (productName.length > 18) {
-    showError('productNameError', '※18文字以内で入力してください');
-    hasError = true;
-  }
-  if (!productPrice) {
-    showError('productPriceError', '※入力してください');
-    hasError = true;
-  } else if (!/^[0-9]+$/.test(productPrice)) {
-    showError('productPriceError', '※半角数字で入力してください');
-    hasError = true;
-  } else if (productPrice.length > 5) {
-    showError('productPriceError', '※5桁以内で入力してください');
-    hasError = true;
-  }
+/* -------------------- 商品・トッピング作成／編集画面向け -------------------- */
 
-  if (hasError) {
-    // エラーがあればポップアップは表示しない
-    return;
-  }
+//商品、トッピング新規作成・編集画面で使う共通XSS対策
+function handleCommonFormToggle(button) {
+	const type = button.dataset.type;
 
-  // チェック済みトッピングの取得
-  const toppingCheckboxes = document.querySelectorAll('input[name="topping_id"]:checked');
-  const toppingNames = Array.from(toppingCheckboxes).map(cb => cb.parentElement.textContent.trim());
+	openCommonFormDisplayTogglePopup({ type });
+}
 
-  // ポップアップに値をセット
-  //XSS対策（値を表示に使う前に escape）
-  document.getElementById('popup-category').textContent = escapeHtml(category || '(未選択)');
-  document.getElementById('popup-name').textContent = escapeHtml(productName);
-  document.getElementById('popup-price').textContent = escapeHtml(productPrice);
+//商品新規作成・編集画面で使うカテゴリーとトッピング表示用
+function handleProductExtras(category, toppingNames) {
+  document.getElementById('popup-category').textContent = category || '(未選択)';
 
   let toppingHtml = '';
   toppingNames.forEach((name, index) => {
     if (index % 3 === 0) toppingHtml += '<div>';
-		toppingHtml += `<span style="margin-right: 20px;">・${escapeHtml(name)}</span>`;
-	if (index % 3 === 2 || index === toppingNames.length - 1) toppingHtml += '</div>';
-	});
-  document.getElementById('popup-toppings').innerHTML = toppingNames.length > 0 ? toppingHtml : '(なし)';
-
-  // メッセージの切り替え
-  const formButton = document.querySelector('.create-btn') ? 'ProductCreate' : 'ProductEdit';
-  const actionMessage = formButton === 'ProductCreate'
-    ? 'この内容で作成しますか？'
-    : 'この内容で変更しますか？';
-
-  document.getElementById('popup-action-message').textContent = actionMessage;
-
-  // 表示
-  showDisplayHidePopup();
-
-  // 「はい」ボタンで form を submit
-  const confirmButton = document.getElementById('confirm-button');
-  confirmButton.dataset.action = 'setupConfirmHidePopup';
-  confirmButton.onclick = function () {
-    document.getElementById('productForm').submit();
-  };
-}
-
-//トッピング一覧画面で使うポップアップ処理
-function toppingDisplayHidePopup(toppingId) {
-	const button = document.getElementById(toppingId);
-	if (!button) return;
-	
-	const currentFlag=button.dataset.visibleFlag;
-	
-	if(currentFlag === '1'){
-		button.textContent="非表示にする";
-		button.classList.remove("btn-display");
-		button.classList.add("btn-hide");
-		button.dataset.visibleFlag="0";
-	}else{
-		button.textContent="表示にする";
-		button.classList.remove("btn-hide");
-		button.classList.add("btn-display");
-		button.dataset.visibleFlag="1";
-	}
-}
-
-//トッピング一覧画面XSS対策
-function handleToppingToggle(button) {
-	const id = button.dataset.id;
-	const visibleFlag = button.dataset.visibleFlag;
-	const name = button.dataset.name;
-
-	openToppingDisplayTogglePopup(id, visibleFlag, name);
-}
-
-//トッピング一覧画面で使うポップアップメッセージ処理
-function openToppingDisplayTogglePopup(toppingId,visibleFlag,toppingName){
-	const popupToppingName=document.getElementById('popup-topping-name');
-	const popupMessage = document.getElementById('popup-message');
-	const confirmButton = document.getElementById('confirm-button');
-	const popupToppingId=document.getElementById('popup-topping-id');
-	const popupVisibleFlag=document.getElementById('popup-topping-visible-flag');
-	
-	//XSS対策：ユーザー入力をエスケープ
-	if(popupToppingName && toppingName != null){
-		popupToppingName.textContent=escapeHtml(toppingName);
-	}
-
-	//メッセージもHTML構文を含むため、固定部分だけHTML、変数はエスケープ
-	const actionColor = visibleFlag === '1' ? 'red' : 'blue';
-	const actionText = visibleFlag === '1' ? '非表示' : '表示';
-	
-	popupMessage.innerHTML = `このトッピングを<span style="color: ${actionColor};">${escapeHtml(actionText)}</span>にします。`;
-
-	confirmButton.dataset.action = 'toppingDisplayHide';
-	confirmButton.dataset.targetToppingId = `toggle-btn-${toppingId}`;
-
-
-	//トッピングIDと表示フラグをhidden inputにセット
-	popupToppingId.value=toppingId;
-	popupVisibleFlag.value=visibleFlag;
-	
-	showDisplayHidePopup();
-}
-
-//トッピング新規作成・編集画面で使うポップアップ処理
-function openToppingFormDisplayTogglePopup(){
-  // 画面のエラー表示をクリアする関数を用意しておく
-  clearErrors(); 	
-	
-  // 入力値の取得
-  const toppingName = document.getElementById('topping_name').value;
-  const toppingPrice = document.getElementById('topping_price').value;
-
-  // 簡易バリデーション
-  let hasError = false;
-  if (!toppingName) {
-    showError('toppingNameError', '※入力してください');
-    hasError = true;
-  } else if (toppingName.length > 18) {
-    showError('toppingNameError', '※18文字以内で入力してください');
-    hasError = true;
-  }
-  if (!toppingPrice) {
-    showError('toppingPriceError', '※入力してください');
-    hasError = true;
-  } else if (!/^[0-9]+$/.test(toppingPrice)) {
-    showError('toppingPriceError', '※半角数字で入力してください');
-    hasError = true;
-  } else if (toppingPrice.length > 5) {
-    showError('toppingPriceError', '※5桁以内で入力してください');
-    hasError = true;
-  }
-
-  if (hasError) {
-    // エラーがあればポップアップは表示しない
-    return;
-  }
-  
-  // ポップアップに値をセット
-  //XSS対策（値を表示に使う前に escape）
-  document.getElementById('popup-name').textContent = escapeHtml(toppingName);
-  document.getElementById('popup-price').textContent = escapeHtml(toppingPrice);
-
-  // メッセージの切り替え
-  const formButton = document.querySelector('.create-btn') ? 'ToppingCreate' : 'ToppingEdit';
-  const actionMessage = formButton === 'ToppingCreate'
-    ? 'この内容で作成しますか？'
-    : 'この内容で変更しますか？';
-
-  document.getElementById('popup-action-message').textContent = actionMessage;
-
-  // 表示
-  showDisplayHidePopup();
-
-  // 「はい」ボタンで form を submit
-  const confirmButton = document.getElementById('confirm-button');
-  confirmButton.dataset.action = 'setupConfirmHidePopup';
-  confirmButton.onclick = function () {
-    document.getElementById('toppingForm').submit();
-  };
-}
-
-// エラーメッセージ表示用の関数例
-function showError(id, message) {
-	const span = document.getElementById(id);
-	if (span) {
-		span.textContent = message;
-		span.classList.add('text-error');
-	}
-}
-
-//エラー表示をクリアにする
-function clearErrors() {
-  const errorIds = [
-    'categoryNameError',
-    'productNameError',
-    'productPriceError',
-    'toppingNameError',
-    'toppingPriceError'
-  ];
-  errorIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = '';
+    toppingHtml += `<span style="margin-right: 20px;">・${escapeHtml(name)}</span>`;
+    if (index % 3 === 2 || index === toppingNames.length - 1) toppingHtml += '</div>';
   });
+  document.getElementById('popup-toppings').innerHTML = toppingNames.length > 0 ? toppingHtml : '(なし)';
+}
+
+// 商品・トッピング新規作成・編集画面で使う共通ポップアップ処理
+function openCommonFormDisplayTogglePopup({ type }) {
+  // エラー表示の初期化
+  clearErrors();
+
+  // 入力値の取得
+  const name = document.getElementById(`${type}_name`).value.trim();
+  const price = document.getElementById(`${type}_price`).value.trim();
+  let hasError = false;
+
+  // バリデーション（名称）
+  if (!name) {
+    showError(`${type}NameError`, '※入力してください');
+    hasError = true;
+  } else if (name.length > 18) {
+    showError(`${type}NameError`, '※18文字以内で入力してください');
+    hasError = true;
+  }
+
+  // バリデーション（金額）
+  if (!price) {
+    showError(`${type}PriceError`, '※入力してください');
+    hasError = true;
+  } else if (!/^[0-9]+$/.test(price)) {
+    showError(`${type}PriceError`, '※半角数字で入力してください');
+    hasError = true;
+  } else if (price.length > 5) {
+    showError(`${type}PriceError`, '※5桁以内で入力してください');
+    hasError = true;
+  }
+
+  // 商品特有の処理（カテゴリとトッピング）
+  if (type === 'product') {
+    const category = document.getElementById('category_name').value.trim();
+    if (!category) {
+      showError('categoryNameError', '※選択してください');
+      hasError = true;
+    }
+
+    const toppingCheckboxes = document.querySelectorAll('input[name="topping_id"]:checked');
+    const toppingNames = Array.from(toppingCheckboxes).map(cb => cb.parentElement.textContent.trim());
+
+    handleProductExtras(category, toppingNames); // → カテゴリ・トッピング名をポップアップにセット
+  }
+
+  // エラーがある場合はポップアップを表示しない
+  if (hasError) return;
+
+  // ポップアップに値をセット（XSS対策済み）
+  document.getElementById('popup-name').textContent = name;
+  document.getElementById('popup-price').textContent = price;
+
+  // ポップアップのメッセージ切り替え（作成 or 編集）
+  const formButton = document.querySelector('.create-btn') ? `${capitalize(type)}Create` : `${capitalize(type)}Edit`;
+  const actionMessage = formButton === `${capitalize(type)}Create`
+    ? 'この内容で作成しますか？'
+    : 'この内容で変更しますか？';
+
+  document.getElementById('popup-action-message').textContent = actionMessage;
+
+  // ポップアップを表示
+  showDisplayHidePopup();
+
+  // 「はい」ボタンの処理を設定（フォームを送信）
+  const confirmButton = document.getElementById('confirm-button');
+  confirmButton.dataset.action = 'setupConfirmHidePopup';
+  confirmButton.onclick = function () {
+    document.getElementById(`${type}Form`).submit();
+  };
 }

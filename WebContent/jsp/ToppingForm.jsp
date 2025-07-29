@@ -35,38 +35,40 @@
 			</c:if>
 		</div>
 		<!-- 元のフォーム全体を囲む form -->
-		<c:set var="actionUrl"
-			value="${formButton == 'ToppingCreate' ? 'ToppingCreate' : 'ToppingEdit'}" />
+		<c:set var="actionUrl" value="${formButton == 'ToppingCreate' ? 'ToppingCreate' : 'ToppingEdit'}" />
 		<form id="toppingForm" method="post" action="${actionUrl}">
 			<div class="form-box">
 				<div class="form-group">
 					<!-- トッピング名 -->
-					<label for="topping_name" class="text-box-label">トッピング名</label><span
-						class="note-text">※最大18文字</span><br>
+					<label for="topping_name" class="text-box-label">トッピング名</label>
+					<span class="note-text">※最大18文字</span><br>
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ToppingCreate'}">
 						<input type="text" id="topping_name" name="topping_name"
-							class="topping-box" value="<c:out value='${toppingFormInfo.name}'/>" required>
+							class="topping-box"
+							value="<c:out value='${toppingFormInfo.name}'/>" required>
 					</c:if>
 					<!-- 編集ボタンからの場合 -->
 					<c:if test="${formButton == 'ToppingEdit'}">
 						<!-- 変更だけ商品名だけでなくIDも送る -->
-						<input type="hidden" name="topping_id"
-							value="${toppingFormInfo.id}">
+						<input type="hidden" name="topping_id" value="${toppingFormInfo.id}">
 						<input type="text" id="topping_name" name="topping_name"
-							class="topping-box" value="<c:out value='${toppingFormInfo.name}'/>" required>
+							class="topping-box"
+							value="<c:out value='${toppingFormInfo.name}'/>" required>
 					</c:if>
-					<br> <span class="text-error" id="toppingNameError"> <c:if
-							test="${not empty toppingNameError}">
+					<br> 
+					<span class="text-error" id="toppingNameError"> 
+						<c:if test="${not empty toppingNameError}">
 							<c:out value="${toppingNameError}" />
-						</c:if></span>
+						</c:if>
+					</span>
 				</div>
 				<br>
 
 				<!-- 金額 -->
 				<div class="form-group">
-					<label for="topping_price" class="text-box-label">金額</label> <span
-						id="topping_price_note" class="note-text">※最大5桁</span><br>
+					<label for="topping_price" class="text-box-label">金額</label> 
+					<span id="topping_price_note" class="note-text">※最大5桁</span><br>
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ToppingCreate'}">
 						<c:choose>
@@ -91,10 +93,13 @@
 							value="<c:out value='${toppingFormInfo.price}'/>" required>
 						<span class="text-bold">円</span>
 					</c:if>
-					<br> <span class="text-error" id="toppingPriceError"> <c:if
+					<br> 
+					<span class="text-error" id="toppingPriceError"> 
+						<c:if
 							test="${not empty toppingPriceError}">
 							<c:out value="${toppingPriceError}" />
-						</c:if></span>
+						</c:if>
+					</span>
 				</div>
 				<br> <br>
 
@@ -106,12 +111,12 @@
 
 					<!-- 右側：「作成」または「変更」ボタン -->
 					<c:if test="${formButton == 'ToppingCreate'}">
-						<button type="button"
-							onclick="openToppingFormDisplayTogglePopup()" class="create-btn">作成</button>
+						<button type="button" data-type="topping"
+							onclick="handleCommonFormToggle(this)" class="create-btn">作成</button>
 					</c:if>
 					<c:if test="${formButton == 'ToppingEdit'}">
-						<button type="button"
-							onclick="openToppingFormDisplayTogglePopup()" class="edit-btn">変更</button>
+						<button type="button" data-type="topping"
+							onclick="handleCommonFormToggle(this)" class="edit-btn">変更</button>
 					</c:if>
 				</div>
 			</div>

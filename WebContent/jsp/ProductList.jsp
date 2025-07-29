@@ -51,10 +51,10 @@
 
 				<!-- ラベル（横スクロール） -->
 				<div class="tab-labels">
-					<c:forEach var="category" items="${categoryList}"
-						varStatus="category_">
-						<label for="tab${category_.index + 1}"><c:out
-								value="${category}" /></label>
+					<c:forEach var="category" items="${categoryList}" varStatus="category_">
+						<label for="tab${category_.index + 1}">
+							<c:out value="${category}" />
+						</label>
 					</c:forEach>
 				</div>
 			</div>
@@ -73,15 +73,11 @@
 
 						<!-- 編集ボタンで商品新規作成・編集画面へ遷移する -->
 						<form action="ProductEditForm" method="post">
-							<input type="hidden" name="form" value="ProductEdit"> <input
-								type="hidden" name="product_id"
-								value="<c:out value='${product.id}'/>"> <input
-								type="hidden" name="product_name"
-								value="<c:out value='${product.name}' />"> <input
-								type="hidden" name="category_name"
-								value="<c:out value='${product.category}'/>"> <input
-								type="hidden" name="product_price"
-								value="<c:out value='${product.price}'/>">
+							<input type="hidden" name="form" value="ProductEdit"> 
+							<input type="hidden" name="product_id" value="<c:out value='${product.id}'/>"> 
+							<input type="hidden" name="product_name" value="<c:out value='${product.name}' />"> 
+							<input type="hidden" name="category_name" value="<c:out value='${product.category}'/>"> 
+							<input type="hidden" name="product_price" value="<c:out value='${product.price}'/>">
 							<button class="btn-edit" type="submit">編集</button>
 						</form>
 
@@ -91,8 +87,10 @@
 							id="toggle-btn-${product.id}"
 							data-id="<c:out value='${product.id}'/>"
 							data-visible-flag="<c:out value='${product.visible_flag}'/>"
-							data-name="<c:out value='${product.name}'/>"
-							onclick="handleProductToggle(this)">${product.visible_flag == 1 ? '非表示にする' : '表示にする'}</button>
+							data-name="<c:out value='${product.name}'/>" data-type="product"
+							data-label="商品" onclick="handleCommonToggle(this)">
+							${product.visible_flag == 1 ? '非表示にする' : '表示にする'}
+						</button>
 					</div>
 				</c:forEach>
 			</div>
@@ -113,7 +111,9 @@
 				id="popup-product-visible-flag"> <input type="hidden"
 				name="selected_category" id="popup-selected-category">
 			<button type="submit" class="popup-proceed" id="confirm-button"
-				data-action="" data-target-product-id="">は い</button>
+				data-action="" data-target-id="">
+				は い
+			</button>
 		</form>
 
 		<button class="popup-close" id="close-popup">いいえ</button>

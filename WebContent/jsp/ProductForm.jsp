@@ -35,8 +35,7 @@
 			</c:if>
 		</div>
 		<!-- 元のフォーム全体を囲む form -->
-		<c:set var="actionUrl"
-			value="${formButton == 'ProductCreate' ? 'ProductCreate' : 'ProductEdit'}" />
+		<c:set var="actionUrl" value="${formButton == 'ProductCreate' ? 'ProductCreate' : 'ProductEdit'}" />
 		<form id="productForm" method="post" action="${actionUrl}">
 			<div class="form-box">
 				<div class="form-group">
@@ -50,15 +49,17 @@
 							<c:if test="${formButton == 'ProductCreate'}">
 								<!-- カテゴリー情報を格納する -->
 								<option value="<c:out value='${category}'/>"
-									<c:if test="${category == productFormInfo.category}">selected</c:if>><c:out
-										value="${category}" /></option>
+									<c:if test="${category == productFormInfo.category}">selected</c:if>>
+									<c:out value="${category}" />
+								</option>
 							</c:if>
 							<!-- 編集ボタンからの場合 -->
 							<c:if test="${formButton == 'ProductEdit'}">
 								<!-- 取得したカテゴリー情報を格納しておく -->
 								<option value="<c:out value='${category}'/>"
-									<c:if test="${category == productFormInfo.category}">selected</c:if>><c:out
-										value="${category}" /></option>
+									<c:if test="${category == productFormInfo.category}">selected</c:if>>
+									<c:out value="${category}" />
+								</option>
 							</c:if>
 						</c:forEach>
 					</select> <br> <span class="text-error" id="categoryNameError">
@@ -72,8 +73,8 @@
 
 				<div class="form-group">
 					<!-- 商品名 -->
-					<label for="product_name" class="text-box-label">商品名</label><span
-						class="note-text">※最大18文字</span><br>
+					<label for="product_name" class="text-box-label">商品名</label>
+					<span class="note-text">※最大18文字</span><br>
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductCreate'}">
 						<input type="text" id="product_name" name="product_name"
@@ -89,8 +90,9 @@
 							class="product-box"
 							value="<c:out value='${productFormInfo.name}'/>" required>
 					</c:if>
-					<br> <span class="text-error" id="productNameError"> <c:if
-							test="${not empty productNameError}">
+					<br> 
+					<span class="text-error" id="productNameError"> 
+						<c:if test="${not empty productNameError}">
 							<c:out value="${productNameError}" />
 						</c:if>
 					</span>
@@ -106,8 +108,8 @@
 					<c:if test="${formButton == 'ProductCreate'}">
 						<c:forEach var="topping" items="${toppingInfo}">
 							<c:set var="checkboxId" value="topping_${topping.id}" />
-							<label for="${checkboxId}"> <input type="checkbox"
-								name="topping_id" id="${checkboxId}" value="${topping.id}">
+							<label for="${checkboxId}"> 
+								<input type="checkbox" name="topping_id" id="${checkboxId}" value="${topping.id}">
 								${topping.name}
 							</label>
 						</c:forEach>
@@ -123,9 +125,10 @@
 									<c:set var="checked" value="true" />
 								</c:if>
 							</c:forEach>
-							<label for="${checkboxId}"> <input type="checkbox"
-								name="topping_id" id="${checkboxId}" value="${topping.id}"
-								<c:if test="${checked}">checked</c:if>> ${topping.name}
+							<label for="${checkboxId}"> 
+								<input type="checkbox" name="topping_id" id="${checkboxId}" value="${topping.id}"
+								<c:if test="${checked}">checked</c:if>> 
+								${topping.name}
 							</label>
 						</c:forEach>
 					</c:if>
@@ -134,15 +137,13 @@
 
 				<!-- 金額 -->
 				<div class="form-group">
-					<label for="product_price" class="text-box-label">金額</label><span
-						class="note-text">※最大5桁</span><br>
+					<label for="product_price" class="text-box-label">金額</label>
+					<span class="note-text">※最大5桁</span><br>
 					<!-- 新規作成ボタンからの場合 -->
 					<c:if test="${formButton == 'ProductCreate'}">
 						<c:choose>
-							<c:when
-								test="${productFormInfo.price == 0 || empty productFormInfo.price}">
-								<input type="text" id="product_price" name="product_price"
-									class="price-box" value="" required>
+							<c:when test="${productFormInfo.price == 0 || empty productFormInfo.price}">
+								<input type="text" id="product_price" name="product_price" class="price-box" value="" required>
 							</c:when>
 							<c:otherwise>
 								<input type="text" id="product_price" name="product_price"
@@ -159,8 +160,9 @@
 							value="<c:out value='${productFormInfo.price}'/>" required>
 						<span class="text-bold">円</span>
 					</c:if>
-					<br> <span class="text-error" id="productPriceError"> <c:if
-							test="${not empty productPriceError}">
+					<br> 
+					<span class="text-error" id="productPriceError"> 
+						<c:if test="${not empty productPriceError}">
 							<c:out value="${productPriceError}" />
 						</c:if>
 					</span>
@@ -176,11 +178,13 @@
 					<!-- 右側：「作成」または「変更」ボタン -->
 					<c:if test="${formButton == 'ProductCreate'}">
 						<button type="button"
-							onclick="openProductFormDisplayTogglePopup()" class="create-btn">作成</button>
+							data-type="product"
+							onclick="handleCommonFormToggle(this)" class="create-btn">作成</button>
 					</c:if>
 					<c:if test="${formButton == 'ProductEdit'}">
 						<button type="button"
-							onclick="openProductFormDisplayTogglePopup()" class="edit-btn">変更</button>
+							data-type="product"
+							onclick="handleCommonFormToggle(this)" class="edit-btn">変更</button>
 					</c:if>
 				</div>
 			</div>

@@ -27,7 +27,9 @@
 		<div class="category-box">
 			<c:forEach var="category" items="${categoryList}">
 				<div class="category-row">
-					<div class="category-name"><c:out value="${category}"/></div>
+					<div class="category-name">
+						<c:out value="${category}" />
+					</div>
 				</div>
 			</c:forEach>
 		</div>
