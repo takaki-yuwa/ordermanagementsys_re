@@ -31,6 +31,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			String tableNumber = request.getParameter("table_number");
 			String productId = request.getParameter("product_id");
 			String productName = request.getParameter("product_name");
+			String productPrice = request.getParameter("product_price");
 			String productQuantity = request.getParameter("product_quantity");
 			String productStock = request.getParameter("product_stock");
 			String[] toppingNames = request.getParameterValues("topping_name[]");
@@ -42,6 +43,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			System.out.println("table_number: " + tableNumber);
 			System.out.println("product_id: " + productId);
 			System.out.println("product_name: " + productName);
+			System.out.println("product_price: " + productPrice);
 			System.out.println("product_quantity: " + productQuantity);
 			System.out.println("product_stock: " + productStock);
 			System.out.println("topping_names: " + Arrays.toString(toppingNames));
@@ -58,6 +60,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			for (OrderEditToppingInfo topping : toppingList) {
 			    System.out.println("Topping ID: " + topping.getToppingId() +
 			                       ", Name: " + topping.getToppingName() +
+			                       ", Price: " + topping.getToppingPrice() +
 			                       ", Stock: " + topping.getToppingStock());
 			}
 
@@ -68,6 +71,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			request.setAttribute("tableNumber", tableNumber);
 			request.setAttribute("productId", productId);
 			request.setAttribute("productName", productName);
+			request.setAttribute("productPrice", productPrice);
 			request.setAttribute("productQuantity", productQuantity);
 			request.setAttribute("productStock", productStock);
 			request.setAttribute("toppingNames", toppingNames);

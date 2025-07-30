@@ -9,7 +9,7 @@
 	padding-left: 10px;
 }
 
-/*テーブルデザイン*/
+/*枠の調整*/
 .box {
 	width: 80vw;
 	height: 85vh;
@@ -17,10 +17,114 @@
 	border: 1px solid;
 }
 
+/*枠内下線*/
 .underline {
+	display: flex;
 	box-sizing: border-box;
 	width: 100%;
 	margin: 0 auto;
 	border-bottom: 1px solid #333;
 	padding: 8px;
+}
+
+.list-padding {
+	box-sizing: border-box;
+	width: 50vw;
+	margin: 0 auto;
+	padding: 8px;
+}
+
+.table{
+	margin-left: 20px;
+}
+
+/* 横並び２列 */
+ul {
+	list-style-type: none;
+	padding-left: 20px;
+	display: grid;
+	width: fit-content;
+	column-gap: 100px;
+	grid-template-columns: repeat(2, auto);
+	text-align: right;
+}
+
+li{
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 30px;
+}
+
+.item-name {
+	margin-top: 10px;
+}
+
+.menu-item {
+	display: flex;
+	align-items: center;
+}
+
+.quantity-buttons {
+	margin-left: 20px;
+}
+
+.delete {
+	color: #fff;
+	background-color: rgb(255, 128, 128);
+}
+
+.back {
+	color: #fff;
+	background-color: rgb(128, 128, 128);
+}
+
+.change {
+	color: #fff;
+	background-color: rgb(0, 128, 0);
+}
+
+.decrease-btn,
+.increase-btn {
+	margin-top: 10px;
+	width: 30px;
+	height: 30px;
+	font-size: 15px;
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+	border: 1px solid #333
+}
+
+.quantity{
+	margin: 8px;
+}
+
+/*ボタン設定*/
+.form-button {
+	width: 100px;
+	margin-left: 20px;
+	height: 35px;
+	border-radius: 20px;
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+	border: 1px solid #333
+}
+
+button:active {
+	transform: translateY(1px);
+}
+
+.form-delet {
+	padding: 8px;
+	margin-left: auto;
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.form {
+	padding: 16px;
+	margin-left: auto;
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
 }

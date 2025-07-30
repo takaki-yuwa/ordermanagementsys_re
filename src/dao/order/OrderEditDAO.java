@@ -17,7 +17,7 @@ public class OrderEditDAO {
     public List<OrderEditToppingInfo> getToppingsByProductId(int productId) throws SQLException {
         List<OrderEditToppingInfo> toppingList = new ArrayList<>();
 
-        String sql = "SELECT t.topping_id, t.topping_name, t.topping_stock " +
+        String sql = "SELECT t.topping_id, t.topping_name, t.topping_price, t.topping_stock " +
                      "FROM product_topping pt " +
                      "JOIN topping t ON pt.topping_id = t.topping_id " +
                      "WHERE pt.product_id = ?";
@@ -31,8 +31,9 @@ public class OrderEditDAO {
                 while (rs.next()) {
                     int id = rs.getInt("topping_id");
                     String name = rs.getString("topping_name");
+                    int price = rs.getInt("topping_price");
                     int stock = rs.getInt("topping_stock");
-                    toppingList.add(new OrderEditToppingInfo(id, name, stock));
+                    toppingList.add(new OrderEditToppingInfo(id, name, price, stock));
                 }
             }
         }

@@ -3,11 +3,13 @@ package model.order;
 public class OrderEditToppingInfo {
 	private int topping_id;
 	private String topping_name;
+	private int topping_price;
 	private int topping_stock;
 
-	public OrderEditToppingInfo(int topping_id, String topping_name, int topping_stock) {
+	public OrderEditToppingInfo(int topping_id, String topping_name, int topping_price, int topping_stock) {
 		this.topping_id = topping_id;
 		this.topping_name = topping_name;
+		this.topping_price = topping_price;
 		this.topping_stock = topping_stock;
 	}
 
@@ -18,6 +20,10 @@ public class OrderEditToppingInfo {
 	public int getToppingId() {
 	    return topping_id;
 	}
+	
+	public int getToppingPrice() {
+	    return topping_price;
+	}
 	public int getToppingStock() {
 	    return topping_stock;
 	}
@@ -27,6 +33,7 @@ public class OrderEditToppingInfo {
 	    return "OrderEditToppingInfo{" +
 	            "topping_id=" + topping_id +
 	            ", topping_name='" + topping_name + '\'' +
+	            ", topping_price=" + topping_price +
 	            ", topping_stock=" + topping_stock +
 	            '}';
     }

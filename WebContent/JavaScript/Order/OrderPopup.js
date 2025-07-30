@@ -18,14 +18,15 @@ function showhidePopup(actionType, orderId, options = {}) {
     popupText[1].textContent = "よろしいですか？";
 
     popupForm.action = actionType;
-    document.getElementById("popup-order-id").value = orderId;
+	document.getElementById("popup-order-price").value = total;
+	document.getElementById("popup-product-stock").value = options.product_stock || '';
+	document.getElementById("popup-topping-stock").value = options.topping_stock || '';
 
   } else if (actionType === "OrderDetailsEdit") {
     popupText[0].textContent = "この商品の内容を変更します";
     popupText[1].textContent = "よろしいですか？";
 
     popupForm.action = actionType;
-    document.getElementById("popup-order-price").value = options.order_price || '';
     document.getElementById("popup-product-quantity").value = options.product_quantity || '';
     document.getElementById("popup-topping-quantity").value = options.topping_quantity || '';
     document.getElementById("popup-product-stock").value = options.product_stock || '';
