@@ -5,12 +5,13 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.order.OrderDetailsDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import dao.order.OrderDetailsDAO;
 import model.orderditails.OrderUpdateInfo;
 import model.orderditails.OrderUpdateToppingInfo;
 
@@ -101,6 +102,8 @@ public class OrderDetailsEditServlet extends HttpServlet {
 					topping.setToppingStock(Integer.parseInt(toppingStocks[i]));
 					toppingList.add(topping);
 				}
+				
+				orderInfo.setOrderTopping(toppingList);
 
 			}
 
