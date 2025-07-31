@@ -27,7 +27,7 @@
 		<div class="underline">
 			<span class="item-name">${productName}</span>
 			<!--確認用-->
-			<span class="stock" id="stock-p${productId}">：${productStock}</span>
+			<span style="display: none; class="stock" id="stock-p${productId}">：${productStock}</span>
 			<!-- 増減ボタンを追加 -->
 			<div class="quantity-buttons">
 				<button type="button" name="quantity" class="decrease-btn"
@@ -52,7 +52,7 @@
 					<c:forEach var="topping" items="${toppingList}" varStatus="status">
 						<li class="menu-item"><span class="topping-name">${topping.toppingName}</span>
 							<!--確認用--> 
-							<span class="stock" id="stock-t${topping.toppingId}">：${topping.toppingStock}</span>
+							<span style="display: none; class="stock" id="stock-t${topping.toppingId}">：${topping.toppingStock}</span>
 							<!-- 増減ボタンを追加 -->
 							<div class="quantity-buttons">
 								<button type="button" name="quantity" class="decrease-btn"
@@ -81,8 +81,6 @@
 			<button onclick="handleChangeButton('edit',${productId})"
 				class="form-button change">変更</button>
 		</div>
-		<!-- 合計金額表示 -->
-		<div id="total-price"></div>
 	</div>
 	<!--ポップアップの背景-->
 	<div class="popup-overlay" id="popup-overlay"></div>
