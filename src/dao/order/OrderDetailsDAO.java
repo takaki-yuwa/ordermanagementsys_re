@@ -34,13 +34,16 @@ public class OrderDetailsDAO {
 			}
 
 			// 3. multiple_topping テーブルの更新（複数対応）
-			String sql3 = "INSERT INTO multiple_topping (order_id, topping_id, topping_quantity) " +
+			String sql3 = "INSERT INTO multiple_toppings (order_id, topping_id, topping_quantity) " +
 					"VALUES (?, ?, ?) " +
 					"ON DUPLICATE KEY UPDATE topping_quantity = VALUES(topping_quantity)";
 			try (PreparedStatement ps3 = con.prepareStatement(sql3)) {
 				List<OrderUpdateToppingInfo> toppingList = orderUpdateInfo.getOrderTopping();
 				if (toppingList != null) {
 					for (OrderUpdateToppingInfo topping : toppingList) {
+						System.out.println("登録前order_id:" + orderUpdateInfo.getOrderId());
+						System.out.println("登録前topping_id:" + topping.getToppingId());
+						System.out.println("登録前topping_quantity:" + topping.getToppingQuantity());
 						ps3.setInt(1, orderUpdateInfo.getOrderId());
 						ps3.setInt(2, topping.getToppingId());
 						ps3.setInt(3, topping.getToppingQuantity());
@@ -71,6 +74,29 @@ public class OrderDetailsDAO {
 
 		try (Connection con = util.DBUtil.getConnection()) {
 
+			// 4. product テーブルの更新
+			String sql4 = "UPDATE product SET product_stock = product_stock + ? WHERE product_id = ?";
+			try (PreparedStatement ps4 = con.prepareStatement(sql4)) {
+				ps4.setInt(1, orderDeleteInfo.getProductQuantity());
+				ps4.setInt(2, orderDeleteInfo.getProductId());
+				ps4.executeUpdate();
+			}
+
+			// 5. topping テーブルの更新
+			String sql5 = "UPDATE topping SET topping_stock = topping_stock + ? WHERE topping_id = ?";
+			try (PreparedStatement ps5 = con.prepareStatement(sql5)) {
+				List<OrderDeleteToppingInfo> toppingList = orderDeleteInfo.getOrderTopping();
+				if (toppingList != null) {
+					for (OrderDeleteToppingInfo topping : toppingList) {
+						ps5.setInt(1, topping.getToppingQuantity());
+						ps5.setInt(2, topping.getToppingId());
+						ps5.addBatch();
+					}
+					ps5.executeBatch();
+				}
+
+			}
+
 			// 1. order_details テーブルの削除
 			String sql1 = "DELETE FROM order_details WHERE order_id= ?";
 			try (PreparedStatement ps1 = con.prepareStatement(sql1)) {
@@ -79,7 +105,7 @@ public class OrderDetailsDAO {
 			}
 
 			// 2. multiple_topping テーブルの削除
-			String sql2 = "DELETE FROM multiple_topping WHERE order_id= ?";
+			String sql2 = "DELETE FROM multiple_toppings WHERE order_id= ?";
 			try (PreparedStatement ps2 = con.prepareStatement(sql2)) {
 				ps2.setInt(1, orderDeleteInfo.getOrderId());
 				ps2.executeUpdate();
@@ -92,28 +118,6 @@ public class OrderDetailsDAO {
 				ps3.executeUpdate();
 			}
 
-			// 4. product テーブルの更新
-			String sql4 = "UPDATE product SET product_stock = ? WHERE product_id = ?";
-			try (PreparedStatement ps4 = con.prepareStatement(sql4)) {
-				ps4.setInt(1, orderDeleteInfo.getProductStock());
-				ps4.setInt(2, orderDeleteInfo.getProductId());
-				ps4.executeUpdate();
-			}
-
-			// 5. topping テーブルの更新
-			String sql5 = "UPDATE topping SET topping_stock = ? WHERE topping_id = ?";
-			try (PreparedStatement ps5 = con.prepareStatement(sql5)) {
-				List<OrderDeleteToppingInfo> toppingList = orderDeleteInfo.getOrderTopping();
-				if (toppingList != null) {
-					for (OrderDeleteToppingInfo topping : toppingList) {
-						ps5.setInt(1, topping.getToppingStock());
-						ps5.setInt(2, topping.getToppingId());
-						ps5.addBatch();
-					}
-					ps5.executeBatch();
-				}
-
-			}
 		}
 	}
 }

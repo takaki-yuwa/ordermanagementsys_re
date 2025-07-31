@@ -102,6 +102,7 @@ public class OrderDetailsEditServlet extends HttpServlet {
 					toppingList.add(topping);
 				}
 
+				orderInfo.setOrderTopping(toppingList);
 			}
 
 			// DAOを呼び出す

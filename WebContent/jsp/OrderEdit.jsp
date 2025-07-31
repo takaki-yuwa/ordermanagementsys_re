@@ -27,14 +27,14 @@
 		<div class="underline">
 			<span class="item-name">${productName}</span>
 			<!--確認用-->
-			<span class="stock" id="stock-p${productId}">：${productStock-productQuantity}</span>
+			<span class="stock" id="stock-p${productId}">：${productStock}</span>
 			<!-- 増減ボタンを追加 -->
 			<div class="quantity-buttons">
 				<button type="button" name="quantity" class="decrease-btn"
 					id="decrement-p${productId}">-</button>
 				<!-- 数量を表示する要素、変数にバインド -->
 				<span class="quantity" id="counter-p${productId}"
-					data-stock="${productStock-productQuantity}" data-price="${productPrice}"
+					data-stock="${productStock}" data-price="${productPrice}"
 					data-quantity="${productQuantity}"> ${productQuantity} </span>
 				<button type="button" name="quantity" class="increase-btn"
 					id="increment-p${productId}">+</button>
@@ -92,7 +92,7 @@
 		<p>よろしいですか？</p>
 		<button class="popup-close" id="close-popup">いいえ</button>
 		<!-- 注文を変更、削除 -->
-		<form id="popup-form" method="get">
+		<form id="popup-form" method="post">
 			<input type="hidden" name="order_id" value="${orderId}"> 
 			<input type="hidden" name="order_price" id="popup-order-price"> 
 			<input type="hidden" name="product_id" value="${productId}"> 
