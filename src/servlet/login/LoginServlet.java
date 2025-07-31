@@ -32,14 +32,14 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("入力されたユーザーID: " + userId);
 			System.out.println("入力されたパスワード: " + password);
 
-			//IDが空の場合
 			if (userId == null || userId.trim().isEmpty()) {
+				//IDが空の場合
 				request.setAttribute("useridError", "IDを入力してください");
 				hasError = true;
 
 			}
-			//パスワードが空の場合
 			if (password == null || password.trim().isEmpty()) {
+				//パスワードが空の場合
 				request.setAttribute("passwordError", "パスワードを入力してください");
 				hasError = true;
 			}

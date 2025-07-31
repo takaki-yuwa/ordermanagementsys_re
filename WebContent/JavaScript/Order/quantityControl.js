@@ -97,6 +97,46 @@ document.addEventListener('DOMContentLoaded', () => {
   updateTotalPrice();
 });
 
+// 変更ボタンを押した時に呼び出される関数
+function handleChangeButton(type, productId) {
+  const productCounter = document.getElementById(`counter-p${productId}`);
+  const productQuantity = parseInt(productCounter.textContent, 10);
+  const productStock = parseInt(productCounter.dataset.stock, 10);
+
+  const toppingIds = [];
+  const toppingQuantities = [];
+  const toppingStocks = [];
+
+  // トッピング数量と在庫を取得
+  const toppingSpans = document.querySelectorAll('[id^="counter-t"]');
+  toppingSpans.forEach(span => {
+    const toppingId = span.id.replace("counter-t", "");
+    toppingIds.push(toppingId);
+    toppingQuantities.push(parseInt(span.textContent, 10));
+    toppingStocks.push(parseInt(span.dataset.stock, 10));
+  });
+
+  if (type === 'edit') {
+    // 編集用ポップアップを表示
+    showhidePopup("OrderDetailsEdit", {
+      product_quantity: productQuantity,
+      topping_quantity: toppingQuantities,
+      product_stock: productStock,
+      topping_stock: toppingStocks,
+      topping_id: toppingIds,
+    });
+  } else if (type === 'delete') {
+    // 削除用ポップアップを表示
+    showhidePopup("OrderDetailsDelete", {
+      product_quantity: productQuantity,
+      topping_quantity: toppingQuantities,
+      product_stock: productStock,
+      topping_stock: toppingStocks,
+      topping_id: toppingIds,
+    });
+  }
+}
+
 
 //ポップアップ処理
 function showhidePopup(actionType, options = {}) {
@@ -111,13 +151,51 @@ function showhidePopup(actionType, options = {}) {
   const popupForm = document.getElementById("popup-form");
   popupForm.reset(); // 前回の値をクリア
 
+  // 既存のtopping系のhidden inputをすべて削除(重複送信を防ぐため)
+  popupForm.querySelectorAll('input[name="topping_id[]"], input[name="topping_quantity[]"], input[name="topping_stock[]"]').forEach(el => el.remove());
+  
+  // topping_id[]を追加
+  if (Array.isArray(options.topping_id)) {
+    options.topping_id.forEach(id => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'topping_id[]';
+      input.value = id;
+      popupForm.appendChild(input);
+    });
+  }
+
+  // topping_quantity[]を追加
+  if (Array.isArray(options.topping_quantity)) {
+    options.topping_quantity.forEach(quantity => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'topping_quantity[]';
+      input.value = quantity;
+      popupForm.appendChild(input);
+    });
+  }
+
+  // topping_stock[]を追加
+  if (Array.isArray(options.topping_stock)) {
+    options.topping_stock.forEach(stock => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'topping_stock[]';
+      input.value = stock;
+      popupForm.appendChild(input);
+    });
+  }
+  
   if (actionType === "OrderDetailsDelete") {
     popupText[0].textContent = "この商品を削除します";
     popupText[1].textContent = "よろしいですか？";
 
 	popupForm.action = actionType;
-	document.getElementById("popup-product-stock").value = options.product_stock || '';
-	document.getElementById("popup-topping-stock").value = options.topping_stock || '';
+	document.getElementById("popup-order-price").value = total;
+    document.getElementById("popup-product-quantity").value = options.product_quantity || '';
+    document.getElementById("popup-product-stock").value = options.product_stock || '';
+    
 
 	  
 	} else if (actionType === "OrderDetailsEdit") {
@@ -127,9 +205,7 @@ function showhidePopup(actionType, options = {}) {
     popupForm.action = actionType;
 	document.getElementById("popup-order-price").value = total;
     document.getElementById("popup-product-quantity").value = options.product_quantity || '';
-    document.getElementById("popup-topping-quantity").value = options.topping_quantity || '';
     document.getElementById("popup-product-stock").value = options.product_stock || '';
-    document.getElementById("popup-topping-stock").value = options.topping_stock || '';
   }
 }
 

@@ -30,50 +30,43 @@
 			<span class="stock" id="stock-p${productId}">：${productStock}</span>
 			<!-- 増減ボタンを追加 -->
 			<div class="quantity-buttons">
-				<button type="button" name="quantity"
-					class="decrease-btn" id="decrement-p${productId}">-</button>
+				<button type="button" name="quantity" class="decrease-btn"
+					id="decrement-p${productId}">-</button>
 				<!-- 数量を表示する要素、変数にバインド -->
-				<span class="quantity" 
-				      id="counter-p${productId}" 
-				      data-stock="${productStock + productQuantity}" 
-				      data-price="${productPrice}">
-				      ${productQuantity}
-				</span>
-				<button type="button" name="quantity"
-					class="increase-btn" id="increment-p${productId}">+</button>
+				<span class="quantity" id="counter-p${productId}"
+					data-stock="${productStock}" data-price="${productPrice}"
+					data-quantity="${productQuantity}"> ${productQuantity} </span>
+				<button type="button" name="quantity" class="increase-btn"
+					id="increment-p${productId}">+</button>
 			</div>
 			<div class="form-delet">
-				<button onclick="showhidePopup('OrderDetailsDelete')" class="form-button delete">注文取り消し</button>
+				<button onclick="handleChangeButton('delete',${productId})"
+					class="form-button delete">注文取り消し</button>
 			</div>
 		</div>
 		<div class="list-padding">
 			<!-- トッピングが1つ以上ある場合だけ表示 -->
 			<c:if test="${not empty toppingList}">
-			    <ul class="list">
-			        <!-- トッピングのリストをループして表示 -->
-			        <c:forEach var="topping" items="${toppingList}" varStatus="status">
-			            <li class="menu-item">
-			                <span class="topping-name">${topping.toppingName}</span>
-			                <!--確認用-->
-			                <span class="stock" id="stock-t${topping.toppingId}">：${topping.toppingStock}</span>
-			                <!-- 増減ボタンを追加 -->
-			                <div class="quantity-buttons">
-			                    <button type="button" name="quantity"
-			                        class="decrease-btn" id="decrement-t${topping.toppingId}">-</button>
-			                    <span class="quantity"
-								      id="counter-t${topping.toppingId}"
-								     data-stock="${topping.toppingStock + (empty toppingQuantities[status.index] ? 0 : toppingQuantities[status.index] + 0)}"
-								      data-price="${topping.toppingPrice}">
-								      ${empty toppingQuantity ? 0 : toppingQuantity}
+				<ul class="list">
+					<!-- トッピングのリストをループして表示 -->
+					<c:forEach var="topping" items="${toppingList}" varStatus="status">
+						<li class="menu-item"><span class="topping-name">${topping.toppingName}</span>
+							<!--確認用--> <span class="stock" id="stock-t${topping.toppingId}">：${topping.toppingStock}</span>
+							<!-- 増減ボタンを追加 -->
+							<div class="quantity-buttons">
+								<button type="button" name="quantity" class="decrease-btn"
+									id="decrement-t${topping.toppingId}">-</button>
+								<span class="quantity" id="counter-t${topping.toppingId}"
+									data-stock="${topping.toppingStock + (empty toppingQuantities[status.index] ? 0 : toppingQuantities[status.index] + 0)}"
+									data-price="${topping.toppingPrice}"> ${empty toppingQuantity ? 0 : toppingQuantity}
 								</span>
-			                    <button type="button" name="quantity"
-			                        class="increase-btn" id="increment-t${topping.toppingId}">+</button>
-			                </div>
-			            </li>
-			        </c:forEach>
-			    </ul>
+								<button type="button" name="quantity" class="increase-btn"
+									id="increment-t${topping.toppingId}">+</button>
+							</div></li>
+					</c:forEach>
+				</ul>
 			</c:if>
-			
+
 
 			<!-- トッピングが空のときは空要素（または非表示） -->
 			<c:if test="${empty toppingList}">
@@ -84,7 +77,8 @@
 			<form action="${screen}" method="get">
 				<button class="form-button back">一覧へ戻る</button>
 			</form>
-			<button onclick="showhidePopup('OrderDetailsEdit')" class="form-button change">変更</button>
+			<button onclick="handleChangeButton('edit',${productId})"
+				class="form-button change">変更</button>
 		</div>
 		<!-- 合計金額表示 -->
 		<div id="total-price"></div>
@@ -98,19 +92,18 @@
 		<button class="popup-close" id="close-popup">いいえ</button>
 		<!-- 注文を変更、削除 -->
 		<form id="popup-form" method="post">
-		  <input type="hidden" name="order_id" value=${orderId}>
-		  <input type="hidden" name="order_price" id="popup-order-price">
-		  <input type="hidden" name="product_id" value=${productId}>
-		  <input type="hidden" name="product_quantity" id="popup-product-quantity">
-		  <input type="hidden" name="product_stock" id="popup-product-stock">
-		  <input type="hidden" name="topping_id[]" id="popup-topping-id[]">
-		  <input type="hidden" name="topping_quantity[]" id="popup-topping-quantity[]">
-		　<input type="hidden" name="topping_stock[]" id="popup-topping-stock[]">
-		  <input type="hidden" name="screen" value="${screen}">
-		  <button type="submit" class="popup-proceed" id="confirm-button">は　い</button>
+			<input type="hidden" name="order_id" value="${orderId}"> 
+			<input type="hidden" name="order_price" id="popup-order-price"> 
+			<input type="hidden" name="product_id" value="${productId}"> 
+			<input type="hidden" name="product_quantity" id="popup-product-quantity">
+			<input type="hidden" name="product_stock" id="popup-product-stock">
+			<!-- JavaScript(showhidePopup)側でトッピング関連はinputにセットする -->
+			<input type="hidden" name="screen" value="${screen}">
+			<button type="submit" class="popup-proceed" id="confirm-button">は
+				い</button>
 		</form>
 	</div>
-<script>
+	<script>
   // サーバーの配列をJSに渡す
   const toppingNames = [
     <c:forEach var="name" items="${toppingNames}">
@@ -124,7 +117,11 @@
     </c:forEach>
   ];
 </script>
-<script src="<%=request.getContextPath()%>/JavaScript/Order/orderEdit.js"></script>
-<script src="<%=request.getContextPath()%>/JavaScript/Order/quantityControl.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/JavaScript/Order/orderEdit.js"
+		defer></script>
+	<script
+		src="<%=request.getContextPath()%>/JavaScript/Order/quantityControl.js"
+		defer></script>
 </body>
 </html>
