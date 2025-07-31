@@ -27,14 +27,14 @@
 		<div class="underline">
 			<span class="item-name">${productName}</span>
 			<!--確認用-->
-			<span class="stock" id="stock-p${productId}">：${productStock}</span>
+			<span class="stock" id="stock-p${productId}">：${productStock-productQuantity}</span>
 			<!-- 増減ボタンを追加 -->
 			<div class="quantity-buttons">
 				<button type="button" name="quantity" class="decrease-btn"
 					id="decrement-p${productId}">-</button>
 				<!-- 数量を表示する要素、変数にバインド -->
 				<span class="quantity" id="counter-p${productId}"
-					data-stock="${productStock}" data-price="${productPrice}"
+					data-stock="${productStock-productQuantity}" data-price="${productPrice}"
 					data-quantity="${productQuantity}"> ${productQuantity} </span>
 				<button type="button" name="quantity" class="increase-btn"
 					id="increment-p${productId}">+</button>
@@ -51,13 +51,14 @@
 					<!-- トッピングのリストをループして表示 -->
 					<c:forEach var="topping" items="${toppingList}" varStatus="status">
 						<li class="menu-item"><span class="topping-name">${topping.toppingName}</span>
-							<!--確認用--> <span class="stock" id="stock-t${topping.toppingId}">：${topping.toppingStock}</span>
+							<!--確認用--> 
+							<span class="stock" id="stock-t${topping.toppingId}">：${topping.toppingStock}</span>
 							<!-- 増減ボタンを追加 -->
 							<div class="quantity-buttons">
 								<button type="button" name="quantity" class="decrease-btn"
 									id="decrement-t${topping.toppingId}">-</button>
 								<span class="quantity" id="counter-t${topping.toppingId}"
-									data-stock="${topping.toppingStock + (empty toppingQuantities[status.index] ? 0 : toppingQuantities[status.index] + 0)}"
+									data-stock="${topping.toppingStock}"
 									data-price="${topping.toppingPrice}"> ${empty toppingQuantity ? 0 : toppingQuantity}
 								</span>
 								<button type="button" name="quantity" class="increase-btn"
@@ -91,12 +92,12 @@
 		<p>よろしいですか？</p>
 		<button class="popup-close" id="close-popup">いいえ</button>
 		<!-- 注文を変更、削除 -->
-		<form id="popup-form" method="post">
+		<form id="popup-form" method="get">
 			<input type="hidden" name="order_id" value="${orderId}"> 
 			<input type="hidden" name="order_price" id="popup-order-price"> 
 			<input type="hidden" name="product_id" value="${productId}"> 
 			<input type="hidden" name="product_quantity" id="popup-product-quantity">
-			<input type="hidden" name="product_stock" id="popup-product-stock">
+			<input type="hidden" name="product_stock" id="popup-product-stock" value="${productStock}">
 			<!-- JavaScript(showhidePopup)側でトッピング関連はinputにセットする -->
 			<input type="hidden" name="screen" value="${screen}">
 			<button type="submit" class="popup-proceed" id="confirm-button">は

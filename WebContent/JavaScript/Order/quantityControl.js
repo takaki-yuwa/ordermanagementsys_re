@@ -17,9 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	  //data-stock 取得
       const maxStock = parseInt(counter.dataset.stock, 10);
 	  //カウントを1増やして表示に反映
-      if (count < maxStock) {
+      if (0 < maxStock) {
         count++;
         counter.textContent = count;
+        
+        //data-stockを更新する
+        counter.dataset.stock=maxStock-1;
 		
 		// 在庫を1減らす
         const stockSpan = document.getElementById(`stock-${idPart}`);
@@ -36,6 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const idPart = getIdPart(button.id);
 	  const counter = document.getElementById(`counter-${idPart}`);
 	  let count = parseInt(counter.textContent, 10);
+	  //data-stock 取得
+      const maxStock = parseInt(counter.dataset.stock, 10);
 
 	  // null や "" や NaN 対策：0に初期化
 	  if (isNaN(count)) {
@@ -51,6 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (count > min) {
         count--;
         counter.textContent = count;
+        
+        //data-stockを更新する
+        counter.dataset.stock=maxStock+1;
 		
 		// 在庫を1増やす
         const stockSpan = document.getElementById(`stock-${idPart}`);
