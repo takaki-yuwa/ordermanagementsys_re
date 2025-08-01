@@ -22,26 +22,27 @@
 	</form>
 	<div class="box">
 		<div class="underline">
-			${orderId}番<span class="table">${tableNumber}卓</span>
+			<c:out value="${orderId}" />番<span class="table"><c:out value="${tableNumber}" />卓</span>
 		</div>
 		<div class="underline">
-			<span class="item-name">${productName}</span>
+			<span class="item-name"><c:out value="${productName}" /></span>
 			<!--確認用-->
-			<span style="display: none; class="stock" id="stock-p${productId}">：${productStock}</span>
+			<span style="display: none;" class="stock" id="stock-p<c:out value='${productId}' />">：<c:out value="${productStock}" /></span>
 			<!-- 増減ボタンを追加 -->
 			<div class="quantity-buttons">
 				<button type="button" name="quantity" class="decrease-btn"
 					id="decrement-p${productId}">-</button>
 				<!-- 数量を表示する要素、変数にバインド -->
-				<span class="quantity" id="counter-p${productId}"
-					data-stock="${productStock}" data-price="${productPrice}"
-					data-quantity="${productQuantity}"> ${productQuantity} </span>
-				<button type="button" name="quantity" class="increase-btn"
-					id="increment-p${productId}">+</button>
+				<span class="quantity" id="counter-p<c:out value='${productId}' />"
+					data-stock="<c:out value='${productStock}' />"
+					data-price="<c:out value='${productPrice}' />"
+					data-quantity="<c:out value='${productQuantity}' />">
+					<c:out value="${productQuantity}" />
+				</span>
+				<button type="button" name="quantity" class="increase-btn" id="increment-p<c:out value='${productId}' />">+</button>
 			</div>
 			<div class="form-delet">
-				<button onclick="handleChangeButton('delete',${productId})"
-					class="form-button delete">注文取り消し</button>
+				<button onclick="handleChangeButton('delete','<c:out value='${productId}' />')" class="form-button delete">注文取り消し</button>
 			</div>
 		</div>
 		<div class="list-padding">
@@ -50,20 +51,20 @@
 				<ul class="list">
 					<!-- トッピングのリストをループして表示 -->
 					<c:forEach var="topping" items="${toppingList}" varStatus="status">
-						<li class="menu-item"><span class="topping-name">${topping.toppingName}</span>
+						<li class="menu-item"><span class="topping-name"><c:out value="${topping.toppingName}" /></span>
 							<!--確認用--> 
-							<span style="display: none; class="stock" id="stock-t${topping.toppingId}">：${topping.toppingStock}</span>
+							<span style="display: none; class="stock" id="stock-t<c:out value='${topping.toppingId}' />">：<c:out value="${topping.toppingStock}" /></span>
 							<!-- 増減ボタンを追加 -->
 							<div class="quantity-buttons">
-								<button type="button" name="quantity" class="decrease-btn"
-									id="decrement-t${topping.toppingId}">-</button>
-								<span class="quantity" id="counter-t${topping.toppingId}"
-									data-stock="${topping.toppingStock}"
-									data-price="${topping.toppingPrice}"> ${empty toppingQuantity ? 0 : toppingQuantity}
+								<button type="button" name="quantity" class="decrease-btn" id="decrement-t<c:out value='${topping.toppingId}' />">-</button>
+								<span class="quantity" id="counter-t<c:out value='${topping.toppingId}' />"
+									data-stock="<c:out value='${topping.toppingStock}' />"
+									data-price="<c:out value='${topping.toppingPrice}' />">
+									<c:out value="${empty toppingQuantity ? 0 : toppingQuantity}" />
 								</span>
-								<button type="button" name="quantity" class="increase-btn"
-									id="increment-t${topping.toppingId}">+</button>
-							</div></li>
+								<button type="button" name="quantity" class="increase-btn" id="increment-t<c:out value='${topping.toppingId}' />">+</button>
+							</div>
+						</li>
 					</c:forEach>
 				</ul>
 			</c:if>
@@ -75,11 +76,10 @@
 			</c:if>
 		</div>
 		<div class="form">
-			<form action="${screen}" method="get">
+			<form action="<c:out value='${screen}' />" method="get">
 				<button class="form-button back">一覧へ戻る</button>
 			</form>
-			<button onclick="handleChangeButton('edit',${productId})"
-				class="form-button change">変更</button>
+			<button onclick="handleChangeButton('edit','<c:out value='${productId}' />')" class="form-button change">変更</button>
 		</div>
 	</div>
 	<!--ポップアップの背景-->
@@ -91,28 +91,27 @@
 		<button class="popup-close" id="close-popup">いいえ</button>
 		<!-- 注文を変更、削除 -->
 		<form id="popup-form" method="post">
-			<input type="hidden" name="order_id" value="${orderId}"> 
+			<input type="hidden" name="order_id" value="<c:out value='${orderId}' />">
 			<input type="hidden" name="order_price" id="popup-order-price"> 
-			<input type="hidden" name="product_id" value="${productId}"> 
+			<input type="hidden" name="product_id" value="<c:out value='${productId}' />">
 			<input type="hidden" name="product_quantity" id="popup-product-quantity">
-			<input type="hidden" name="product_stock" id="popup-product-stock" value="${productStock}">
+			<input type="hidden" name="product_stock" id="popup-product-stock" value="<c:out value='${productStock}' />">
 			<!-- JavaScript(showhidePopup)側でトッピング関連はinputにセットする -->
-			<input type="hidden" name="screen" value="${screen}">
-			<button type="submit" class="popup-proceed" id="confirm-button">は
-				い</button>
+			<input type="hidden" name="screen" value="<c:out value='${screen}' />">
+			<button type="submit" class="popup-proceed" id="confirm-button">はい</button>
 		</form>
 	</div>
 	<script>
   // サーバーの配列をJSに渡す
   const toppingNames = [
     <c:forEach var="name" items="${toppingNames}">
-      "${name}"<c:if test="${!status.last}">,</c:if>
+      "<c:out value='${name}' />"<c:if test="${!status.last}">,</c:if>
     </c:forEach>
   ];
 
   const toppingQuantities = [
     <c:forEach var="qty" items="${toppingQuantities}">
-      ${qty}<c:if test="${!status.last}">,</c:if>
+    	<c:out value='${qty}' /><c:if test="${!status.last}">,</c:if>
     </c:forEach>
   ];
 </script>
@@ -120,7 +119,7 @@
 		src="<%=request.getContextPath()%>/JavaScript/Order/orderEdit.js"
 		defer></script>
 	<script
-		src="<%=request.getContextPath()%>/JavaScript/Order/quantityControl.js"
+		src="<%=request.getContextPath()%>/JavaScript/Order/toppingManagement.js"
 		defer></script>
 </body>
 </html>
