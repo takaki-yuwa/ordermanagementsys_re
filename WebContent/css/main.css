@@ -1,6 +1,4 @@
 @charset "UTF-8";
 /*全ての画面で使うCSSのリンク*/
 @import url('besign-base.css');
-@import url('footer-base.css');
-@import url('header-base.css');
 @import url('text-style.css');

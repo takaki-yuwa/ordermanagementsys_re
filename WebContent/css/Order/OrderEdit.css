@@ -34,7 +34,7 @@
 	padding: 8px;
 }
 
-.table{
+.table {
 	margin-left: 20px;
 }
 
@@ -49,7 +49,7 @@ ul {
 	text-align: right;
 }
 
-li{
+li {
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 30px;
@@ -97,13 +97,13 @@ li{
 
 .increase-btn:disabled,
 .decrease-btn:disabled {
-  pointer-events: none;
-  animation: none !important;
-  opacity: 0.5;
-  cursor: not-allowed !important;
+	pointer-events: none;
+	animation: none !important;
+	opacity: 0.5;
+	cursor: not-allowed !important;
 }
 
-.quantity{
+.quantity {
 	margin: 8px;
 }
 

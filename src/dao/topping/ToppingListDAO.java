@@ -61,36 +61,36 @@ public class ToppingListDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//トッピング新規作成
-	public void insertToppingList(String toppingName,int toppingPrice) {
+	public void insertToppingList(String toppingName, int toppingPrice) {
 		String sql = "INSERT INTO topping (topping_name, topping_price, topping_stock, topping_display_flag) VALUES (?, ?, 20, 1)";
 		try (Connection con = DBUtil.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql)) {
-			
+
 			ps.setString(1, toppingName);
 			ps.setInt(2, toppingPrice);
-			
+
 			ps.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			System.err.println("トッピング登録中にエラーが発生しました。");
 			e.printStackTrace();
 		}
 	}
-	
+
 	//トッピング変更
-	public void updateToppingList(int toppingId,String toppingName,int toppingPrice) {
+	public void updateToppingList(int toppingId, String toppingName, int toppingPrice) {
 		String sql = "UPDATE topping SET topping_name = ?, topping_price = ? WHERE topping_id = ?";
 		try (Connection con = DBUtil.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql)) {
-			
+
 			ps.setString(1, toppingName);
 			ps.setInt(2, toppingPrice);
 			ps.setInt(3, toppingId);
-			
+
 			ps.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			System.err.println("トッピング変更中にエラーが発生しました。");
 			e.printStackTrace();

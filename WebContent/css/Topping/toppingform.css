@@ -1,29 +1,29 @@
 @charset "UTF-8";
 
 main {
-  width: 100%; 
-  height: 100vh;       
-  padding: 0;
+	width: 100%;
+	height: 100vh;
+	padding: 0;
 }
 
 /*ホームボタン設定*/
 .btn-row {
-  margin-top: 8px;
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start;
-  align-items: center;
-  margin-left: 10px;
-  width: 30px;
-  height: auto;
-  border-right: 1px solid rgb(192, 192, 192);
-  padding-right: 10px;
+	margin-top: 8px;
+	display: flex;
+	gap: 10px;
+	justify-content: flex-start;
+	align-items: center;
+	margin-left: 10px;
+	width: 30px;
+	height: auto;
+	border-right: 1px solid rgb(192, 192, 192);
+	padding-right: 10px;
 }
 
 /*フォームボックス*/
-.form-box{
-	width:800px;
-	margin:20px auto;
+.form-box {
+	width: 800px;
+	margin: 20px auto;
 	max-width: 100%;
 	height: 440px;
 	margin: 20px auto;
@@ -31,61 +31,61 @@ main {
 	border: 2px solid black;
 	background-color: white;
 	border-radius: 20px;
-	box-shadow: 0 4px 12px rgb(0,0,0,0.1);
+	box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);
 	box-sizing: border-box;
 	justify-content: center;
 }
 
 /*フォームボックス内のラベル設定*/
 .text-box-label {
-  font-weight: bold;
-  margin-bottom: 10px;
-  font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	font-size: 16px;
 }
 
 /*ラベルとテキストボックスとの行間*/
 .form-group {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 /*注意書きテキスト設定*/
 .note-text {
-  color: gray;
-  font-weight: bold;
-  margin-bottom: 5px;
-  font-size: 12px;
+	color: gray;
+	font-weight: bold;
+	margin-bottom: 5px;
+	font-size: 12px;
 }
 
 /*フォームボックス内のトッピング名のテキストボックス設定*/
-.form-box input[type="text"]{
-  padding: 8px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-bottom: 15px;
+.form-box input[type="text"] {
+	padding: 8px;
+	font-size: 16px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	margin-bottom: 15px;
 }
 
 
 /*トッピング名テキストボックス*/
-.topping-box{
-	width:250px;
+.topping-box {
+	width: 250px;
 }
 
 /*金額テキストボックス*/
-.price-box{
-	width:60px;
+.price-box {
+	width: 60px;
 }
 
 /*フォームボックス内のボタン設定*/
 .form-box button {
-  padding: 10px;
-  font-size: 18px;
-  border-radius: 10px;
-  color: white;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
+	padding: 10px;
+	font-size: 18px;
+	border-radius: 10px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s ease;
 }
 
 /*ボタンの並び*/
@@ -101,29 +101,29 @@ main {
 }
 
 /*作成ボタン設定*/
-.create-btn{
-	width:200px;
+.create-btn {
+	width: 200px;
 	background-color: rgb(0, 128, 0);
 }
 
 /*変更ボタン設定*/
-.edit-btn{
-	width:200px;
+.edit-btn {
+	width: 200px;
 	background-color: rgb(0, 128, 0);
 }
 
 /*一覧へ戻るボタン設定*/
-.return-btn{
-	width:200px;
-	background-color:gray;
+.return-btn {
+	width: 200px;
+	background-color: gray;
 }
 
 /*ポップアップ設定*/
 .popup-content p {
-  margin: 6px 0;
-  font-size: 16px;
+	margin: 6px 0;
+	font-size: 16px;
 }
 
-.popup-text{
+.popup-text {
 	color: green;
 }

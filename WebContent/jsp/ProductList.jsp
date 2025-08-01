@@ -107,15 +107,10 @@
 		<!-- 商品の表示変更 -->
 		<form action="ProductList" method="post">
 			<input type="hidden" name="product_id" id="popup-product-id">
-			<input type="hidden" name="product_visible_flag"
-				id="popup-product-visible-flag"> <input type="hidden"
-				name="selected_category" id="popup-selected-category">
-			<button type="submit" class="popup-proceed" id="confirm-button"
-				data-action="" data-target-id="">
-				は い
-			</button>
+			<input type="hidden" name="product_visible_flag" id="popup-product-visible-flag">
+			<input type="hidden" name="selected_category" id="popup-selected-category">
+			<button type="submit" class="popup-proceed" id="confirm-button" data-action="" data-target-id="">は い</button>
 		</form>
-
 		<button class="popup-close" id="close-popup">いいえ</button>
 	</div>
 

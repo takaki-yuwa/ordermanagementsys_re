@@ -102,8 +102,6 @@ public class OrderDetailsEditServlet extends HttpServlet {
 					topping.setToppingStock(Integer.parseInt(toppingStocks[i]));
 					toppingList.add(topping);
 				}
-				
-				orderInfo.setOrderTopping(toppingList);
 
 				orderInfo.setOrderTopping(toppingList);
 			}

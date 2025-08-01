@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		order.style.display = shouldShow ? '' : 'none';
 	});
-	
+
 	updateCounts(orders);
 
 	//タブ変更時のフィルター表示

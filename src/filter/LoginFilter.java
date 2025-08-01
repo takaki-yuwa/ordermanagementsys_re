@@ -42,7 +42,8 @@ public class LoginFilter implements Filter {
 
 			// エラーページにリダイレクトするなどの対応（必要に応じて）
 			if (response instanceof HttpServletResponse) {
-				((HttpServletResponse) response).sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "内部エラーが発生しました");
+				((HttpServletResponse) response).sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"内部エラーが発生しました");
 			}
 		}
 	}

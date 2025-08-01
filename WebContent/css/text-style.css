@@ -1,37 +1,39 @@
 @charset "UTF-8";
+
 /*全体の画面で使うデフォルトのテキスト設定*/
-html,body{
+html,
+body {
 	font-family: Arial, Helvetica, sans-serif;
-	color:black;
+	color: black;
 	font-size: 16px;
 }
 
 /*テキスト左寄せ(デフォルト)*/
-.text-left{
+.text-left {
 	text-align: left;
 }
 
 /*中央寄せ*/
-.text-center{
+.text-center {
 	text-align: center;
 }
 
 /*右寄せ*/
-.text-right{
+.text-right {
 	text-align: right;
 }
 
 /*太字*/
-.text-bold{
+.text-bold {
 	font-weight: bold;
 }
 
 /*下線*/
-.text-underline{
+.text-underline {
 	text-decoration: underline;
 }
 
 /*エラーテキストの色*/
-.text-error{
-	color:red;
+.text-error {
+	color: red;
 }

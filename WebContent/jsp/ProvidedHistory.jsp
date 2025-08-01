@@ -37,8 +37,7 @@
 					</form>
 					<!-- ラベル（横スクロール） -->
 					<div class="tab-labels">
-						<c:forEach var="category" items="${categoryList}"
-							varStatus="status">
+						<c:forEach var="category" items="${categoryList}" varStatus="status">
 							<label for="tab${status.index}">${category}</label>
 						</c:forEach>
 					</div>

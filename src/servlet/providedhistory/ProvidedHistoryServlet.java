@@ -19,13 +19,13 @@ public class ProvidedHistoryServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		try {
 			// キャッシュ制御ヘッダーを設定
 			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 			response.setHeader("Pragma", "no-cache");
 			response.setDateHeader("Expires", 0);
-			
+
 			//情報を取得
 			String selectedCategory = (String) request.getSession().getAttribute("selected_category");
 			// 選択カテゴリーをセッションにも保持
@@ -34,14 +34,14 @@ public class ProvidedHistoryServlet extends HttpServlet {
 				request.getSession().removeAttribute("selected_category"); // 一度使ったら消す
 			}
 			ProvidedHistoryDAO dao = new ProvidedHistoryDAO();
-			
+
 			// 注文リストを取得
 			List<OrderInfo> orderList = dao.getAllOrderList();
 			System.out.println(orderList); // デバッグ表示
 
 			request.setAttribute("orderinfo", orderList);
 			request.setAttribute("categoryList", Constants.HISTORY_TABLE_LIST);
-			
+
 			request.getRequestDispatcher("/jsp/ProvidedHistory.jsp").forward(request, response);
 
 			//例外処理
@@ -82,7 +82,7 @@ public class ProvidedHistoryServlet extends HttpServlet {
 			}
 
 			// 更新後は一覧画面にリダイレクト（PRGパターン推奨）
-            response.sendRedirect(request.getContextPath() + "/ProvidedHistory");
+			response.sendRedirect(request.getContextPath() + "/ProvidedHistory");
 
 		} catch (Exception e) {
 			e.printStackTrace();

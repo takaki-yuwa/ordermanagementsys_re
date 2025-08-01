@@ -5,43 +5,43 @@
 
 // HTMLエスケープ（XSS対策）
 function escapeHtml(str) {
-  if (!str) return '';
-  return str.replace(/[&<>"']/g, match => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-  })[match]);
+	if (!str) return '';
+	return str.replace(/[&<>"']/g, match => ({
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#39;',
+	})[match]);
 }
 
 // 文字列の先頭を大文字に変換
 function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // エラーメッセージ表示
 function showError(id, message) {
-  const span = document.getElementById(id);
-  if (span) {
-    span.textContent = message;
-    span.classList.add('text-error');
-  }
+	const span = document.getElementById(id);
+	if (span) {
+		span.textContent = message;
+		span.classList.add('text-error');
+	}
 }
 
 // エラー表示クリア
 function clearErrors() {
-  const errorIds = [
-    'categoryNameError',
-    'productNameError',
-    'productPriceError',
-    'toppingNameError',
-    'toppingPriceError'
-  ];
-  errorIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = '';
-  });
+	const errorIds = [
+		'categoryNameError',
+		'productNameError',
+		'productPriceError',
+		'toppingNameError',
+		'toppingPriceError'
+	];
+	errorIds.forEach(id => {
+		const el = document.getElementById(id);
+		if (el) el.textContent = '';
+	});
 }
 
 /* -------------------- ポップアップ全般制御 -------------------- */
@@ -51,7 +51,7 @@ function showDisplayHidePopup() {
 	const popupOverlay = document.getElementById('popup-overlay');
 	const popupContent = document.getElementById('popup-content');
 	const closePopupButton = document.getElementById('close-popup');
-	
+
 	//ポップアップ表示
 	popupOverlay.classList.add('show');
 	popupContent.classList.add('show');
@@ -175,84 +175,84 @@ function handleCommonFormToggle(button) {
 
 //商品新規作成・編集画面で使うカテゴリーとトッピング表示用
 function handleProductExtras(category, toppingNames) {
-  document.getElementById('popup-category').textContent = category || '(未選択)';
+	document.getElementById('popup-category').textContent = category || '(未選択)';
 
-  let toppingHtml = '';
-  toppingNames.forEach((name, index) => {
-    if (index % 3 === 0) toppingHtml += '<div>';
-    toppingHtml += `<span style="margin-right: 20px;">・${escapeHtml(name)}</span>`;
-    if (index % 3 === 2 || index === toppingNames.length - 1) toppingHtml += '</div>';
-  });
-  document.getElementById('popup-toppings').innerHTML = toppingNames.length > 0 ? toppingHtml : '(なし)';
+	let toppingHtml = '';
+	toppingNames.forEach((name, index) => {
+		if (index % 3 === 0) toppingHtml += '<div>';
+		toppingHtml += `<span style="margin-right: 20px;">・${escapeHtml(name)}</span>`;
+		if (index % 3 === 2 || index === toppingNames.length - 1) toppingHtml += '</div>';
+	});
+	document.getElementById('popup-toppings').innerHTML = toppingNames.length > 0 ? toppingHtml : '(なし)';
 }
 
 // 商品・トッピング新規作成・編集画面で使う共通ポップアップ処理
 function openCommonFormDisplayTogglePopup(type) {
-  // エラー表示の初期化
-  clearErrors();
+	// エラー表示の初期化
+	clearErrors();
 
-  // 入力値の取得
-  const name = document.getElementById(`${type}_name`).value.trim();
-  const price = document.getElementById(`${type}_price`).value.trim();
-  let hasError = false;
+	// 入力値の取得
+	const name = document.getElementById(`${type}_name`).value.trim();
+	const price = document.getElementById(`${type}_price`).value.trim();
+	let hasError = false;
 
-  // バリデーション（名称）
-  if (!name) {
-    showError(`${type}NameError`, '※入力してください');
-    hasError = true;
-  } else if (name.length > 18) {
-    showError(`${type}NameError`, '※18文字以内で入力してください');
-    hasError = true;
-  }
+	// バリデーション（名称）
+	if (!name) {
+		showError(`${type}NameError`, '※入力してください');
+		hasError = true;
+	} else if (name.length > 18) {
+		showError(`${type}NameError`, '※18文字以内で入力してください');
+		hasError = true;
+	}
 
-  // バリデーション（金額）
-  if (!price) {
-    showError(`${type}PriceError`, '※入力してください');
-    hasError = true;
-  } else if (!/^[0-9]+$/.test(price)) {
-    showError(`${type}PriceError`, '※半角数字で入力してください');
-    hasError = true;
-  } else if (price.length > 5) {
-    showError(`${type}PriceError`, '※5桁以内で入力してください');
-    hasError = true;
-  }
+	// バリデーション（金額）
+	if (!price) {
+		showError(`${type}PriceError`, '※入力してください');
+		hasError = true;
+	} else if (!/^[0-9]+$/.test(price)) {
+		showError(`${type}PriceError`, '※半角数字で入力してください');
+		hasError = true;
+	} else if (price.length > 5) {
+		showError(`${type}PriceError`, '※5桁以内で入力してください');
+		hasError = true;
+	}
 
-  // 商品特有の処理（カテゴリとトッピング）
-  if (type === 'product') {
-    const category = document.getElementById('category_name').value.trim();
-    if (!category) {
-      showError('categoryNameError', '※選択してください');
-      hasError = true;
-    }
+	// 商品特有の処理（カテゴリとトッピング）
+	if (type === 'product') {
+		const category = document.getElementById('category_name').value.trim();
+		if (!category) {
+			showError('categoryNameError', '※選択してください');
+			hasError = true;
+		}
 
-    const toppingCheckboxes = document.querySelectorAll('input[name="topping_id"]:checked');
-    const toppingNames = Array.from(toppingCheckboxes).map(cb => cb.parentElement.textContent.trim());
+		const toppingCheckboxes = document.querySelectorAll('input[name="topping_id"]:checked');
+		const toppingNames = Array.from(toppingCheckboxes).map(cb => cb.parentElement.textContent.trim());
 
-    handleProductExtras(category, toppingNames); // → カテゴリ・トッピング名をポップアップにセット
-  }
+		handleProductExtras(category, toppingNames); // → カテゴリ・トッピング名をポップアップにセット
+	}
 
-  // エラーがある場合はポップアップを表示しない
-  if (hasError) return;
+	// エラーがある場合はポップアップを表示しない
+	if (hasError) return;
 
-  // ポップアップに値をセット（XSS対策済み）
-  document.getElementById('popup-name').textContent = name;
-  document.getElementById('popup-price').textContent = price;
+	// ポップアップに値をセット（XSS対策済み）
+	document.getElementById('popup-name').textContent = name;
+	document.getElementById('popup-price').textContent = price;
 
-  // ポップアップのメッセージ切り替え（作成 or 編集）
-  const formButton = document.querySelector('.create-btn') ? `${capitalize(type)}Create` : `${capitalize(type)}Edit`;
-  const actionMessage = formButton === `${capitalize(type)}Create`
-    ? 'この内容で作成しますか？'
-    : 'この内容で変更しますか？';
+	// ポップアップのメッセージ切り替え（作成 or 編集）
+	const formButton = document.querySelector('.create-btn') ? `${capitalize(type)}Create` : `${capitalize(type)}Edit`;
+	const actionMessage = formButton === `${capitalize(type)}Create`
+		? 'この内容で作成しますか？'
+		: 'この内容で変更しますか？';
 
-  document.getElementById('popup-action-message').textContent = actionMessage;
+	document.getElementById('popup-action-message').textContent = actionMessage;
 
-  // ポップアップを表示
-  showDisplayHidePopup();
+	// ポップアップを表示
+	showDisplayHidePopup();
 
-  // 「はい」ボタンの処理を設定（フォームを送信）
-  const confirmButton = document.getElementById('confirm-button');
-  confirmButton.dataset.action = 'setupConfirmHidePopup';
-  confirmButton.onclick = function () {
-    document.getElementById(`${type}Form`).submit();
-  };
+	// 「はい」ボタンの処理を設定（フォームを送信）
+	const confirmButton = document.getElementById('confirm-button');
+	confirmButton.dataset.action = 'setupConfirmHidePopup';
+	confirmButton.onclick = function() {
+		document.getElementById(`${type}Form`).submit();
+	};
 }

@@ -3,13 +3,14 @@ package servlet.productform;
 import java.io.IOException;
 import java.util.List;
 
-import constants.Constants;
-import dao.topping.ToppingListDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import constants.Constants;
+import dao.topping.ToppingListDAO;
 import model.product.ProductFormInfo;
 import model.topping.ToppingInfo;
 
@@ -18,7 +19,7 @@ public class ProductCreateFormServlet extends HttpServlet {
 	//商品新規作成・編集画面へ遷移
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		try {
 			// キャッシュ制御ヘッダーを設定
 			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP/1.1

@@ -69,7 +69,7 @@ public class OrderListServlet extends HttpServlet {
 				int orderId = Integer.parseInt(orderIdStr);
 				int orderFlag = Integer.parseInt(orderFlagStr);
 				orderFlag = (orderFlag == 0) ? 1 : 0;
-				
+
 				OrderListDAO dao = new OrderListDAO();
 				dao.updateOrderList(orderId, orderFlag);
 			}

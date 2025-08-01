@@ -3,14 +3,15 @@ package servlet.productform;
 import java.io.IOException;
 import java.util.List;
 
-import constants.Constants;
-import dao.product.ProductFormDAO;
-import dao.topping.ToppingListDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import constants.Constants;
+import dao.product.ProductFormDAO;
+import dao.topping.ToppingListDAO;
 import model.product.ProductFormInfo;
 import model.producttopping.ProductToppingInfo;
 import model.topping.ToppingInfo;
@@ -38,7 +39,6 @@ public class ProductEditFormServlet extends HttpServlet {
 			int productId = 0;
 			int productPrice = 0;
 
-
 			//int型に変換
 			if (productIdStr != null && productPriceStr != null) {
 				productId = Integer.parseInt(productIdStr);
@@ -46,7 +46,8 @@ public class ProductEditFormServlet extends HttpServlet {
 
 			}
 
-			ProductFormInfo productFormInfo = new ProductFormInfo(productId, productName, productCategory, productPrice);
+			ProductFormInfo productFormInfo = new ProductFormInfo(productId, productName, productCategory,
+					productPrice);
 			ToppingListDAO toppingDao = new ToppingListDAO();
 			ProductFormDAO productFormDao = new ProductFormDAO();
 
@@ -54,7 +55,6 @@ public class ProductEditFormServlet extends HttpServlet {
 			List<ToppingInfo> toppingInfo = toppingDao.selectToppingList();
 			//商品トッピングの取得
 			List<ProductToppingInfo> productToppingInfo = productFormDao.selectProductToppingList(productId);
-			
 
 			//どのボタンから遷移してきたかの情報をリクエスト属性にセット
 			request.setAttribute("formButton", form);

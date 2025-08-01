@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import model.topping.ToppingFormInfo;
 
 @WebServlet("/ToppingEditForm")
@@ -37,9 +38,9 @@ public class ToppingEditFormServlet extends HttpServlet {
 				toppingPrice = Integer.parseInt(toppingPriceStr);
 
 			}
-			
+
 			//空の情報を格納
-			ToppingFormInfo toppingFormInfo = new ToppingFormInfo(toppingId,toppingName,toppingPrice);
+			ToppingFormInfo toppingFormInfo = new ToppingFormInfo(toppingId, toppingName, toppingPrice);
 
 			//どのボタンから遷移してきたかの情報をリクエスト属性にセット
 			request.setAttribute("formButton", form);

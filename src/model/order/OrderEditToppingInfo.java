@@ -16,26 +16,27 @@ public class OrderEditToppingInfo {
 	public String getToppingName() {
 		return topping_name;
 	}
-	
+
 	public int getToppingId() {
-	    return topping_id;
+		return topping_id;
 	}
-	
+
 	public int getToppingPrice() {
-	    return topping_price;
+		return topping_price;
 	}
+
 	public int getToppingStock() {
-	    return topping_stock;
+		return topping_stock;
 	}
 
 	@Override
 	public String toString() {
-	    return "OrderEditToppingInfo{" +
-	            "topping_id=" + topping_id +
-	            ", topping_name='" + topping_name + '\'' +
-	            ", topping_price=" + topping_price +
-	            ", topping_stock=" + topping_stock +
-	            '}';
-    }
+		return "OrderEditToppingInfo{" +
+				"topping_id=" + topping_id +
+				", topping_name='" + topping_name + '\'' +
+				", topping_price=" + topping_price +
+				", topping_stock=" + topping_stock +
+				'}';
+	}
 
 }

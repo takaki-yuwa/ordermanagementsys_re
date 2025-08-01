@@ -137,7 +137,8 @@ public class ProductListDAO {
 	}
 
 	//商品変更
-	public void updateProductList(int productId, String productName, String categoryName, int productPrice, List<Integer> validToppingIds) {
+	public void updateProductList(int productId, String productName, String categoryName, int productPrice,
+			List<Integer> validToppingIds) {
 		Connection con = null;
 		try {
 			con = DBUtil.getConnection();
@@ -150,7 +151,8 @@ public class ProductListDAO {
 			boolean hasValidIds = validToppingIds != null && !validToppingIds.isEmpty();
 			//validToppingIdsの中身が存在する場合
 			if (hasValidIds) {
-				StringBuilder sb = new StringBuilder("DELETE FROM product_topping WHERE product_id = ? AND topping_id NOT IN (");
+				StringBuilder sb = new StringBuilder(
+						"DELETE FROM product_topping WHERE product_id = ? AND topping_id NOT IN (");
 				for (int i = 0; i < validToppingIds.size(); i++) {
 					sb.append("?");
 					if (i < validToppingIds.size() - 1)

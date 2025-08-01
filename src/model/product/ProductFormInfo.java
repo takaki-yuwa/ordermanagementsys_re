@@ -10,14 +10,13 @@ public class ProductFormInfo {
 	private String category;
 	private int price;
 
-
 	public ProductFormInfo(int id, String name, String category, int price) {
 		this.setId(id);
 		this.setName(name);
 		this.setCategory(category);
 		this.setPrice(price);
 	}
-	
+
 	public ProductFormInfo(String name, String category, int price) {
 		this.setName(name);
 		this.setCategory(category);
@@ -26,7 +25,7 @@ public class ProductFormInfo {
 
 	//空の情報
 	public static ProductFormInfo createEmpty() {
-		return new ProductFormInfo(0,"","",0);
+		return new ProductFormInfo(0, "", "", 0);
 	}
 
 	public int getId() {

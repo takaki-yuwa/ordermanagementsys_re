@@ -30,8 +30,7 @@
 			<span style="display: none;" class="stock" id="stock-p<c:out value='${productId}' />">：<c:out value="${productStock}" /></span>
 			<!-- 増減ボタンを追加 -->
 			<div class="quantity-buttons">
-				<button type="button" name="quantity" class="decrease-btn"
-					id="decrement-p${productId}">-</button>
+				<button type="button" name="quantity" class="decrease-btn" id="decrement-p${productId}">-</button>
 				<!-- 数量を表示する要素、変数にバインド -->
 				<span class="quantity" id="counter-p<c:out value='${productId}' />"
 					data-stock="<c:out value='${productStock}' />"

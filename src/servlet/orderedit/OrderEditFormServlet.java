@@ -25,7 +25,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 			response.setHeader("Pragma", "no-cache");
 			response.setDateHeader("Expires", 0);
-			
+
 			String screen = request.getParameter("screen");
 			String orderId = request.getParameter("order_id");
 			String tableNumber = request.getParameter("table_number");
@@ -37,7 +37,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			String[] toppingNames = request.getParameterValues("topping_name[]");
 			String[] toppingQuantities = request.getParameterValues("topping_quantity[]");
 			String[] toppingStocks = request.getParameterValues("topping_stock[]");
-			
+
 			System.out.println("screen: " + screen);
 			System.out.println("order_id: " + orderId);
 			System.out.println("table_number: " + tableNumber);
@@ -49,7 +49,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			System.out.println("topping_names: " + Arrays.toString(toppingNames));
 			System.out.println("topping_quantities: " + Arrays.toString(toppingQuantities));
 			System.out.println("topping_stocks: " + Arrays.toString(toppingStocks));
-			
+
 			OrderEditDAO dao = new OrderEditDAO();
 			int pId = Integer.parseInt(productId);
 
@@ -58,13 +58,12 @@ public class OrderEditFormServlet extends HttpServlet {
 
 			// デバッグ出力
 			for (OrderEditToppingInfo topping : toppingList) {
-			    System.out.println("Topping ID: " + topping.getToppingId() +
-			                       ", Name: " + topping.getToppingName() +
-			                       ", Price: " + topping.getToppingPrice() +
-			                       ", Stock: " + topping.getToppingStock());
+				System.out.println("Topping ID: " + topping.getToppingId() +
+						", Name: " + topping.getToppingName() +
+						", Price: " + topping.getToppingPrice() +
+						", Stock: " + topping.getToppingStock());
 			}
 
-			
 			// JSPへ渡す
 			request.setAttribute("screen", screen);
 			request.setAttribute("orderId", orderId);
@@ -81,8 +80,8 @@ public class OrderEditFormServlet extends HttpServlet {
 
 			request.getRequestDispatcher("/jsp/OrderEdit.jsp").forward(request, response);
 		} catch (Exception e) {
-            e.printStackTrace();
-            request.getRequestDispatcher("/jsp/Error.jsp").forward(request, response);
-        }
-    }
+			e.printStackTrace();
+			request.getRequestDispatcher("/jsp/Error.jsp").forward(request, response);
+		}
+	}
 }
