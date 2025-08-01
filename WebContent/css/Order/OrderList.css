@@ -71,7 +71,7 @@ button:active {
 	align-items: center;
 	background-color: rgb(251, 255, 251);
 	z-index: 1000;
-	padding: 8px;
+	padding: 10px;
 }
 
 /*ホームボタン*/
