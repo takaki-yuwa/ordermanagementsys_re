@@ -95,6 +95,14 @@ li{
 	border: 1px solid #333
 }
 
+.increase-btn:disabled,
+.decrease-btn:disabled {
+  pointer-events: none;
+  animation: none !important;
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
 .quantity{
 	margin: 8px;
 }

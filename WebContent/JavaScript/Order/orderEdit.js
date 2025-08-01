@@ -4,14 +4,61 @@
 //totalをグローバルに設定
 let total = 0;
 
+//商品についてるトッピングの個数を反映
+document.addEventListener('DOMContentLoaded', () => {
+	// toppingNames と toppingQuantities はサーバーから受け取った配列
+
+	// .topping-name の要素一覧を取得
+	const toppingElements = document.querySelectorAll('.topping-name');
+
+	toppingElements.forEach(el => {
+		const name = el.textContent.trim();
+
+		// サーバーから受け取った名前と一致するか検索
+		const index = toppingNames.indexOf(name);
+		if (index !== -1) {
+			// 一致したら数量表示の要素を取得し数量をセット
+			const quantityEl = el.parentElement.querySelector('.quantity');
+			if (quantityEl) {
+				quantityEl.textContent = toppingQuantities[index];
+			}
+		}
+	});
+});
+
+//ボタンの活性非活性
+function changeButton(count, min, max, minusBtn, plusBtn) {
+	if (minusBtn) {
+		if (count == min) {
+			minusBtn.setAttribute('disabled', 'true');
+		} else {
+			minusBtn.removeAttribute('disabled');
+		}
+	} else {
+		console.warn("minusBtn が見つかりません");
+	}
+
+	if (plusBtn) {
+		if (count == max) {
+			plusBtn.classList.add('disabled');
+			plusBtn.setAttribute('disabled', 'true');
+		} else {
+			plusBtn.classList.remove('disabled');
+			plusBtn.removeAttribute('disabled');
+		}
+	} else {
+		console.warn("plusBtn が見つかりません");
+	}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	// すべての増減ボタンを取得
 	const increaseButtons = document.querySelectorAll('.increase-btn');
 	const decreaseButtons = document.querySelectorAll('.decrease-btn');
 
 	increaseButtons.forEach(button => {
-		button.addEventListener('click', () => {
-			const idPart = getIdPart(button.id);
+		button.addEventListener('click', function() {
+			const idPart = getIdPart(this.id);
 			const counter = document.getElementById(`counter-${idPart}`);
 			let count = parseInt(counter.textContent, 10);
 			//data-stock 取得
@@ -20,55 +67,83 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (0 < maxStock) {
 				count++;
 				counter.textContent = count;
-
 				//data-stockを更新する
 				counter.dataset.stock = maxStock - 1;
-
 				// 在庫を1減らす
 				const stockSpan = document.getElementById(`stock-${idPart}`);
 				let stock = parseInt(stockSpan.textContent.replace('：', ''), 10);
 				stockSpan.textContent = `：${stock - 1}`;
 
 				updateTotalPrice();
+
+				const plusBtn = document.getElementById(`increment-${idPart}`);
+				const minusBtn = document.getElementById(`decrement-${idPart}`);
+				const isProduct = idPart.startsWith('p');
+				const min = isProduct ? 1 : 0;
+				const max = parseInt(counter.dataset.stock, 10) + count;
+				changeButton(count, min, max, minusBtn, plusBtn);
+
 			}
 		});
 	});
 
-	decreaseButtons.forEach(button => {
-		button.addEventListener('click', () => {
-			const idPart = getIdPart(button.id);
+
+	decreaseButtons.forEach(function(button) {
+		button.addEventListener('click', function() {
+			const idPart = getIdPart(this.id);
 			const counter = document.getElementById(`counter-${idPart}`);
 			let count = parseInt(counter.textContent, 10);
 			//data-stock 取得
 			const maxStock = parseInt(counter.dataset.stock, 10);
-
 			// null や "" や NaN 対策：0に初期化
 			if (isNaN(count)) {
 				count = 0;
 			}
 
 			const isProduct = idPart.startsWith('p');
-
 			// product は最小1、topping は最小0
 			const min = isProduct ? 1 : 0;
-
 			//カウントが0以上の時カウントを1減らして表示に反映
 			if (count > min) {
 				count--;
 				counter.textContent = count;
-
 				//data-stockを更新する
 				counter.dataset.stock = maxStock + 1;
-
 				// 在庫を1増やす
 				const stockSpan = document.getElementById(`stock-${idPart}`);
 				let stock = parseInt(stockSpan.textContent.replace('：', ''), 10);
 				stockSpan.textContent = `：${stock + 1}`;
 
 				updateTotalPrice();
+
+				const plusBtn = document.getElementById(`increment-${idPart}`);
+				const minusBtn = document.getElementById(`decrement-${idPart}`);
+				const max = parseInt(counter.dataset.stock, 10) + count;
+				changeButton(count, min, max, minusBtn, plusBtn);
+
 			}
 		});
 	});
+
+	// ページの読み込み時にボタンの見た目を初期化
+	document.querySelectorAll('.increase-btn').forEach(button => {
+		const idPart = getIdPart(button.id);
+		const counter = document.getElementById(`counter-${idPart}`);
+		if (!counter) return;
+
+		const count = parseInt(counter.textContent, 10) || 0;
+		const stock = parseInt(counter.dataset.stock, 10) || 0;
+
+		const plusBtn = document.getElementById(`increment-${idPart}`);
+		const minusBtn = document.getElementById(`decrement-${idPart}`);
+
+		const isProduct = idPart.startsWith('p');
+		const min = isProduct ? 1 : 0;
+		const max = count + stock;
+
+		changeButton(count, min, max, minusBtn, plusBtn);
+	});
+
 
 	//どのボタンが押されたかの判断
 	function getIdPart(id) {
@@ -94,10 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 
 		total = (productPrice + toppingTotal) * productQuantity;
-
-		// 合計表示を更新
-		const totalElement = document.getElementById('total-price');
-		totalElement.textContent = `${total.toLocaleString()}`;
 
 	}
 

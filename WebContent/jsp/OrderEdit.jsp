@@ -118,8 +118,5 @@
 	<script
 		src="<%=request.getContextPath()%>/JavaScript/Order/orderEdit.js"
 		defer></script>
-	<script
-		src="<%=request.getContextPath()%>/JavaScript/Order/toppingManagement.js"
-		defer></script>
 </body>
 </html>
