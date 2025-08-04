@@ -37,19 +37,31 @@ public class OrderDetailsDAO {
 			String sql3 = "INSERT INTO multiple_toppings (order_id, topping_id, topping_quantity) " +
 					"VALUES (?, ?, ?) " +
 					"ON DUPLICATE KEY UPDATE topping_quantity = VALUES(topping_quantity)";
-			try (PreparedStatement ps3 = con.prepareStatement(sql3)) {
+			String sqlDelete = "DELETE FROM multiple_toppings WHERE order_id = ? AND topping_id = ?";
+			try (PreparedStatement ps3 = con.prepareStatement(sql3);
+					PreparedStatement psDelete = con.prepareStatement(sqlDelete)) {
 				List<OrderUpdateToppingInfo> toppingList = orderUpdateInfo.getOrderTopping();
 				if (toppingList != null) {
 					for (OrderUpdateToppingInfo topping : toppingList) {
-						System.out.println("登録前order_id:" + orderUpdateInfo.getOrderId());
-						System.out.println("登録前topping_id:" + topping.getToppingId());
-						System.out.println("登録前topping_quantity:" + topping.getToppingQuantity());
-						ps3.setInt(1, orderUpdateInfo.getOrderId());
-						ps3.setInt(2, topping.getToppingId());
-						ps3.setInt(3, topping.getToppingQuantity());
-						ps3.addBatch(); // バッチで実行する
+						if (topping.getToppingQuantity() != 0) {
+							System.out.println("登録前order_id:" + orderUpdateInfo.getOrderId());
+							System.out.println("登録前topping_id:" + topping.getToppingId());
+							System.out.println("登録前topping_quantity:" + topping.getToppingQuantity());
+							ps3.setInt(1, orderUpdateInfo.getOrderId());
+							ps3.setInt(2, topping.getToppingId());
+							ps3.setInt(3, topping.getToppingQuantity());
+							ps3.addBatch(); // バッチで実行する
+						} else {
+							System.out.println("削除対象order_id:" + orderUpdateInfo.getOrderId());
+							System.out.println("削除対象topping_id:" + topping.getToppingId());
+
+							psDelete.setInt(1, orderUpdateInfo.getOrderId());
+							psDelete.setInt(2, topping.getToppingId());
+							psDelete.addBatch();
+						}
 					}
 					ps3.executeBatch();
+					psDelete.executeBatch();
 				}
 			}
 
@@ -94,7 +106,7 @@ public class OrderDetailsDAO {
 				ps3.setInt(1, orderDeleteInfo.getOrderId());
 				ps3.executeUpdate();
 			}
-			
+
 			// 4. product テーブルの更新
 			String sql4 = "UPDATE product SET product_stock = product_stock + ? WHERE product_id = ?";
 			try (PreparedStatement ps4 = con.prepareStatement(sql4)) {
@@ -117,8 +129,6 @@ public class OrderDetailsDAO {
 				}
 
 			}
-
-			
 
 		}
 	}
