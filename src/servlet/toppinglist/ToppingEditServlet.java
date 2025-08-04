@@ -71,7 +71,7 @@ public class ToppingEditServlet extends HttpServlet {
 			toppingPrice = Integer.parseInt(toppingPriceStr);
 
 			ToppingListDAO dao = new ToppingListDAO();
-			dao.updateToppingList(toppingId, toppingName, toppingPrice);
+			dao.updateTopping(toppingId, toppingName, toppingPrice);
 
 			// 更新後は一覧画面にリダイレクト（PRGパターン推奨）
 			response.sendRedirect(request.getContextPath() + "/ToppingEdit");

@@ -73,7 +73,7 @@ public class ToppingCreateServlet extends HttpServlet {
 			toppingPrice = Integer.parseInt(toppingPriceStr);
 
 			ToppingListDAO dao = new ToppingListDAO();
-			dao.insertToppingList(toppingName, toppingPrice);
+			dao.insertTopping(toppingName, toppingPrice);
 
 			// 更新後は一覧画面にリダイレクト（PRGパターン推奨）
 			response.sendRedirect(request.getContextPath() + "/ToppingCreate");

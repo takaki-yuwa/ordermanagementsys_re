@@ -94,7 +94,7 @@ public class ProductEditServlet extends HttpServlet {
 				}
 			}
 			ProductListDAO dao = new ProductListDAO();
-			dao.updateProductList(productId, productName, categoryName, productPrice, toppingIds);
+			dao.updateProduct(productId, productName, categoryName, productPrice, toppingIds);
 
 			// POST内でカテゴリー保持（セッションに保存）
 			if (selectedCategory != null && !selectedCategory.isEmpty()) {

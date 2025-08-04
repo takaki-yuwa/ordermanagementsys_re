@@ -13,8 +13,8 @@ import util.DBUtil;
 public class ToppingListDAO {
 	//情報取得
 	public List<ToppingInfo> selectToppingList() {
-		List<ToppingInfo> toppingInfoList = new ArrayList<>();
 		String selectToppingSql = "SELECT * FROM topping";
+		List<ToppingInfo> toppingInfoList = new ArrayList<>();
 		try (Connection connection = DBUtil.getConnection();
 				PreparedStatement selectStmt = connection.prepareStatement(selectToppingSql)) {
 
@@ -57,13 +57,13 @@ public class ToppingListDAO {
 			updateStmt.executeUpdate();
 
 		} catch (SQLException e) {
-			System.err.println("予期しないエラーが発生しました。");
+			System.err.println("トッピング表示フラグ更新中にSQLエラーが発生しました: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
 	//トッピング新規作成
-	public void insertToppingList(String toppingName, int toppingPrice) {
+	public void insertTopping(String toppingName, int toppingPrice) {
 		String insertToppingSql = "INSERT INTO topping (topping_name, topping_price, topping_stock, topping_display_flag) VALUES (?, ?, 20, 1)";
 		try (Connection connection = DBUtil.getConnection();
 				PreparedStatement insertStmt = connection.prepareStatement(insertToppingSql)) {
@@ -74,13 +74,13 @@ public class ToppingListDAO {
 			insertStmt.executeUpdate();
 
 		} catch (SQLException e) {
-			System.err.println("トッピング登録中にエラーが発生しました。");
+			System.err.println("トッピング登録中にエラーが発生しました:" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
 	//トッピング変更
-	public void updateToppingList(int toppingId, String toppingName, int toppingPrice) {
+	public void updateTopping(int toppingId, String toppingName, int toppingPrice) {
 		String updateToppingSql = "UPDATE topping SET topping_name = ?, topping_price = ? WHERE topping_id = ?";
 		try (Connection connection = DBUtil.getConnection();
 				PreparedStatement updateStmt = connection.prepareStatement(updateToppingSql)) {
@@ -92,7 +92,7 @@ public class ToppingListDAO {
 			updateStmt.executeUpdate();
 
 		} catch (SQLException e) {
-			System.err.println("トッピング変更中にエラーが発生しました。");
+			System.err.println("トッピング変更中にエラーが発生しました:" + e.getMessage());
 			e.printStackTrace();
 		}
 	}

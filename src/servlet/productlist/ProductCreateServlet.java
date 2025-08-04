@@ -93,7 +93,7 @@ public class ProductCreateServlet extends HttpServlet {
 			}
 
 			ProductListDAO dao = new ProductListDAO();
-			dao.insertProductList(productName, categoryName, productPrice, toppingIds);
+			dao.insertProduct(productName, categoryName, productPrice, toppingIds);
 
 			// POST内でカテゴリー保持（セッションに保存）
 			if (selectedCategory != null && !selectedCategory.isEmpty()) {
