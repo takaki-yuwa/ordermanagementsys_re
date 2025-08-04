@@ -13,24 +13,24 @@ import util.DBUtil;
 public class ProductFormDAO {
 	//情報取得
 	public List<ProductToppingInfo> selectProductToppingList(int productId) {
-		List<ProductToppingInfo> productToppingInfo = new ArrayList<>();
-		String sql = "SELECT * FROM product_topping WHERE product_id = ?";
-		try (Connection con = DBUtil.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		List<ProductToppingInfo> productToppingInfoList = new ArrayList<>();
+		String selectProductToppingSql = "SELECT * FROM product_topping WHERE product_id = ?";
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement selectStmt = connection.prepareStatement(selectProductToppingSql)) {
 
-			ps.setInt(1, productId);
+			selectStmt.setInt(1, productId);
 
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					int productToppingId = rs.getInt("product_topping_id");
-					int toppingId = rs.getInt("topping_id");
-					int fechedProductId = rs.getInt("product_id");
+			try (ResultSet resultSet = selectStmt.executeQuery()) {
+				while (resultSet.next()) {
+					int productToppingId = resultSet.getInt("product_topping_id");
+					int toppingId = resultSet.getInt("topping_id");
+					int fechedProductId = resultSet.getInt("product_id");
 
 					// デバッグ用出力
 					System.out.println("商品ID: " + fechedProductId);
 					System.out.println("トッピングID:" + toppingId);
 
-					productToppingInfo.add(new ProductToppingInfo(productToppingId, toppingId, fechedProductId));
+					productToppingInfoList.add(new ProductToppingInfo(productToppingId, toppingId, fechedProductId));
 				}
 			}
 
@@ -45,6 +45,6 @@ public class ProductFormDAO {
 			e.printStackTrace();
 		}
 
-		return productToppingInfo;
+		return productToppingInfoList;
 	}
 }

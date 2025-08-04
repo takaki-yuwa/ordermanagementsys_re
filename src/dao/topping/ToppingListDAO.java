@@ -13,20 +13,20 @@ import util.DBUtil;
 public class ToppingListDAO {
 	//情報取得
 	public List<ToppingInfo> selectToppingList() {
-		List<ToppingInfo> toppingInfo = new ArrayList<>();
-		String sql = "SELECT * FROM topping";
-		try (Connection con = DBUtil.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		List<ToppingInfo> toppingInfoList = new ArrayList<>();
+		String selectToppingSql = "SELECT * FROM topping";
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement selectStmt = connection.prepareStatement(selectToppingSql)) {
 
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					int id = rs.getInt("topping_id");
-					String name = rs.getString("topping_name");
-					int price = rs.getInt("topping_price");
-					int stock = rs.getInt("topping_stock");
-					int display_flag = rs.getInt("topping_display_flag");
+			try (ResultSet resultSet = selectStmt.executeQuery()) {
+				while (resultSet.next()) {
+					int id = resultSet.getInt("topping_id");
+					String name = resultSet.getString("topping_name");
+					int price = resultSet.getInt("topping_price");
+					int stock = resultSet.getInt("topping_stock");
+					int display_flag = resultSet.getInt("topping_display_flag");
 
-					toppingInfo.add(new ToppingInfo(id, name, price, stock, display_flag));
+					toppingInfoList.add(new ToppingInfo(id, name, price, stock, display_flag));
 				}
 			}
 
@@ -41,20 +41,20 @@ public class ToppingListDAO {
 			e.printStackTrace();
 		}
 
-		return toppingInfo;
+		return toppingInfoList;
 
 	}
 
 	//表示・非表示フラグの更新
 	public void updateToppingFlag(int toppingId, int visibleFlag) {
-		String sql = "UPDATE topping SET topping_display_flag = ? WHERE topping_id = ?";
-		try (Connection con = DBUtil.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		String updateToppingFlagSql = "UPDATE topping SET topping_display_flag = ? WHERE topping_id = ?";
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement updateStmt = connection.prepareStatement(updateToppingFlagSql)) {
 
-			ps.setInt(1, visibleFlag);
-			ps.setInt(2, toppingId);
+			updateStmt.setInt(1, visibleFlag);
+			updateStmt.setInt(2, toppingId);
 
-			ps.executeUpdate();
+			updateStmt.executeUpdate();
 
 		} catch (SQLException e) {
 			System.err.println("予期しないエラーが発生しました。");
@@ -64,14 +64,14 @@ public class ToppingListDAO {
 
 	//トッピング新規作成
 	public void insertToppingList(String toppingName, int toppingPrice) {
-		String sql = "INSERT INTO topping (topping_name, topping_price, topping_stock, topping_display_flag) VALUES (?, ?, 20, 1)";
-		try (Connection con = DBUtil.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		String insertToppingSql = "INSERT INTO topping (topping_name, topping_price, topping_stock, topping_display_flag) VALUES (?, ?, 20, 1)";
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement insertStmt = connection.prepareStatement(insertToppingSql)) {
 
-			ps.setString(1, toppingName);
-			ps.setInt(2, toppingPrice);
+			insertStmt.setString(1, toppingName);
+			insertStmt.setInt(2, toppingPrice);
 
-			ps.executeUpdate();
+			insertStmt.executeUpdate();
 
 		} catch (SQLException e) {
 			System.err.println("トッピング登録中にエラーが発生しました。");
@@ -81,15 +81,15 @@ public class ToppingListDAO {
 
 	//トッピング変更
 	public void updateToppingList(int toppingId, String toppingName, int toppingPrice) {
-		String sql = "UPDATE topping SET topping_name = ?, topping_price = ? WHERE topping_id = ?";
-		try (Connection con = DBUtil.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		String updateToppingSql = "UPDATE topping SET topping_name = ?, topping_price = ? WHERE topping_id = ?";
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement updateStmt = connection.prepareStatement(updateToppingSql)) {
 
-			ps.setString(1, toppingName);
-			ps.setInt(2, toppingPrice);
-			ps.setInt(3, toppingId);
+			updateStmt.setString(1, toppingName);
+			updateStmt.setInt(2, toppingPrice);
+			updateStmt.setInt(3, toppingId);
 
-			ps.executeUpdate();
+			updateStmt.executeUpdate();
 
 		} catch (SQLException e) {
 			System.err.println("トッピング変更中にエラーが発生しました。");

@@ -12,16 +12,16 @@ public class LoginDAO {
 	public LoginInfo getLogin(String userid) {
 		LoginInfo loginInfo = null;
 		//login_idを参照してlogin_passwordを取得する
-		String sql = "SELECT login_password FROM user_login WHERE login_id = ?";
+		String selectLoginSql = "SELECT login_password FROM user_login WHERE login_id = ?";
 
-		try (Connection con = DBUtil.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement selectStmt = connection.prepareStatement(selectLoginSql)) {
 
-			ps.setString(1, userid);
+			selectStmt.setString(1, userid);
 
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					String password = rs.getString("login_password");
+			try (ResultSet resultSet = selectStmt.executeQuery()) {
+				if (resultSet.next()) {
+					String password = resultSet.getString("login_password");
 
 					loginInfo = new LoginInfo();
 					loginInfo.setId(userid);
