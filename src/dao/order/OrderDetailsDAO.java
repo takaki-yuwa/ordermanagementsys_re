@@ -74,6 +74,27 @@ public class OrderDetailsDAO {
 
 		try (Connection con = util.DBUtil.getConnection()) {
 
+			// 1. order_details テーブルの削除
+			String sql1 = "DELETE FROM order_details WHERE order_id= ?";
+			try (PreparedStatement ps1 = con.prepareStatement(sql1)) {
+				ps1.setInt(1, orderDeleteInfo.getOrderId());
+				ps1.executeUpdate();
+			}
+
+			// 2. multiple_topping テーブルの削除
+			String sql2 = "DELETE FROM multiple_toppings WHERE order_id= ?";
+			try (PreparedStatement ps2 = con.prepareStatement(sql2)) {
+				ps2.setInt(1, orderDeleteInfo.getOrderId());
+				ps2.executeUpdate();
+			}
+
+			// 3. product_details テーブルの削除
+			String sql3 = "DELETE FROM product_details WHERE order_id= ?";
+			try (PreparedStatement ps3 = con.prepareStatement(sql3)) {
+				ps3.setInt(1, orderDeleteInfo.getOrderId());
+				ps3.executeUpdate();
+			}
+			
 			// 4. product テーブルの更新
 			String sql4 = "UPDATE product SET product_stock = product_stock + ? WHERE product_id = ?";
 			try (PreparedStatement ps4 = con.prepareStatement(sql4)) {
@@ -97,26 +118,7 @@ public class OrderDetailsDAO {
 
 			}
 
-			// 1. order_details テーブルの削除
-			String sql1 = "DELETE FROM order_details WHERE order_id= ?";
-			try (PreparedStatement ps1 = con.prepareStatement(sql1)) {
-				ps1.setInt(1, orderDeleteInfo.getOrderId());
-				ps1.executeUpdate();
-			}
-
-			// 2. multiple_topping テーブルの削除
-			String sql2 = "DELETE FROM multiple_toppings WHERE order_id= ?";
-			try (PreparedStatement ps2 = con.prepareStatement(sql2)) {
-				ps2.setInt(1, orderDeleteInfo.getOrderId());
-				ps2.executeUpdate();
-			}
-
-			// 3. product_details テーブルの削除
-			String sql3 = "DELETE FROM product_details WHERE order_id= ?";
-			try (PreparedStatement ps3 = con.prepareStatement(sql3)) {
-				ps3.setInt(1, orderDeleteInfo.getOrderId());
-				ps3.executeUpdate();
-			}
+			
 
 		}
 	}

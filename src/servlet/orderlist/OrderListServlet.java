@@ -79,7 +79,7 @@ public class OrderListServlet extends HttpServlet {
 				request.getSession().setAttribute("selected_category", selectedCategory);
 			}
 
-			// 更新後は一覧画面にリダイレクト（PRGパターン推奨）
+			// 更新後は注文管理画面にリダイレクト（PRGパターン推奨）
 			response.sendRedirect(request.getContextPath() + "/OrderList");
 
 		} catch (Exception e) {

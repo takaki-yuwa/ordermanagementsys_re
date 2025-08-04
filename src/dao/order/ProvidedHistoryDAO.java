@@ -92,7 +92,7 @@ public class ProvidedHistoryDAO {
 		return new ArrayList<>(orderMap.values());
 	}
 
-	//表示・非表示フラグの更新
+	//提供フラグの更新
 	public void updateProvidedHistoryList(int orderId, int orderFlag) {
 		String sql = "UPDATE order_details SET order_flag = ? WHERE order_id = ?";
 		try (Connection con = DBUtil.getConnection();

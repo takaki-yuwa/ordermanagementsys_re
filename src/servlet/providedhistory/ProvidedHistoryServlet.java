@@ -81,7 +81,7 @@ public class ProvidedHistoryServlet extends HttpServlet {
 				request.getSession().setAttribute("selected_category", selectedCategory);
 			}
 
-			// 更新後は一覧画面にリダイレクト（PRGパターン推奨）
+			// 更新後は提供済み履歴画面にリダイレクト（PRGパターン推奨）
 			response.sendRedirect(request.getContextPath() + "/ProvidedHistory");
 
 		} catch (Exception e) {
