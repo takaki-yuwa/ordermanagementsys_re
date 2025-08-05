@@ -2,17 +2,18 @@ package servlet.categorylist;
 
 import java.io.IOException;
 
-import constants.Constants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import constants.Constants;
+
 @WebServlet("/CategoryList")
 public class CategoryListServlet extends HttpServlet {
 	//カテゴリー一覧画面へ遷移
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
 			// キャッシュ制御ヘッダーを設定

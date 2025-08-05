@@ -24,7 +24,7 @@
 		<div class="text-center">ホームメニュー</div>
 		<hr>
 		<h5>注文管理</h5>
-		<form action="OrderList" method="post">
+		<form action="OrderList" method="get">
 			<button class="btn--ordermanagemant button">注文一覧</button>
 		</form>
 		<hr>
@@ -32,17 +32,17 @@
 		<table>
 			<tr>
 				<td>
-					<form action="ProductList" method="post">
+					<form action="ProductList" method="get">
 						<button class="btn--menumanagemant button">商品</button>
 					</form>
 				</td>
 				<td>
-					<form action="ToppingList" method="post">
+					<form action="ToppingList" method="get">
 						<button class="btn--menumanagemant button">トッピング</button>
 					</form>
 				</td>
 				<td>
-					<form action="CategoryList" method="post">
+					<form action="CategoryList" method="get">
 						<button class="btn--menumanagemant button">カテゴリ</button>
 					</form>
 				</td>
