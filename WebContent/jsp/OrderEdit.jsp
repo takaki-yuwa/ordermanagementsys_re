@@ -67,13 +67,11 @@
 					</c:forEach>
 				</ul>
 			</c:if>
-
-
+		</div>
 			<!-- トッピングが空のときは空要素（または非表示） -->
 			<c:if test="${empty toppingList}">
-				<span></span>
+				<span style="margin-left: 8px;">選択可能なトッピングがありません。</span>
 			</c:if>
-		</div>
 		<div class="form">
 			<form action="<c:out value='${screen}' />" method="get">
 				<button class="form-button back">一覧へ戻る</button>

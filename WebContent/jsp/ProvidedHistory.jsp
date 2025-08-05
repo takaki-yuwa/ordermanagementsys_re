@@ -139,7 +139,7 @@
 				<input type="image" src="image/homeButton.png" alt="ホームボタン"
 					class="homebutton">
 			</form>
-			<p class="no-orders">注文がありません。</p>
+			<p class="no-orders">提供済みの商品はありません。</p>
 		</c:if>
 		<div class="fixed-row">
 			<form action="OrderList" class="order_history-form" method="get">
