@@ -67,11 +67,9 @@ public class ProvidedHistoryServlet extends HttpServlet {
 			// 注文情報の更新処理がある場合
 			if (orderIdStr != null && orderFlagStr != null) {
 				int orderId = Integer.parseInt(orderIdStr);
-				int orderFlag = Integer.parseInt(orderFlagStr);
-				orderFlag = (orderFlag == 0) ? 1 : 0;
 
 				ProvidedHistoryDAO dao = new ProvidedHistoryDAO();
-				dao.updateProvidedHistoryList(orderId, orderFlag);
+				dao.updateProvidedHistoryFlag(orderId);
 			}
 
 			// POST内でカテゴリー保持（セッションに保存）

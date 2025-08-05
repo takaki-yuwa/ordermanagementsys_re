@@ -93,13 +93,12 @@ public class OrderListDAO {
 	}
 
 	//提供フラグの更新
-	public void updateOrderList(int orderId, int orderFlag) {
-		String sql = "UPDATE order_details SET order_flag = ? WHERE order_id = ?";
+	public void updateOrderFlag(int orderId) {
+		String sql = "UPDATE order_details SET order_flag = 1 WHERE order_id = ?";
 		try (Connection con = DBUtil.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql)) {
 
-			ps.setInt(1, orderFlag);
-			ps.setInt(2, orderId);
+			ps.setInt(1, orderId);
 
 			ps.executeUpdate();
 
