@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	//全ての注文一覧が入っている親要素を取得
 	const orderBox = document.querySelector('.tab-contents');
+	if (!orderBox) return;
 
 	//サーバーから渡された以前選択されたカテゴリー名を取得
 	const categoryFromServer = document.getElementById('initial-selected-category')?.value;
