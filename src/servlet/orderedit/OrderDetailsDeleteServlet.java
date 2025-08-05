@@ -5,12 +5,13 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.order.OrderDetailsDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import dao.order.OrderDetailsDAO;
 import model.orderditails.OrderDeleteInfo;
 import model.orderditails.OrderDeleteToppingInfo;
 
@@ -74,7 +75,7 @@ public class OrderDetailsDeleteServlet extends HttpServlet {
 
 			// DAOを呼び出す
 			OrderDetailsDAO dao = new OrderDetailsDAO();
-			dao.deletOrderDetails(orderInfo);
+			dao.deleteOrderDetails(orderInfo);
 
 			response.sendRedirect(request.getContextPath() + "/" + URLEncoder.encode(screen, "UTF-8"));
 		} catch (Exception e) {

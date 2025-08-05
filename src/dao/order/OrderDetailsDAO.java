@@ -82,7 +82,7 @@ public class OrderDetailsDAO {
 		}
 	}
 
-	public void deletOrderDetails(OrderDeleteInfo orderDeleteInfo) throws SQLException {
+	public void deleteOrderDetails(OrderDeleteInfo orderDeleteInfo) throws SQLException {
 
 		try (Connection con = util.DBUtil.getConnection()) {
 
