@@ -103,7 +103,7 @@ function setupConfirmHidePopup() {
 
 /* -------------------- 商品・トッピング一覧画面向け -------------------- */
 
-//商品、トッピング一覧画面で使う共通XSS対策
+//商品、トッピング一覧画面でポップアップを出すための共通トリガー処理
 function handleCommonToggle(button) {
 	const id = button.dataset.id;
 	const visibleFlag = button.dataset.visibleFlag;
@@ -121,13 +121,6 @@ function openCommonDisplayTogglePopup(id, visibleFlag, name, type, label) {
 	const confirmButton = document.getElementById('confirm-button');
 	const popupIdInput = document.getElementById(`popup-${type}-id`);
 	const popupFlagInput = document.getElementById(`popup-${type}-visible-flag`);
-
-	// 商品の場合のみカテゴリをセット
-	if (type === 'product') {
-		const selectedRadio = document.querySelector('input[name="tab"]:checked');
-		const selectedIndex = Array.from(document.querySelectorAll('input[name="tab"]')).indexOf(selectedRadio);
-		document.getElementById('popup-selected-category').value = categoryList[selectedIndex];
-	}
 
 	// XSS対策：ユーザー入力をエスケープ
 	if (popupNameElement && name != null) {
@@ -150,7 +143,7 @@ function openCommonDisplayTogglePopup(id, visibleFlag, name, type, label) {
 	showDisplayHidePopup();
 }
 
-//商品、トッピング一覧画面で使う共通ポップアップ処理
+//商品、トッピング一覧画面で使う共通ボタン切り替え処理
 function commonDisplayHidePopup(buttonId) {
 	const button = document.getElementById(buttonId);
 	if (!button) return;
@@ -166,7 +159,7 @@ function commonDisplayHidePopup(buttonId) {
 
 /* -------------------- 商品・トッピング作成／編集画面向け -------------------- */
 
-//商品、トッピング新規作成・編集画面で使う共通XSS対策
+//商品、トッピング新規作成・編集画面で使う共通トリガー処理
 function handleCommonFormToggle(button) {
 	const type = button.dataset.type;
 
