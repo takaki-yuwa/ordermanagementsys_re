@@ -110,7 +110,7 @@
 							<c:set var="checkboxId" value="topping_${topping.id}" />
 							<label for="${checkboxId}"> 
 								<input type="checkbox" name="topping_id" id="${checkboxId}" value="${topping.id}">
-								${topping.name}
+								<c:out value="${topping.name}" />
 							</label>
 						</c:forEach>
 					</c:if>
@@ -128,7 +128,7 @@
 							<label for="${checkboxId}"> 
 								<input type="checkbox" name="topping_id" id="${checkboxId}" value="${topping.id}"
 								<c:if test="${checked}">checked</c:if>> 
-								${topping.name}
+								<c:out value="${topping.name}" />
 							</label>
 						</c:forEach>
 					</c:if>
