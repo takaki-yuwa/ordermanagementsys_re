@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import model.order.OrderInfo;
 import model.order.OrderToppingInfo;
@@ -17,7 +17,7 @@ import util.DBUtil;
 public class ProvidedHistoryDAO {
 	public List<OrderInfo> getAllOrderList() {
 		// 注文情報を保持するマップ
-		Map<Integer, OrderInfo> orderMap = new HashMap<>();
+		Map<Integer, OrderInfo> orderMap = new TreeMap<>();
 
 		try (Connection con = util.DBUtil.getConnection();
 				Statement st = con.createStatement();
