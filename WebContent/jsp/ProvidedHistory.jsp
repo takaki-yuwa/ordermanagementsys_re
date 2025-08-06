@@ -11,7 +11,7 @@
 <!--.cssの呼び出し-->
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/Order/OrderList.css">
-<title>履歴</title>
+<title>注文管理システム--提供済み履歴--</title>
 </head>
 <script src="JavaScript/setTabContent.js"></script>
 <body>

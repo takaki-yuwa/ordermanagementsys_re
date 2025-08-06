@@ -8,7 +8,7 @@
 <!--サイトのサイズ自動調整-->
 <meta name="viewport"
 	content="width=device-width,height=device-height,initial-scale=1.0">
-<title>CategoryList</title>
+<title>注文管理システム--カテゴリ一覧--</title>
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/Category/categorylist.css">
 <!-- ファビコン非表示 -->

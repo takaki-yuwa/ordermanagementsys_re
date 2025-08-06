@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/popup.css">
 <link rel="stylesheet" href="css/Order/OrderEdit.css">
-<title>注文編集</title>
+<title>注文管理システム--注文編集--</title>
 </head>
 <body>
 	<!--ホームボタン-->
