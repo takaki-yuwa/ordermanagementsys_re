@@ -141,8 +141,8 @@
 			</div>
 		</div>
 		<!-- 商品一覧へ遷移 -->
-		<button type="button" class="popup-proceed" id="confirm-button">はい</button>
 		<button class="popup-close" id="close-popup">いいえ</button>
+		<button type="button" class="popup-proceed" id="confirm-button">はい</button>
 	</div>
 	<!-- .jsの呼び出し -->
 	<script src="JavaScript/Popup.js"></script>

@@ -56,12 +56,11 @@
 		<p class="text-bold">ログアウトします</p>
 		<p>よろしいですか？</p>
 		<!-- ログアウト -->
+		<button class="popup-close" id="close-popup">いいえ</button>
 		<form action="Logout" method="post">
 			<button type="submit" class="popup-proceed" id="confirm-button"
 				data-action="setupConfirmHidePopup">は い</button>
 		</form>
-
-		<button class="popup-close" id="close-popup">いいえ</button>
 	</div>
 	<!-- .jsの呼び出し -->
 	<script src="JavaScript/Popup.js"></script>

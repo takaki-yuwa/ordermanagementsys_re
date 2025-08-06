@@ -74,6 +74,7 @@
 		<p id="popup-message"></p>
 		<p>よろしいですか？</p>
 		<!-- トッピングの表示変更 -->
+		<button class="popup-close" id="close-popup">いいえ</button>
 		<form action="ToppingList" method="post">
 			<input type="hidden" name="topping_id" id="popup-topping-id">
 			<input type="hidden" name="topping_visible_flag"
@@ -83,8 +84,6 @@
 				は い
 			</button>
 		</form>
-
-		<button class="popup-close" id="close-popup">いいえ</button>
 	</div>
 	</main>
 	<!-- .jsの呼び出し -->
