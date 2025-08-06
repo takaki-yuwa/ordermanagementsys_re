@@ -122,6 +122,13 @@ function openCommonDisplayTogglePopup(id, visibleFlag, name, type, label) {
 	const popupIdInput = document.getElementById(`popup-${type}-id`);
 	const popupFlagInput = document.getElementById(`popup-${type}-visible-flag`);
 
+	// 商品の場合のみカテゴリをセット
+	if (type === 'product') {
+		const selectedRadio = document.querySelector('input[name="tab"]:checked');
+		const selectedIndex = Array.from(document.querySelectorAll('input[name="tab"]')).indexOf(selectedRadio);
+		document.getElementById('popup-selected-category').value = categoryList[selectedIndex];
+	}
+
 	// XSS対策：ユーザー入力をエスケープ
 	if (popupNameElement && name != null) {
 		popupNameElement.textContent = name;
