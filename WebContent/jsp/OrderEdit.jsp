@@ -105,7 +105,6 @@
       "<c:out value='${name}' />"<c:if test="${!status.last}">,</c:if>
     </c:forEach>
   ];
-
   const toppingQuantities = [
     <c:forEach var="qty" items="${toppingQuantities}">
     	<c:out value='${qty}' /><c:if test="${!status.last}">,</c:if>
