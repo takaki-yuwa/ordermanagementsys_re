@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 main {
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
 	padding: 0;
 }
@@ -11,7 +11,8 @@ main {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin-top: 30px;
+	padding-top: 30px;
+	overflow: hidden;
 }
 
 /* 横スクロールバー非表示 */
@@ -24,7 +25,6 @@ main {
 	display: flex;
 	overflow-x: auto;
 	margin: 0 auto;
-	/* 左右のマージン自動で中央寄せ */
 	scroll-behavior: smooth;
 }
 
@@ -43,16 +43,14 @@ main {
 	text-align: center;
 }
 
-/* コンテンツ切り替え */
-.tab-content {
-	margin-top: 30px;
-	margin-bottom: 30px;
-	display: none;
-	padding: 20px 40px;
+/* タブコンテンツ */
+.tab-contents {
+	width: 90vw;
+	height: 75vh;
+	overflow-y: auto;
+	padding: 20px 10px 50px 10px;
 	margin: 0 auto;
-	/* 左右のマージン自動で中央寄せ */
-	width: max-content;
-	/* コンテンツ幅に合わせる */
+	margin-top: 15px;
 	color: #555;
 }
 
@@ -60,13 +58,30 @@ main {
 .tab-wrapper {
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: 15px;
 	width: calc(100% - 30px);
 	display: flex;
 	align-items: center;
 	background-color: rgb(251, 255, 251);
 	z-index: 1000;
 	padding: 10px;
+}
+
+/*件数の表示*/
+.count {
+	flex-shrink: 0;
+	display: inline-block;
+	font-size: 12px;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background: rgb(255, 128, 128);
+	text-align: center;
+	line-height: 16px;
+	position: relative;
+	left: -10px;
+	bottom: -5px;
+	color: rgb(255, 255, 255);
 }
 
 /*ホームボタン*/
