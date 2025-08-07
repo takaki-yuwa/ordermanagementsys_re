@@ -3,14 +3,13 @@ package servlet.productlist;
 import java.io.IOException;
 import java.util.List;
 
+import constants.Constants;
+import dao.product.ProductListDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import constants.Constants;
-import dao.product.ProductListDAO;
 import model.product.ProductInfo;
 
 @WebServlet("/ProductList")
@@ -27,7 +26,9 @@ public class ProductListServlet extends HttpServlet {
 
 			// セッションから選択カテゴリー取得（あればリクエスト属性にセット）
 			String selectedCategory = (String) request.getSession().getAttribute("selectedCategory");
+
 			if (selectedCategory != null) {
+
 				request.setAttribute("selectedCategory", selectedCategory);
 				request.getSession().removeAttribute("selectedCategory"); // 一度使ったら消す
 			}
@@ -80,8 +81,10 @@ public class ProductListServlet extends HttpServlet {
 				dao.updateProductFlag(productId, visibleFlag);
 			}
 
+			System.out.println("現在のタブ" + selectedCategory);
 			// POST内でカテゴリー保持（セッションに保存）
 			if (selectedCategory != null && !selectedCategory.isEmpty()) {
+
 				request.getSession().setAttribute("selectedCategory", selectedCategory);
 			}
 

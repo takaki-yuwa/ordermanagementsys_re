@@ -13,7 +13,6 @@ public class LoginDAO {
 		LoginInfo loginInfo = null;
 		//login_idを参照してlogin_passwordを取得する
 		String selectLoginSql = "SELECT login_password FROM user_login WHERE login_id = ?";
-
 		try (Connection connection = DBUtil.getConnection();
 				PreparedStatement selectStmt = connection.prepareStatement(selectLoginSql)) {
 

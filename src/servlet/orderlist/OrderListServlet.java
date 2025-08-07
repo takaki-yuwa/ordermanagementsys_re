@@ -3,14 +3,13 @@ package servlet.orderlist;
 import java.io.IOException;
 import java.util.List;
 
+import constants.Constants;
+import dao.order.OrderListDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import constants.Constants;
-import dao.order.OrderListDAO;
 import model.order.OrderInfo;
 
 @WebServlet("/OrderList")
@@ -72,6 +71,7 @@ public class OrderListServlet extends HttpServlet {
 				dao.updateOrderFlag(orderId);
 			}
 
+			System.out.println("現在のタブ" + selectedCategory);
 			// POST内でカテゴリー保持（セッションに保存）
 			if (selectedCategory != null && !selectedCategory.isEmpty()) {
 				request.getSession().setAttribute("selected_category", selectedCategory);
