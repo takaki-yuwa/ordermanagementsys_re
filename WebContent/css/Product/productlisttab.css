@@ -61,7 +61,7 @@ main {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100%;
+	width: calc(100% - 30px);
 	display: flex;
 	align-items: center;
 	background-color: rgb(251, 255, 251);
