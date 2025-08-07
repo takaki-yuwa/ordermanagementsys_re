@@ -26,14 +26,14 @@
 	border-bottom: 1px solid #333;
 	padding: 8px;
 }
-
+/*リスト幅*/
 .list-padding {
 	box-sizing: border-box;
-	width: 50vw;
+	width: 550px;
 	margin: 0 auto;
-	padding: 8px;
+	padding: 20px;
 }
-
+/*卓番幅*/
 .table {
 	margin-left: 20px;
 }
@@ -48,41 +48,41 @@ ul {
 	grid-template-columns: repeat(2, auto);
 	text-align: right;
 }
-
+/*リスト*/
 li {
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 30px;
 }
-
+/*商品名位置*/
 .item-name {
 	margin-top: 10px;
 }
-
+/*トッピング名位置*/
 .menu-item {
 	display: flex;
 	align-items: center;
 }
-
+/*増減ボタン*/
 .quantity-buttons {
 	margin-left: 20px;
 }
-
+/*注文取り消しボタン*/
 .delete {
 	color: #fff;
 	background-color: rgb(255, 128, 128);
 }
-
+/*一覧へ戻るボタン*/
 .back {
 	color: #fff;
 	background-color: rgb(128, 128, 128);
 }
-
+/*変更ボタン*/
 .change {
 	color: #fff;
 	background-color: rgb(0, 128, 0);
 }
-
+/*プラスマイナスボタン*/
 .decrease-btn,
 .increase-btn {
 	margin-top: 10px;
@@ -94,7 +94,7 @@ li {
 	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
 	border: 1px solid #333
 }
-
+/*非活性のプラスマイナスボタン*/
 .increase-btn:disabled,
 .decrease-btn:disabled {
 	pointer-events: none;
@@ -102,7 +102,7 @@ li {
 	opacity: 0.5;
 	cursor: not-allowed !important;
 }
-
+/*個数*/
 .quantity {
 	margin: 8px;
 }
@@ -116,11 +116,11 @@ li {
 	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
 	border: 1px solid #333
 }
-
+/*ボタン押された時沈むアニメーション*/
 button:active {
 	transform: translateY(1px);
 }
-
+/*注文取り消しフォーム位置*/
 .form-delet {
 	padding: 8px;
 	margin-left: auto;
@@ -128,7 +128,7 @@ button:active {
 	justify-content: flex-end;
 	gap: 10px;
 }
-
+/*変更、一覧へ戻るフォーム位置*/
 .form {
 	padding: 16px;
 	margin-left: auto;
