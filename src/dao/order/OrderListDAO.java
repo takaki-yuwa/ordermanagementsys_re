@@ -15,9 +15,10 @@ import util.DBUtil;
 
 public class OrderListDAO {
 	public List<OrderInfo> getAllOrderList() {
-		// 注文情報を保持するマップ
-		Map<Integer, OrderInfo> orderMap = new TreeMap<>();
 		try {
+			// 注文情報を保持するマップ
+			Map<Integer, OrderInfo> orderMap = new TreeMap<>();
+
 			String sql = "SELECT\n"
 					+ "o.order_id, o.product_quantity, o.table_number, o.order_time, o.order_flag,\n"
 					+ "d.product_id,\n"
@@ -88,12 +89,13 @@ public class OrderListDAO {
 					}
 				}
 			}
+			// マップの値をリストとして返す
+			return new ArrayList<>(orderMap.values());
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return new ArrayList<>();
 		}
 
-		// マップの値をリストとして返す
-		return new ArrayList<>(orderMap.values());
 	}
 
 	//提供フラグの更新
