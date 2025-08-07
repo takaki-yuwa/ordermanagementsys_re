@@ -27,9 +27,8 @@ public class HomeServlet extends HttpServlet {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "サーバー内部エラー（I/O）");
 		} catch (Exception e) {
-			System.err.println("予期しないエラーが発生しました: " + e.getMessage());
 			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "予期しないエラーが発生しました");
+			request.getRequestDispatcher("/jsp/Error.jsp").forward(request, response);
 		}
 	}
 }
