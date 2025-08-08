@@ -60,7 +60,7 @@
 							<c:forEach var="order" items="${orderinfo}">
 								<!-- data-tableに現在の卓番情報を保存 -->
 								<tr class="order_row hidden-row"
-									data-table="<c:out value='${order.tableNumber}卓'/>"
+									data-table="<c:out value='${order.tableNumber}卓'/>">
 									<td>
 										<!--注文情報を注文編集へ送信-->
 										<form action="OrderEditForm" method="post">
