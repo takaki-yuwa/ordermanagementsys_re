@@ -29,7 +29,6 @@
 						id="tab${status.index}" ${status.index == 0 ? "checked" : ""}
 						<c:if test="${category == selected_category}">checked</c:if>>
 				</c:forEach>
-
 				<div class="tab-wrapper">
 					<!--ホームボタン-->
 					<form action="Home" style="margin-top: 8px;">
@@ -90,7 +89,6 @@
 											<ul class="list">
 												<c:set var="toppingString" value="" />
 												<!-- トッピングの文字列を格納する変数 -->
-
 												<!-- トッピングのリストをループして処理 -->
 												<c:forEach var="topping" items="${order.orderTopping}"
 													varStatus="status">
@@ -100,12 +98,10 @@
 														<!-- 各トッピングをリスト項目として表示 -->
 													</c:if>
 												</c:forEach>
-
 												<!-- トッピングが1つ以上存在した場合に表示 -->
 												<c:if test="${not empty toppingString}">
 													<span><c:out value="${toppingString}"/></span>
 												</c:if>
-
 												<!-- トッピングが全て数量0の場合は表示しない -->
 												<c:if test="${empty toppingString}">
 													<span></span>
@@ -115,7 +111,6 @@
 										<c:if test="${empty order.orderTopping}">
 											<span></span>
 										</c:if>
-
 									</td>
 									<td>
 										<!--提供済みフラグの更新-->
