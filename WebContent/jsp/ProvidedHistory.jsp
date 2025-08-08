@@ -19,7 +19,7 @@
 	<main>
 		<!-- 選択されたカテゴリーを JavaScript に渡すための hidden input -->
 		<input type="hidden" id="initial-selected-category"
-			value="${selectedCategory}">
+			value="<c:out value='${selectedCategory}' />">
 		<c:if test="${not empty orderinfo}">
 			<div class="tab">
 				<!-- ラジオボタン（表示制御のキーになる） -->
@@ -39,7 +39,7 @@
 					<!-- ラベル（横スクロール） -->
 					<div class="tab-labels">
 						<c:forEach var="category" items="${categoryList}" varStatus="status">
-							<label for="tab${status.index}">${category}</label>
+							<label for="tab${status.index}"><c:out value="${category}"/></label>
 						</c:forEach>
 					</div>
 				</div>
@@ -61,29 +61,29 @@
 							<c:forEach var="order" items="${orderinfo}">
 								<!-- data-tableに現在の卓番情報を保存 -->
 								<tr class="order_row hidden-row"
-									data-table="${order.tableNumber}卓">
+									data-table="<c:out value='${order.tableNumber}卓'/>"
 									<td>
 										<!--注文情報を注文編集へ送信-->
 										<form action="OrderEditForm" method="post">
 											<input type="hidden" name="screen" value="ProvidedHistory">
-											<input type="hidden" name="order_id" value="${order.orderId}">
-											<input type="hidden" name="table_number" value="${order.tableNumber}">
-											<input type="hidden" name="product_id" value="${order.productId}">
-											<input type="hidden" name="product_name" value="${order.productName}">
-											<input type="hidden" name="product_price" value="${order.productPrice}">
-											<input type="hidden" name="product_quantity" value="${order.productQuantity}">
-											<input type="hidden" name="product_stock" value="${order.productStock}">
+											<input type="hidden" name="order_id" value="<c:out value='${order.orderId}'/>">
+											<input type="hidden" name="table_number" value="<c:out value='${order.tableNumber}'/>">
+											<input type="hidden" name="product_id" value="<c:out value='${order.productId}'/>">
+											<input type="hidden" name="product_name" value="<c:out value='${order.productName}'/>">
+											<input type="hidden" name="product_price" value="<c:out value='${order.productPrice}'/>">
+											<input type="hidden" name="product_quantity" value="<c:out value='${order.productQuantity}'/>">
+											<input type="hidden" name="product_stock" value="<c:out value='${order.productStock}'/>">
 											<c:forEach var="topping" items="${order.orderTopping}">
-											    <input type="hidden" name="topping_name[]" value="${topping.toppingName}">
-											    <input type="hidden" name="topping_quantity[]" value="${topping.toppingQuantity}">
-											    <input type="hidden" name="topping_stock[]" value="${topping.toppingStock}">
+											    <input type="hidden" name="topping_name[]" value="<c:out value='${topping.toppingName}'/>">
+											    <input type="hidden" name="topping_quantity[]" value="<c:out value='${topping.toppingQuantity}'/>">
+											    <input type="hidden" name="topping_stock[]" value="<c:out value='${topping.toppingStock}'/>">
 											</c:forEach>
-											<button class="order_num">${order.orderId}</button>
+											<button class="order_num"><c:out value='${order.orderId}'/></button>
 										</form>
 									</td>
-									<td>${order.orderTime}</td>
-									<td>${order.productQuantity}個</td>
-									<td>${order.productName}</td>
+									<td><c:out value='${order.orderTime}'/></td>
+									<td><c:out value='${order.productQuantity}'/>個</td>
+									<td><c:out value='${order.productName}'/></td>
 									<td class="topping">
 										<!-- トッピングが複数ある場合、カンマで区切ってリスト表示 -->
 										<c:if test="${not empty order.orderTopping}">
@@ -96,14 +96,14 @@
 													varStatus="status">
 													<!-- トッピングの数量が0でない場合にのみ処理 -->
 													<c:if test="${topping.toppingQuantity > 0}">
-														<li>${topping.toppingName}×${topping.toppingQuantity}</li>
+														<li><c:out value="${topping.toppingName}"/>×<c:out value="${topping.toppingQuantity}"/></li>
 														<!-- 各トッピングをリスト項目として表示 -->
 													</c:if>
 												</c:forEach>
 
 												<!-- トッピングが1つ以上存在した場合に表示 -->
 												<c:if test="${not empty toppingString}">
-													<span>${toppingString}</span>
+													<span><c:out value="${toppingString}"/></span>
 												</c:if>
 
 												<!-- トッピングが全て数量0の場合は表示しない -->
@@ -120,8 +120,8 @@
 									<td>
 										<!--提供済みフラグの更新-->
 										<form action="ProvidedHistory" method="post">
-											<input type="hidden" name="order_id" value="${order.orderId}">
-											<input type="hidden" name="order_flag" value="${order.orderFlag}">
+											<input type="hidden" name="order_id" value="<c:out value='${order.orderId}'/>">
+											<input type="hidden" name="order_flag" value="<c:out value='${order.orderFlag}'/>">
 											<input type="hidden" name="selected_category" class="selected-category">
 											<button class="order_return">戻す</button>
 										</form>
@@ -153,7 +153,7 @@
 	<script>
 		const categoryList=[
 			<c:forEach items="${categoryList}" var="cat" varStatus="category_">
-			'${cat}'<c:if test="${!category_.last}">,</c:if>
+			'<c:out value="${cat}"/>'<c:if test="${!category_.last}">,</c:if>
 			</c:forEach>
 			];
 	</script>
