@@ -78,6 +78,7 @@
 												<input type="hidden" name="product_quantity" value="<c:out value='${order.productQuantity}'/>">
 												<input type="hidden" name="product_stock" value="<c:out value='${order.productStock}'/>">
 												<c:forEach var="topping" items="${order.orderTopping}">
+													<input type="hidden" name="topping_id[]" value="<c:out value='${topping.toppingId}'/>">
 												    <input type="hidden" name="topping_name[]" value="<c:out value='${topping.toppingName}'/>">
 												    <input type="hidden" name="topping_quantity[]" value="<c:out value='${topping.toppingQuantity}'/>">
 												    <input type="hidden" name="topping_stock[]" value="<c:out value='${topping.toppingStock}'/>">

@@ -9,16 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	// toppingNames と toppingQuantities はサーバーから受け取った配列
 
 	// .topping-name の要素一覧を取得
-	const toppingElements = document.querySelectorAll('.topping-name');
+	const toppingElements = document.querySelectorAll('.menu-item');
 
 	toppingElements.forEach(el => {
-		const name = el.textContent.trim();
+		const id = el.dataset.toppingId;
 
 		// サーバーから受け取った名前と一致するか検索
-		const index = toppingNames.indexOf(name);
+		const index = toppingIds.indexOf(id);
 		if (index !== -1) {
 			// 一致したら数量表示の要素を取得し数量をセット
-			const quantityEl = el.parentElement.querySelector('.quantity');
+			const quantityEl = el.querySelector('.quantity');
 			if (quantityEl) {
 				quantityEl.textContent = toppingQuantities[index];
 			}

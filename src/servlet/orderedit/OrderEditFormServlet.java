@@ -35,6 +35,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			String productQuantity = request.getParameter("product_quantity");
 			String productStock = request.getParameter("product_stock");
 			String[] toppingNames = request.getParameterValues("topping_name[]");
+			String[] toppingIds = request.getParameterValues("topping_id[]");
 			String[] toppingQuantities = request.getParameterValues("topping_quantity[]");
 			String[] toppingStocks = request.getParameterValues("topping_stock[]");
 
@@ -47,6 +48,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			System.out.println("product_quantity: " + productQuantity);
 			System.out.println("product_stock: " + productStock);
 			System.out.println("topping_names: " + Arrays.toString(toppingNames));
+			System.out.println("topping_ids: " + Arrays.toString(toppingIds));
 			System.out.println("topping_quantities: " + Arrays.toString(toppingQuantities));
 			System.out.println("topping_stocks: " + Arrays.toString(toppingStocks));
 
@@ -75,6 +77,7 @@ public class OrderEditFormServlet extends HttpServlet {
 			request.setAttribute("productStock", productStock);
 			request.setAttribute("toppingNames", toppingNames);
 			request.setAttribute("toppingQuantities", toppingQuantities);
+			request.setAttribute("toppingIds", toppingIds);
 			request.setAttribute("toppingStocks", toppingStocks);
 			request.setAttribute("toppingList", toppingList);
 

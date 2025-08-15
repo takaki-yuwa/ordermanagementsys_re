@@ -26,7 +26,7 @@
 		</div>
 		<div class="underline">
 			<span class="item-name"><c:out value="${productName}" /></span>
-			<!--確認用-->
+			<!--在庫確認用-->
 			<span style="display: none;" class="stock" id="stock-p<c:out value='${productId}' />">：<c:out value="${productStock}" /></span>
 			<!-- 増減ボタンを追加 -->
 			<div class="quantity-buttons">
@@ -50,9 +50,10 @@
 				<ul class="list">
 					<!-- トッピングのリストをループして表示 -->
 					<c:forEach var="topping" items="${toppingList}" varStatus="status">
-						<li class="menu-item"><span class="topping-name"><c:out value="${topping.toppingName}" /></span>
-							<!--確認用--> 
-							<span style="display: none; class="stock" id="stock-t<c:out value='${topping.toppingId}' />">：<c:out value="${topping.toppingStock}" /></span>
+						<li class="menu-item"
+						data-topping-id="${topping.toppingId}">
+						<span class="topping-name"><c:out value="${topping.toppingName}" /></span>
+						<span style="display: none; class="stock" id="stock-t<c:out value='${topping.toppingId}' />">：<c:out value="${topping.toppingStock}" /></span>
 							<!-- 増減ボタンを追加 -->
 							<div class="quantity-buttons">
 								<button type="button" name="quantity" class="decrease-btn" id="decrement-t<c:out value='${topping.toppingId}' />">-</button>
@@ -100,9 +101,9 @@
 	</div>
 	<script>
   // サーバーの配列をJSに渡す
-  const toppingNames = [
-    <c:forEach var="name" items="${toppingNames}">
-      "<c:out value='${name}' />"<c:if test="${!status.last}">,</c:if>
+  const toppingIds = [
+    <c:forEach var="id" items="${toppingIds}">
+      "<c:out value='${id}' />"<c:if test="${!status.last}">,</c:if>
     </c:forEach>
   ];
   const toppingQuantities = [
