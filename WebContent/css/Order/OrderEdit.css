@@ -12,8 +12,7 @@
 /*枠の調整*/
 .box {
 	width: 80vw;
-	height: 85vh;
-	margin: 0 auto;
+	margin: 20px auto;
 	border: 1px solid;
 }
 
@@ -29,9 +28,8 @@
 /*リスト幅*/
 .list-padding {
 	box-sizing: border-box;
-	width: 550px;
-	margin: 0 auto;
 	padding: 20px;
+	margin: 0 auto;
 }
 /*卓番幅*/
 .table {
@@ -41,11 +39,10 @@
 /* 横並び２列 */
 ul {
 	list-style-type: none;
-	padding-left: 20px;
 	display: grid;
 	width: fit-content;
-	column-gap: 100px;
-	grid-template-columns: repeat(2, auto);
+	margin-left: -60px;
+	grid-template-columns: repeat(2, 35vw);
 	text-align: right;
 }
 /*リスト*/
@@ -62,6 +59,10 @@ li {
 .menu-item {
 	display: flex;
 	align-items: center;
+}
+/*トッピング名文字制限*/
+.topping-name{
+	width: 9em;
 }
 /*増減ボタン*/
 .quantity-buttons {
