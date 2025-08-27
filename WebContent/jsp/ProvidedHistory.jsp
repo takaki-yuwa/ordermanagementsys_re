@@ -95,7 +95,7 @@
 													varStatus="status">
 													<!-- トッピングの数量が0でない場合にのみ処理 -->
 													<c:if test="${topping.toppingQuantity > 0}">
-														<li><c:out value="${topping.toppingName}"/>×<c:out value="${topping.toppingQuantity}"/></li>
+														<li class="toppingname"><c:out value="${topping.toppingName}"/>×<c:out value="${topping.toppingQuantity}"/></li>
 														<!-- 各トッピングをリスト項目として表示 -->
 													</c:if>
 												</c:forEach>

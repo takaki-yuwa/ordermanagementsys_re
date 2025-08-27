@@ -4,7 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<!--1秒ごとに自動更新をする-->
+<meta http-equiv="refresh" content="1" charset="UTF-8">
 <!--サイトのサイズ自動調整-->
 <meta name="viewport"
 	content="width=device-width,height=device-height,initial-scale=1.0">
