@@ -22,13 +22,16 @@ public class ProvidedHistoryDAO {
 		try (Connection con = util.DBUtil.getConnection();
 				Statement st = con.createStatement();
 				ResultSet rs = st.executeQuery("SELECT\n"
-						+ "o.order_id, o.product_quantity, o.table_number, o.order_time, o.order_flag,\n"
+						+ "o.order_id, o.product_quantity, o.order_time, o.order_flag,\n"
+						+ "s.table_id,\n"
 						+ "d.product_id,\n"
 						+ "p.product_name, p.category_name, p.product_price, p.product_stock,\n"
 						+ "m.topping_id, m.topping_quantity,\n"
 						+ "t.topping_name, t.topping_price, t.topping_stock\n"
 						+ "FROM\n"
 						+ "order_details o\n"
+						+ "JOIN\n"
+						+ "table_sessions s ON o.session_id = s.session_id\n"
 						+ "JOIN\n"
 						+ "product_details d ON o.order_id = d.order_id\n"
 						+ "JOIN\n"
@@ -45,7 +48,7 @@ public class ProvidedHistoryDAO {
 				int order_id = rs.getInt("order_id");
 				String order_time = rs.getString("order_time");
 				int product_quantity = rs.getInt("product_quantity");
-				int table_number = rs.getInt("table_number");
+				int table_number = rs.getInt("table_id");
 				int order_flag = rs.getInt("order_flag");
 				int product_id = rs.getInt("product_id");
 				String product_name = rs.getString("product_name");
