@@ -115,3 +115,36 @@ function updateCounts(orders) {
 		}
 	});
 }
+
+//経過時間
+function updateButtonColors() {
+  const buttons = document.querySelectorAll(".provide-btn");
+
+  buttons.forEach(button => {
+    const orderTimeStr = button.dataset.orderTime;
+    const orderTime = new Date(orderTimeStr);
+    const now = new Date();
+
+    const elapsedMs = now - orderTime;
+    const elapsedMin = Math.floor(elapsedMs / 60000); // ミリ秒→分
+
+    // 一度クラスをリセット
+    button.classList.remove("green", "orange", "red");
+
+    // 経過時間に応じて色を設定
+    if (elapsedMin <= 5) {
+      button.classList.add("green");
+    } else if (elapsedMin <= 10) {
+      button.classList.add("orange");
+    } else {
+      button.classList.add("red");
+    }
+
+  });
+}
+
+// 初回実行
+updateButtonColors();
+
+// 30秒ごとに更新
+setInterval(updateButtonColors, 30000);

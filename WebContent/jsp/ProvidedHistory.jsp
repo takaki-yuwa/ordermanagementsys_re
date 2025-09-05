@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
 	content="width=device-width,height=device-height,initial-scale=1.0">
 <!--.cssの呼び出し-->
 <link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/Order/OrderList.css">
+<link rel="stylesheet" href="css/Order/ProvidedHistory.css">
 <link rel="stylesheet" href="css/Order/OrderListtab.css">
 <title>注文管理システム--提供済み履歴--</title>
 </head>
@@ -48,11 +49,12 @@
 						<table>
 							<thead>
 								<tr>
-									<th>注文番号</th>
+									<th>卓番</th>
 									<th>注文時間</th>
 									<th>個数</th>
 									<th>商品</th>
 									<th>トッピング</th>
+									<th>編集</th>
 									<th>戻す</th>
 								</tr>
 							</thead>
@@ -62,29 +64,12 @@
 								<tr class="order_row hidden-row"
 									data-table="<c:out value='${order.tableNumber}卓'/>">
 									<td>
-										<!--注文情報を注文編集へ送信-->
-										<form action="OrderEditForm" method="post">
-											<input type="hidden" name="screen" value="ProvidedHistory">
-											<input type="hidden" name="order_id" value="<c:out value='${order.orderId}'/>">
-											<input type="hidden" name="table_number" value="<c:out value='${order.tableNumber}'/>">
-											<input type="hidden" name="product_id" value="<c:out value='${order.productId}'/>">
-											<input type="hidden" name="product_name" value="<c:out value='${order.productName}'/>">
-											<input type="hidden" name="product_price" value="<c:out value='${order.productPrice}'/>">
-											<input type="hidden" name="product_quantity" value="<c:out value='${order.productQuantity}'/>">
-											<input type="hidden" name="product_stock" value="<c:out value='${order.productStock}'/>">
-											<c:forEach var="topping" items="${order.orderTopping}">
-												<input type="hidden" name="topping_id[]" value="<c:out value='${topping.toppingId}'/>">
-											    <input type="hidden" name="topping_name[]" value="<c:out value='${topping.toppingName}'/>">
-											    <input type="hidden" name="topping_quantity[]" value="<c:out value='${topping.toppingQuantity}'/>">
-											    <input type="hidden" name="topping_stock[]" value="<c:out value='${topping.toppingStock}'/>">
-											</c:forEach>
-											<button class="order_num"><c:out value='${order.orderId}'/></button>
-										</form>
+										<div>${order.tableNumber}卓</div>
 									</td>
-									<td><c:out value='${order.orderTime}'/></td>
-									<td><c:out value='${order.productQuantity}'/>個</td>
-									<td><c:out value='${order.productName}'/></td>
-									<td class="topping">
+									<td style="border-left:  1px solid #e4e4e4;"><c:out value='${fn:substring(order.orderTime, 11, 16)}' /></td>
+									<td style="border-left:  1px solid #e4e4e4;"><c:out value='${order.productQuantity}'/>個</td>
+									<td style="border-left:  1px solid #e4e4e4;"><c:out value='${order.productName}'/></td>
+									<td  style="border-left:  1px solid #e4e4e4;" class="topping">
 										<!-- トッピングが複数ある場合、カンマで区切ってリスト表示 -->
 										<c:if test="${not empty order.orderTopping}">
 											<ul class="list">
@@ -113,7 +98,27 @@
 											<span></span>
 										</c:if>
 									</td>
-									<td>
+									<td style="border-left:  1px solid #e4e4e4;">
+										<!--注文情報を注文編集へ送信-->
+										<form action="OrderEditForm" method="post">
+											<input type="hidden" name="screen" value="ProvidedHistory">
+											<input type="hidden" name="order_id" value="<c:out value='${order.orderId}'/>">
+											<input type="hidden" name="table_number" value="<c:out value='${order.tableNumber}'/>">
+											<input type="hidden" name="product_id" value="<c:out value='${order.productId}'/>">
+											<input type="hidden" name="product_name" value="<c:out value='${order.productName}'/>">
+											<input type="hidden" name="product_price" value="<c:out value='${order.productPrice}'/>">
+											<input type="hidden" name="product_quantity" value="<c:out value='${order.productQuantity}'/>">
+											<input type="hidden" name="product_stock" value="<c:out value='${order.productStock}'/>">
+											<c:forEach var="topping" items="${order.orderTopping}">
+												<input type="hidden" name="topping_id[]" value="<c:out value='${topping.toppingId}'/>">
+											    <input type="hidden" name="topping_name[]" value="<c:out value='${topping.toppingName}'/>">
+											    <input type="hidden" name="topping_quantity[]" value="<c:out value='${topping.toppingQuantity}'/>">
+											    <input type="hidden" name="topping_stock[]" value="<c:out value='${topping.toppingStock}'/>">
+											</c:forEach>
+											<button class="order_num">✎</button>
+										</form>
+									</td>
+									<td style="border-left:  1px solid #e4e4e4;">
 										<!--提供済みフラグの更新-->
 										<form action="ProvidedHistory" method="post">
 											<input type="hidden" name="order_id" value="<c:out value='${order.orderId}'/>">
@@ -138,9 +143,8 @@
 			</form>
 			<p class="no-orders">提供済みの商品はありません。</p>
 		</c:if>
-		<div class="fixed-row">
-			<form action="OrderList" class="order_history-form" method="get">
-				※注文番号を押下することで注文内容の変更・取り消しが可能です
+		<div class="fixed-row" align="right">
+			<form action="OrderList" class="order_history-form" method="get">			
 				<button class="order_history">注文</button>
 			</form>
 		</div>
