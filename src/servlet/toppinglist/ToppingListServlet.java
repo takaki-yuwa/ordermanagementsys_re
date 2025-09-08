@@ -3,12 +3,13 @@ package servlet.toppinglist;
 import java.io.IOException;
 import java.util.List;
 
-import dao.topping.ToppingListDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import dao.topping.ToppingListDAO;
 import model.topping.ToppingInfo;
 
 @WebServlet("/ToppingList")
@@ -43,7 +44,7 @@ public class ToppingListServlet extends HttpServlet {
 		}
 	}
 
-	//表示フラグ更新
+	//表示、削除フラグ更新
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
@@ -65,6 +66,13 @@ public class ToppingListServlet extends HttpServlet {
 
 				ToppingListDAO dao = new ToppingListDAO();
 				dao.updateToppingFlag(toppingId, visibleFlag);
+			}
+			//削除フラグ更新
+			else if (toppingIdStr != null && visibleFlagStr == null) {
+				int toppingId = Integer.parseInt(toppingIdStr);
+
+				ToppingListDAO dao = new ToppingListDAO();
+				dao.updateToppingDeleteFlag(toppingId);
 			}
 
 			// 更新後は一覧画面にリダイレクト（PRGパターン推奨）

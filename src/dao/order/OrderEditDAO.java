@@ -21,7 +21,7 @@ public class OrderEditDAO {
 		String sql = "SELECT t.topping_id, t.topping_name, t.topping_price, t.topping_stock " +
 				"FROM product_topping pt " +
 				"JOIN topping t ON pt.topping_id = t.topping_id " +
-				"WHERE pt.product_id = ?";
+				"WHERE pt.product_id = ? AND t.topping_delete_flag=1";
 
 		try (Connection con = util.DBUtil.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql)) {

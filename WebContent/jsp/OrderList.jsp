@@ -15,8 +15,6 @@
 <link rel="stylesheet" href="css/Order/OrderListtab.css">
 <title>注文管理システム--注文管理--</title>
 </head>
-<script src="JavaScript/setTabContent.js"></script>
-<!--<script src="JavaScript/OrderList.js"></script>-->
 <body>
 	<main>
 		<!-- 選択されたカテゴリーを JavaScript に渡すための hidden input -->
@@ -50,7 +48,7 @@
 				<!-- タブの内容 -->
 				<div class="tab-contents">
 					<c:if test="${not empty orderinfo}">
-						<table class="table-wrapper">
+						<table>
 							<thead>
 								<tr>
 									<th>No.</th>
@@ -168,5 +166,6 @@
 	</script>
 	<script
 		src="<%=request.getContextPath()%>/JavaScript/Order/orderList.js"></script>
+	<script src="JavaScript/setTabContent.js"></script>
 </body>
 </html>

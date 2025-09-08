@@ -1,61 +1,100 @@
 @charset "UTF-8";
 
-main {
-	width: 100%;
-	padding: 0;
-}
-
-/*トッピングボックス*/
-.topping-box {
-	width: 80vw;
-	margin: 20px auto;
-	max-width: 100%;
-	height: 85vh;
-	margin: 20px auto;
-	padding: 20px;
-	border: 2px solid black;
-	background-color: rgb(251, 255, 251);
-	overflow-y: auto;
-	box-sizing: border-box;
-	justify-content: center;
-}
-
-/*商品1行分*/
-.topping-row {
+/* タブラッパーを上部に固定 */
+.tab-wrapper {
+	position: fixed;
+	top: 0;
+	left: 15px;
+	width: calc(100% - 30px);
 	display: flex;
 	align-items: center;
-	border-bottom: 1px solid black;
-	padding: 10px 0;
-}
-
-/*最後の行はボーダーあり*/
-.topping-row:last-child {
-	border-bottom: 1px solid black;
-}
-
-/*各要素の幅調整*/
-.topping-name {
-	flex: 3;
-	/*幅の比率*/
-}
-
-.topping-price {
-	flex: 1;
-}
-
-/*編集ボタンの設定と幅調整*/
-.btn-edit {
-	width: 110px;
+	background-color: rgb(251, 255, 251);
+	z-index: 1000;
 	padding: 10px;
-	border-radius: 10px;
-	border: 1px solid black;
-	background-color: rgb(0, 128, 0);
-	color: white;
-	cursor: pointer;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	transition: background-color 0.3s ease;
+}
+
+/* タブコンテンツ */
+.tab-contents {
+	width: 80vw;
+	height: 85vh;
+	overflow-y: auto;
+	margin: 0 auto;
+	margin-top: 55px;
+	color: #555;
+}
+
+/*ボタン押したときに沈むアニメーション*/
+button:active {
+	transform: translateY(1px);
+}
+
+/*テーブルデザイン*/
+table {
+	overflow: visible;
+	box-sizing: border-box;
+	border-collapse: collapse;
+	border: 1px solid rgb(50 50 50);
 	text-align: center;
-	margin-left: 10px;
+	width: 80vw;
+	max-width: 100%;
+	margin: 0px auto;
+	padding: 20px;
+}
+
+/*テーブルヘッダー*/
+th {
+	border: 1px solid rgb(50 50 50);
+	top: 0px;
+	padding: 8px;
+	position: sticky;
+	background: rgb(190 235 170);
+	color: rgb(30 80 30);
+	border: 1px solid black;
+	z-index: 1;
+}
+
+/*テーブルの線固定*/
+th::before {
+	content: "";
+	top: -1px;
+	left: -1px;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	border: 1px solid black;
+}
+
+/*テーブルセル*/
+td {
+	border-bottom: 1px solid #333;
+	padding: 8px;
+}
+
+/*一時的に非表示にするクラス*/
+.hidden-row {
+	display: none;
+}
+
+/*編集ボタン*/
+.btn-edit {
+	border-radius: 10px;
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+	width: 50px;
+	height: 30px;
+	color: rgb(255 255 255);
+	background-color: rgb(0, 128, 0);
+	border: 1px solid rgb(0 0 0)
+}
+
+/*ごみ箱ボタン*/
+.btn-trash {
+	border-radius: 10px;
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+	width: 50px;
+	height: 30px;
+	color: rgb(255, 255, 255);
+	background-color: rgb(255 30 30);
+	border: 1px solid rgb(0, 0, 0)
 }
 
 /*表示・非表示ボタンの設定と幅調整*/
@@ -87,9 +126,7 @@ main {
 	margin-top: 8px;
 	display: flex;
 	gap: 10px;
-	justify-content: flex-start;
 	align-items: center;
-	margin-left: 10px;
 }
 
 /*新規作成ボタン*/
@@ -107,6 +144,70 @@ main {
 	margin-left: 10px;
 
 }
+
+/* スイッチのスタイル */
+/* スイッチのスタイル */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 27px;
+}
+
+/* チェックボックスを隠す */
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* スライダー本体 */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	transition: 0.4s;
+	border-radius: 34px;
+}
+
+/* スライダーの丸部分 */
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 19px;
+	/* 丸の高さを調整 */
+	width: 19px;
+	/* 丸の幅を調整 */
+	border-radius: 50%;
+	left: 4px;
+	/* 丸の位置調整 */
+	bottom: 4px;
+	/* 丸の位置調整 */
+	background-color: white;
+	transition: 0.4s;
+}
+
+/* スイッチがオンのときのスライダー本体 */
+input:checked+.slider {
+	background-color: rgb(255, 128, 64);
+	/* オン時の色 */
+}
+
+/* スイッチがオンのときの丸部分 */
+input:checked+.slider:before {
+	transform: translateX(23px);
+	/* 丸が右にスライド */
+}
+
+
+
+/*ボタンにカーソルがのっている場合の設定*/
+.btn-edit:hover,
+.btn-display:hover {}
 
 /*ホームボタン*/
 .homebutton {

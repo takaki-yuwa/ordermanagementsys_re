@@ -46,111 +46,130 @@ function clearErrors() {
 
 /* -------------------- ポップアップ全般制御 -------------------- */
 
-//ポップアップ処理
+// ポップアップ表示
 function showDisplayHidePopup() {
 	const popupOverlay = document.getElementById('popup-overlay');
 	const popupContent = document.getElementById('popup-content');
 	const closePopupButton = document.getElementById('close-popup');
-
+	
 	//ポップアップ表示
 	popupOverlay.classList.add('show');
 	popupContent.classList.add('show');
-
+	
 	//closeボタンが存在する場合のみイベント登録
 	if (closePopupButton) {
 		closePopupButton.onclick = () => hidePopup();
 	}
-
 }
 
-//ポップアップ非表示処理
+// ポップアップ非表示
 function hidePopup() {
 	document.getElementById('popup-overlay')?.classList.remove('show');
 	document.getElementById('popup-content')?.classList.remove('show');
 }
 
-//実行ボタン処理
+// 実行ボタン処理
 function confirmPopup() {
 	const confirmButton = document.getElementById('confirm-button');
-	if (confirmButton) {
-		confirmButton.onclick = () => {
-			const action = confirmButton.dataset.action;
+	if (!confirmButton) return;
 
-			switch (action) {
-				case 'setupConfirmHidePopup':
-					setupConfirmHidePopup();
-					break;
-				case 'commonDisplayHide':
-					const targetId = confirmButton.dataset.targetId;
-					commonDisplayHidePopup(targetId);
-					break;
-				default:
-			}
-			hidePopup();
-		};
-	}
+	confirmButton.addEventListener('click', () => {
+		const action = confirmButton.dataset.action;
 
+		if (action === 'setupConfirmHidePopup') {
+			setupConfirmHidePopup();
+			return;
+		}
+
+		const idElement = document.querySelector('[id^="popup-"][id$="-id"]');
+		if (!idElement) return;
+
+		const type = idElement.id.includes('product') ? 'product' : 'topping';
+		const id = document.getElementById(`popup-${type}-id`).value;
+
+		if (action === 'delete') {
+				const visibleFlagInput = document.getElementById(`popup-${type}-visible-flag`);
+				if (visibleFlagInput) {
+					visibleFlagInput.remove();
+				}
+			handleDeleteAction(type, id);
+
+		} else if (action === 'toggle') {
+			const visibleFlag = document.getElementById(`popup-${type}-visible-flag`).value;
+			handleToggleAction(type, id, visibleFlag);
+		}
+
+		hidePopup();
+	}, { once: true }); // 一度だけ実行されるようにする
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
 	confirmPopup();
 });
 
-//ポップアップを非表示にするだけ
+// ポップアップを非表示にするだけ
 function setupConfirmHidePopup() {
 	hidePopup();
 }
 
 /* -------------------- 商品・トッピング一覧画面向け -------------------- */
 
-//商品、トッピング一覧画面でポップアップを出すための共通トリガー処理
+// ポップアップトリガー処理（削除・表示切り替え）
 function handleCommonToggle(button) {
 	const id = button.dataset.id;
 	const visibleFlag = button.dataset.visibleFlag;
 	const name = button.dataset.name;
 	const type = button.dataset.type;
 	const label = button.dataset.label;
+	const action = button.dataset.action || 'toggle';
 
-	openCommonDisplayTogglePopup(id, visibleFlag, name, type, label);
+	openCommonDisplayTogglePopup(id, visibleFlag, name, type, label, action);
 }
 
-//商品、トッピング一覧画面で使う共通ポップアップメッセージ処理
-function openCommonDisplayTogglePopup(id, visibleFlag, name, type, label) {
+// //商品、トッピング一覧画面で使う共通ポップアップメッセージ処理（削除 or 表示切り替え）
+function openCommonDisplayTogglePopup(id, visibleFlag, name, type, label, action) {
 	const popupNameElement = document.getElementById(`popup-${type}-name`);
 	const popupMessage = document.getElementById('popup-message');
 	const confirmButton = document.getElementById('confirm-button');
 	const popupIdInput = document.getElementById(`popup-${type}-id`);
 	const popupFlagInput = document.getElementById(`popup-${type}-visible-flag`);
-
+	
 	// 商品の場合のみカテゴリをセット
 	if (type === 'product') {
 		const selectedRadio = document.querySelector('input[name="tab"]:checked');
 		const selectedIndex = Array.from(document.querySelectorAll('input[name="tab"]')).indexOf(selectedRadio);
 		document.getElementById('popup-selected-category').value = categoryList[selectedIndex];
 	}
-
+	
 	// XSS対策：ユーザー入力をエスケープ
 	if (popupNameElement && name != null) {
 		popupNameElement.textContent = name;
 	}
 
-	// 表示・非表示のメッセージ
-	const actionColor = visibleFlag === '1' ? 'red' : 'blue';
-	const actionText = visibleFlag === '1' ? '非表示' : '表示';
-	popupMessage.innerHTML = `この${label}を<span style="color: ${actionColor};">${escapeHtml(actionText)}</span>にします。`;
+	// 表示・非表示か削除のメッセージ
+	let messageHtml;
+	if (action === 'delete') {
+		messageHtml = `この${label}を<span style="color: red;">削除</span>します。`;
+	} else {
+		const actionColor = visibleFlag === '1' ? 'red' : 'blue';
+		const actionText = visibleFlag === '1' ? '非表示' : '表示';
+		messageHtml = `この${label}を<span style="color: ${actionColor};">${escapeHtml(actionText)}</span>にします。`;
+	}
+	popupMessage.innerHTML = messageHtml;
 
-	// データ属性の設定
-	confirmButton.dataset.action = 'commonDisplayHide';
-	confirmButton.dataset[`target${type}Id`] = `toggle-btn-${id}`;
+	// data属性の設定
+	confirmButton.dataset.action = action;
+	confirmButton.dataset[`target${type}Id`] = `${action === 'delete' ? 'delete-btn' : 'toggle-btn'}-${id}`;
 
-	// hidden inputにセット
 	popupIdInput.value = id;
-	popupFlagInput.value = visibleFlag;
+	if (popupFlagInput) popupFlagInput.value = visibleFlag || '';
 
 	showDisplayHidePopup();
+	confirmPopup(); // 新しいイベントを登録（再設定）
 }
 
-//商品、トッピング一覧画面で使う共通ボタン切り替え処理
+// 商品、トッピング一覧画面で使う共通ボタン切り替え処理
 function commonDisplayHidePopup(buttonId) {
 	const button = document.getElementById(buttonId);
 	if (!button) return;
@@ -166,14 +185,13 @@ function commonDisplayHidePopup(buttonId) {
 
 /* -------------------- 商品・トッピング作成／編集画面向け -------------------- */
 
-//商品、トッピング新規作成・編集画面で使う共通トリガー処理
+// 商品、トッピング新規作成・編集画面で使う共通トリガー処理
 function handleCommonFormToggle(button) {
 	const type = button.dataset.type;
-
 	openCommonFormDisplayTogglePopup(type);
 }
 
-//商品新規作成・編集画面で使うカテゴリーとトッピング表示用
+// 商品新規作成・編集画面で使うカテゴリーとトッピング表示用
 function handleProductExtras(category, toppingNames) {
 	document.getElementById('popup-category').textContent = category || '(未選択)';
 
@@ -227,8 +245,7 @@ function openCommonFormDisplayTogglePopup(type) {
 
 		const toppingCheckboxes = document.querySelectorAll('input[name="topping_id"]:checked');
 		const toppingNames = Array.from(toppingCheckboxes).map(cb => cb.parentElement.textContent.trim());
-
-		handleProductExtras(category, toppingNames); // → カテゴリ・トッピング名をポップアップにセット
+		handleProductExtras(category, toppingNames);// → カテゴリ・トッピング名をポップアップにセット
 	}
 
 	// エラーがある場合はポップアップを表示しない
@@ -252,7 +269,7 @@ function openCommonFormDisplayTogglePopup(type) {
 	// 「はい」ボタンの処理を設定（フォームを送信）
 	const confirmButton = document.getElementById('confirm-button');
 	confirmButton.dataset.action = 'setupConfirmHidePopup';
-	confirmButton.onclick = function() {
+	confirmButton.onclick = function () {
 		document.getElementById(`${type}Form`).submit();
 	};
 }

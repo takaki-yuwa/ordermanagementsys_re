@@ -33,7 +33,6 @@
 					${category_.index == 0 ? "checked" : ""}
 					<c:if test="${category_.index == 0 || category == selectedCategory}">checked</c:if>>
 			</c:forEach>
-
 			<div class="tab-wrapper">
 				<div class="btn-row">
 					<!--ホームボタン-->
@@ -58,43 +57,73 @@
 					</c:forEach>
 				</div>
 			</div>
-			<div class="product-box">
-				<c:forEach var="product" items="${productInfo}">
-					<!-- data-categoryに現在のカテゴリー情報を保存 -->
-					<div class="product-row hidden-row"
-						data-category="${product.category}">
-						<div class="product-name">
-							<c:out value="${product.name}" />
-						</div>
-						<div class="product-price">
-							<c:out value="${product.price}" />
-							円
-						</div>
-
-						<!-- 編集ボタンで商品新規作成・編集画面へ遷移する -->
-						<form action="ProductEditForm" method="post">
-							<input type="hidden" name="form" value="ProductEdit"> 
-							<input type="hidden" name="product_id" value="<c:out value='${product.id}'/>"> 
-							<input type="hidden" name="product_name" value="<c:out value='${product.name}' />"> 
-							<input type="hidden" name="category_name" value="<c:out value='${product.category}'/>"> 
-							<input type="hidden" name="product_price" value="<c:out value='${product.price}'/>">
-							<button class="btn-edit" type="submit">編集</button>
-						</form>
-
-						<!-- 表示フラグが1のとき：非表示にするボタン -->
-						<button type="button"
-							class="btn-toggle ${product.visible_flag == 1 ? 'btn-hide' : 'btn-display'}"
-							id="toggle-btn-${product.id}"
-							data-id="<c:out value='${product.id}'/>"
-							data-visible-flag="<c:out value='${product.visible_flag}'/>"
-							data-name="<c:out value='${product.name}'/>" data-type="product"
-							data-label="商品" onclick="handleCommonToggle(this)">
-							${product.visible_flag == 1 ? '非表示にする' : '表示にする'}
-						</button>
-					</div>
-				</c:forEach>
+			<div class="tab-contents">
+				<table>
+					<thead>
+						<tr>
+							<th>商品名</th>
+							<th>価格</th>
+							<th>編集</th>
+							<th>表示切替</th>
+							<th>削除</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- productInfo リストをループして表示 -->
+						<c:forEach var="product" items="${productInfo}">
+							<!-- data-categoryに現在のカテゴリー情報を保存 -->
+							<tr class="product-row hidden-row"
+								data-category="${product.category}">
+							<td class="product-name"><c:out value="${product.name}" /></td>
+							<td class="product-price" style="border-left: 1px solid #e4e4e4;"><c:out value="${product.price}" />円</td>
+							<td style="border-left: 1px solid #e4e4e4;">
+							<!-- 編集ボタンで商品新規作成・編集画面へ遷移する -->
+								<form action="ProductEditForm" method="post">
+									<input type="hidden" name="form" value="ProductEdit">
+									<input type="hidden" name="product_id"
+										value="<c:out value='${product.id}'/>"> <input
+										type="hidden" name="product_name"
+										value="<c:out value='${product.name}' />"> <input
+										type="hidden" name="category_name"
+										value="<c:out value='${product.category}'/>"> <input
+										type="hidden" name="product_price"
+										value="<c:out value='${product.price}'/>">
+									<button class="btn-edit">編集</button>
+								</form>
+							</td>
+							<td style="border-left: 1px solid #e4e4e4;">
+								${product.visible_flag == 1 ? '表示中：' : '非表示：'}
+								<!-- 表示フラグが1のとき：非表示にするボタン -->
+								<label class="switch" type="button"
+								class="btn-toggle ${product.visible_flag == 1 ? 'btn-hide' : 'btn-display'}"
+								id="toggle-btn-${product.id}"
+								data-id="<c:out value='${product.id}'/>"
+								data-visible-flag="<c:out value='${product.visible_flag}'/>"
+								data-name="<c:out value='${product.name}'/>"
+								data-type="product"
+								data-label="商品"
+								data-action="toggle"
+								onclick="handleCommonToggle(this)">
+								<input type="checkbox" ${product.visible_flag == 1 ? 'checked' : ''} disabled>
+								<span class="slider"></span>
+								</label>
+							</td>
+							<td style="border-left: 1px solid #e4e4e4;">
+								<button class="btn-trash"
+								id="toggle-btn-${product.id}"
+								data-id="<c:out value='${product.id}'/>"
+								data-name="<c:out value='${product.name}'/>"
+								data-type="product"
+								data-label="商品"
+								data-action="delete"
+								onclick="handleCommonToggle(this)">
+								削除</button>
+							</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
-
 		</div>
 	</main>
 	<!--ポップアップの背景-->
@@ -108,9 +137,11 @@
 		<button class="popup-close" id="close-popup">いいえ</button>
 		<form action="ProductList" method="post">
 			<input type="hidden" name="product_id" id="popup-product-id">
-			<input type="hidden" name="product_visible_flag" id="popup-product-visible-flag">
-			<input type="hidden" name="selected_category" id="popup-selected-category">
-			<button type="submit" class="popup-proceed" id="confirm-button" data-action="" data-target-id="">は い</button>
+			<input type="hidden" name="product_visible_flag"
+				id="popup-product-visible-flag"> <input type="hidden"
+				name="selected_category" id="popup-selected-category">
+			<button type="submit" class="popup-proceed" id="confirm-button"
+				data-action="" data-target-id="">は い</button>
 		</form>
 	</div>
 

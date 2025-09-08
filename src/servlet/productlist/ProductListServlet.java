@@ -3,13 +3,14 @@ package servlet.productlist;
 import java.io.IOException;
 import java.util.List;
 
-import constants.Constants;
-import dao.product.ProductListDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import constants.Constants;
+import dao.product.ProductListDAO;
 import model.product.ProductInfo;
 
 @WebServlet("/ProductList")
@@ -55,7 +56,7 @@ public class ProductListServlet extends HttpServlet {
 		}
 	}
 
-	//表示フラグ更新
+	//表示、削除フラグ更新
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -79,6 +80,13 @@ public class ProductListServlet extends HttpServlet {
 
 				ProductListDAO dao = new ProductListDAO();
 				dao.updateProductFlag(productId, visibleFlag);
+			}
+			//削除フラグ更新
+			else if (productIdStr != null && visibleFlagStr == null) {
+				int productId = Integer.parseInt(productIdStr);
+	
+				ProductListDAO dao = new ProductListDAO();
+				dao.updateProductDeleteFlag(productId);
 			}
 
 			System.out.println("現在のタブ" + selectedCategory);

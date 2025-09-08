@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	//全てのラジオボタンを取得
 	const tabs = document.querySelectorAll('input[name="tab"]');
 	//全ての商品一覧が入っている親要素を取得
-	const productBox = document.querySelector('.product-box');
+	const productBox = document.querySelector('.tab-contents');
 	//サーバーから渡された以前選択されたカテゴリー名を取得
 	const categoryFromServer = document.getElementById('initial-selected-category')?.value;
 	//カテゴリー配列から該当するインデックスを取得(nullの場合「全て」をデフォルトにする)

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 main {
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
 	padding: 0;
 }
@@ -11,7 +11,8 @@ main {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin-top: 30px;
+	padding-top: 40px;
+	overflow: hidden;
 }
 
 /* 横スクロールバー非表示 */
@@ -24,7 +25,6 @@ main {
 	display: flex;
 	overflow-x: auto;
 	margin: 0 auto;
-	/* 左右のマージン自動で中央寄せ */
 	scroll-behavior: smooth;
 }
 
@@ -43,16 +43,13 @@ main {
 	text-align: center;
 }
 
-/* コンテンツ切り替え */
-.tab-content {
-	margin-top: 30px;
-	margin-bottom: 30px;
-	display: none;
-	padding: 20px 40px;
+/* タブコンテンツ */
+.tab-contents {
+	width: 90vw;
+	height: 85vh;
+	overflow-y: auto;
 	margin: 0 auto;
-	/* 左右のマージン自動で中央寄せ */
-	width: max-content;
-	/* コンテンツ幅に合わせる */
+	margin-top: 15px;
 	color: #555;
 }
 
@@ -60,7 +57,7 @@ main {
 .tab-wrapper {
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: 15px;
 	width: calc(100% - 30px);
 	display: flex;
 	align-items: center;

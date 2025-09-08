@@ -15,7 +15,7 @@ public class ProductListDAO {
 	//情報取得
 	public List<ProductInfo> selectProductList() {
 		List<ProductInfo> productInfoList = new ArrayList<>();
-		String selectProductSql = "SELECT * FROM product";
+		String selectProductSql = "SELECT * FROM product WHERE product_delete_flag=1";
 		try (Connection connection = DBUtil.getConnection();
 				PreparedStatement selectStmt = connection.prepareStatement(selectProductSql)) {
 
@@ -59,6 +59,22 @@ public class ProductListDAO {
 
 		} catch (SQLException e) {
 			System.err.println("商品表示フラグ更新中にSQLエラーが発生しました: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	//削除フラグの更新
+	public void updateProductDeleteFlag(int productId) {
+		String sql = "UPDATE product SET product_delete_flag = 0 WHERE product_id = ?";
+		try (Connection con = DBUtil.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setInt(1, productId);
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			System.err.println("予期しないエラーが発生しました。");
 			e.printStackTrace();
 		}
 	}

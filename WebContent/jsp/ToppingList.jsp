@@ -18,30 +18,39 @@
 </head>
 <body>
 	<main>
-		<div class="btn-row">
-			<!--ホームボタン-->
-			<form action="Home">
-				<input type="image"
-					src="<%=request.getContextPath()%>/image/homeButton.png"
-					alt="ホームボタン" class="homebutton">
-			</form>
-			<!-- 新規作成ボタン -->
-			<form action="ToppingCreateForm" method="post">
-				<input type="hidden" name="form" value="ToppingCreate">
-				<button type="submit" class="btn-create">新規作成</button>
-			</form>
+		<div class="tab-wrapper">
+			<div class="btn-row">
+				<!--ホームボタン-->
+				<form action="Home">
+					<input type="image"
+						src="<%=request.getContextPath()%>/image/homeButton.png"
+						alt="ホームボタン" class="homebutton">
+				</form>
+				<!-- 新規作成ボタン -->
+				<form action="ToppingCreateForm" method="post">
+					<input type="hidden" name="form" value="ToppingCreate">
+					<button type="submit" class="btn-create">新規作成</button>
+				</form>
+			</div>
 		</div>
-		<div class="topping-box">
-			<c:forEach var="topping" items="${toppingInfo}">
+		<div class="tab-contents">
+		<table>
+			<thead>
+				<tr>
+					<th>トッピング名</th>
+					<th>価格</th>
+					<th>編集</th>
+					<th>表示切替</th>
+					<th>削除</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- productInfo リストをループして表示 -->
+				<c:forEach var="topping" items="${toppingInfo}">
 				<div class="topping-row">
-					<div class="topping-name">
-						<c:out value="${topping.name}" />
-					</div>
-					<div class="topping-price">
-						<c:out value="${topping.price}" />
-						円
-					</div>
-
+					<td class="topping-name"><c:out value="${topping.name}" /></td>
+					<td style="border-left: 1px solid #e4e4e4;" class="topping-price"><c:out value="${topping.price}" />円</td>
+					<td style="border-left: 1px solid #e4e4e4;">
 					<!-- 編集ボタンで商品新規作成・編集画面へ遷移する -->
 					<form action="ToppingEditForm" method="post">
 						<input type="hidden" name="form" value="ToppingEdit"> 
@@ -50,21 +59,41 @@
 						<input type="hidden" name="topping_price" value="<c:out value='${topping.price}' />">
 						<button class="btn-edit" type="submit">編集</button>
 					</form>
-
-					<!-- 表示フラグが1のとき：非表示にするボタン -->
-					<button type="button"
+					</td>
+					<td style="border-left: 1px solid #e4e4e4;">
+						${topping.visible_flag == 1 ? '表示中：' : '非表示：'}
+						<!-- 表示フラグが1のとき：非表示にするボタン -->
+						<label class="switch" type="button"
 						class="btn-toggle ${topping.visible_flag == 1 ? 'btn-hide' : 'btn-display'}"
 						id="toggle-btn-${topping.id}"
 						data-id="<c:out value='${topping.id}'/>"
 						data-visible-flag="<c:out value='${topping.visible_flag}'/>"
-						data-name="<c:out value='${topping.name}'/>" data-type="topping"
-						data-label="トッピング" onclick="handleCommonToggle(this)">
-						${topping.visible_flag == 1 ? '非表示にする' : '表示にする'}
-					</button>
-				</div>
-			</c:forEach>
+						data-name="<c:out value='${topping.name}'/>"
+						data-type="topping"
+						data-label="トッピング"
+						data-action="toggle"
+						onclick="handleCommonToggle(this)">
+						<input type="checkbox" ${topping.visible_flag == 1 ? 'checked' : ''} disabled>
+						<span class="slider"></span>
+						</label>
+					</td>
+					<td style="border-left: 1px solid #e4e4e4;">
+						<button class="btn-trash"
+							id="delete-btn-${topping.id}"
+							data-id="<c:out value='${topping.id}'/>"
+							data-name="<c:out value='${topping.name}'/>"
+							data-type="topping"
+							data-label="トッピング"
+							data-action="delete"
+							onclick="handleCommonToggle(this)">
+							削除
+						</button>
+					</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 		</div>
-
 	</main>
 	<!--ポップアップの背景-->
 	<div class="popup-overlay" id="popup-overlay"></div>

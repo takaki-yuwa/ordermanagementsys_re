@@ -13,7 +13,7 @@ import util.DBUtil;
 public class ToppingListDAO {
 	//情報取得
 	public List<ToppingInfo> selectToppingList() {
-		String selectToppingSql = "SELECT * FROM topping";
+		String selectToppingSql = "SELECT * FROM topping WHERE topping_delete_flag=1";
 		List<ToppingInfo> toppingInfoList = new ArrayList<>();
 		try (Connection connection = DBUtil.getConnection();
 				PreparedStatement selectStmt = connection.prepareStatement(selectToppingSql)) {
@@ -61,6 +61,22 @@ public class ToppingListDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	//削除フラグの更新
+		public void updateToppingDeleteFlag(int toppingId) {
+			String sql = "UPDATE topping SET topping_delete_flag = 0 WHERE topping_id = ?";
+			try (Connection con = DBUtil.getConnection();
+					PreparedStatement ps = con.prepareStatement(sql)) {
+
+				ps.setInt(1, toppingId);
+
+				ps.executeUpdate();
+
+			} catch (SQLException e) {
+				System.err.println("予期しないエラーが発生しました。");
+				e.printStackTrace();
+			}
+		}
 
 	//トッピング新規作成
 	public void insertTopping(String toppingName, int toppingPrice) {
