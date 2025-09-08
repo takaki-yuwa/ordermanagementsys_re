@@ -78,7 +78,7 @@
 						</label>
 					</td>
 					<td style="border-left: 1px solid #e4e4e4;">
-						<button class="btn-trash"
+						<button class="btn-delete"
 							id="delete-btn-${topping.id}"
 							data-id="<c:out value='${topping.id}'/>"
 							data-name="<c:out value='${topping.name}'/>"

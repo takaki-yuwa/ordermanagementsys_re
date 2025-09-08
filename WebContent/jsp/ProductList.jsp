@@ -109,7 +109,7 @@
 								</label>
 							</td>
 							<td style="border-left: 1px solid #e4e4e4;">
-								<button class="btn-trash"
+								<button class="btn-delete"
 								id="toggle-btn-${product.id}"
 								data-id="<c:out value='${product.id}'/>"
 								data-name="<c:out value='${product.name}'/>"

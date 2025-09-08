@@ -71,7 +71,7 @@ li {
 /*注文取り消しボタン*/
 .delete {
 	color: #fff;
-	background-color: rgb(255, 128, 128);
+	background-color: rgb(255 30 30);
 }
 /*一覧へ戻るボタン*/
 .back {
