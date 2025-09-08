@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
-/* タブラッパーを上部に固定 */
-.tab-wrapper {
+/* ラッパーを上部に固定 */
+.wrapper {
 	position: fixed;
 	top: 0;
 	left: 15px;
@@ -13,8 +13,8 @@
 	padding: 10px;
 }
 
-/* タブコンテンツ */
-.tab-contents {
+/* コンテンツ */
+.contents {
 	width: 80vw;
 	height: 85vh;
 	overflow-y: auto;

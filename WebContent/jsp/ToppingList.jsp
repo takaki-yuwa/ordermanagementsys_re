@@ -18,7 +18,7 @@
 </head>
 <body>
 	<main>
-		<div class="tab-wrapper">
+		<div class="wrapper">
 			<div class="btn-row">
 				<!--ホームボタン-->
 				<form action="Home">
@@ -33,7 +33,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="tab-contents">
+		<div class="contents">
 		<table>
 			<thead>
 				<tr>

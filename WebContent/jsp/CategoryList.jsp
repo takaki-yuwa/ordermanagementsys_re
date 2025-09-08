@@ -16,22 +16,33 @@
 </head>
 <body>
 	<main>
-		<div class="btn-row">
-			<!--ホームボタン-->
-			<form action="Home">
-				<input type="image"
-					src="<%=request.getContextPath()%>/image/homeButton.png"
-					alt="ホームボタン" class="homebutton">
-			</form>
+		<div class="wrapper">
+			<div class="btn-row">
+				<!--ホームボタン-->
+				<form action="Home">
+					<input type="image"
+						src="<%=request.getContextPath()%>/image/homeButton.png"
+						alt="ホームボタン" class="homebutton">
+				</form>
+			</div>
 		</div>
-		<div class="category-box">
-			<c:forEach var="category" items="${categoryList}">
-				<div class="category-row">
-					<div class="category-name">
-						<c:out value="${category}" />
-					</div>
-				</div>
-			</c:forEach>
+		<div class="contents">
+			<table>
+				<thead>
+					<tr>
+						<th>カテゴリー名</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="category" items="${categoryList}">
+						<tr class="category-row">
+							<td class="category-name">
+								<c:out value="${category}" />
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</main>
 </body>
