@@ -48,7 +48,7 @@
 				<!-- タブの内容 -->
 				<div class="tab-contents">
 					<c:if test="${not empty orderinfo}">
-						<table>
+						<table id="orderTable">
 							<thead>
 								<tr>
 									<th>No.</th>
@@ -163,6 +163,9 @@
 			'<c:out value="${cat}"/>'<c:if test="${!category_.last}">,</c:if>
 			</c:forEach>
 			];
+	</script>
+	<script>
+	  const contextPath = '<%= request.getContextPath() %>';
 	</script>
 	<script
 		src="<%=request.getContextPath()%>/JavaScript/Order/orderList.js"></script>

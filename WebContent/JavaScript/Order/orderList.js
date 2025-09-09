@@ -148,3 +148,51 @@ updateButtonColors();
 
 // 30秒ごとに更新
 setInterval(updateButtonColors, 30000);
+
+
+// 新しい注文時間が追加されているかどうかを判定する関数
+function getLatestOrderTime(orderList) {
+  return orderList.reduce((latest, order) => {
+    // 文字列としての比較が可能（"YYYY-MM-DD HH:mm:ss"形式）
+    return order.order_time > latest ? order.order_time : latest;
+  }, "");
+}
+
+function isOrderTimeIncreased(oldList, newList) {
+  const oldLatest = getLatestOrderTime(oldList);
+  const newLatest = getLatestOrderTime(newList);
+
+  // 最新の注文時間が更新されていれば true（＝新しい注文が来た）
+  return newLatest > oldLatest;
+}
+
+// ページ読み込み時に前回の注文リストを復元（なければ空配列）
+let previousOrderList = JSON.parse(localStorage.getItem('previousOrderList') || '[]');
+
+async function fetchOrderList() {
+  try {
+    const response = await fetch(contextPath + '/api/orderlist');
+    if (!response.ok) throw new Error('ネットワークエラー');
+
+    const newOrderList = await response.json();
+
+    if (isOrderTimeIncreased(previousOrderList, newOrderList)) {
+      console.log("新しい注文が追加されました → リロード");
+      // localStorageに新しい注文リストを保存してからリロード
+      localStorage.setItem('previousOrderList', JSON.stringify(newOrderList));
+      location.reload();
+      return;
+    }
+
+    // 変化がなければlocalStorageも更新
+    previousOrderList = newOrderList;
+    localStorage.setItem('previousOrderList', JSON.stringify(newOrderList));
+
+  } catch (err) {
+    console.error("注文データ取得に失敗", err);
+  }
+}
+
+window.addEventListener('load', fetchOrderList);
+setInterval(fetchOrderList, 1000);
+
