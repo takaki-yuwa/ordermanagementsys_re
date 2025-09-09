@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import dao.order.OrderListDAO;
 import model.order.OrderInfo;
 
-@WebServlet("/api/orderlist")  // URLに応じて好きに変更可
+@WebServlet("/api/orderlist")
 public class OrderListJsonServlet extends HttpServlet {
 
     @Override
@@ -35,8 +35,8 @@ public class OrderListJsonServlet extends HttpServlet {
             out.flush();
 
         } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "データ取得に失敗しました。");
+        	e.printStackTrace();
+			request.getRequestDispatcher("/jsp/Error.jsp").forward(request, response);
         }
     }
 }
