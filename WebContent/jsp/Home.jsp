@@ -21,7 +21,7 @@
 			<input type="image" src="image/logoutButton.png" alt="ログアウトボタン"
 				class="logout right-image" onclick="showDisplayHidePopup()">
 		</div>
-		<div class="text-center">ホームメニュー</div>
+		<div class="text-center home">ホームメニュー</div>
 		<hr>
 		<h5>注文管理</h5>
 		<form action="OrderList" method="get">

@@ -2,13 +2,16 @@
 
 main {
 	margin: 0 auto;
-	width: 70vw;
+	width: 75vw;
+}
+
+.home{
+	font-size: 25px;
 }
 
 /*ログアウトボタン*/
 .logout {
-	width: 100px;
-	margin-right: 20px;
+	width: 150px;
 }
 
 /*注文管理のボタン色*/
@@ -25,14 +28,16 @@ main {
 
 /*ボタン設定*/
 .button {
-	width: 100px;
-	margin-left: 20px;
-	height: 35px;
-	border-radius: 10px;
+	font-size: 20px;
+	width: 20vw;
+	margin: 0px 20px 20px 0px;
+	height: 60px;
+	border-radius: 20px;
 	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 /*見出し5レイアウト*/
 h5 {
+	font-size: 20px;
 	margin-left: 20px;
 }
