@@ -267,7 +267,7 @@ function showhidePopup(actionType, options = {}) {
 	}
 
 	if (actionType === "OrderDetailsDelete") {
-		popupText[0].textContent = "この商品を削除します";
+		popupText[0].textContent = "この注文を削除します";
 		popupText[1].textContent = "よろしいですか？";
 
 		popupForm.action = actionType;
@@ -278,7 +278,7 @@ function showhidePopup(actionType, options = {}) {
 
 
 	} else if (actionType === "OrderDetailsEdit") {
-		popupText[0].textContent = "この商品の内容を変更します";
+		popupText[0].textContent = "この注文の内容を変更します";
 		popupText[1].textContent = "よろしいですか？";
 
 		popupForm.action = actionType;

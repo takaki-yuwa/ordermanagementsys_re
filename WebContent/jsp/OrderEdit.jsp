@@ -84,7 +84,7 @@
 	<div class="popup-overlay" id="popup-overlay"></div>
 	<!--ポップアップの内容-->
 	<div class="popup-content" id="popup-content">
-		<p>この商品を削除します</p>
+		<p>この注文を削除します</p>
 		<p>よろしいですか？</p>
 		<button class="popup-close" id="close-popup">いいえ</button>
 		<!-- 注文を変更、削除 -->
