@@ -150,22 +150,26 @@ updateButtonColors();
 setInterval(updateButtonColors, 1000);
 
 
-// 新しい注文時間が追加されているかどうかを判定する関数
-function getLatestOrderTime(orderList) {
-	return orderList.reduce((latest, order) => {
-		// 文字列としての比較が可能（"YYYY-MM-DD HH:mm:ss"形式）
-		return order.order_time > latest ? order.order_time : latest;
-	}, "");
-}
-
-
+// 新しい注文が追加されているかどうかを判定する関数
 function isOrderTimeIncreased(oldList, newList) {
-	const oldLatest = getLatestOrderTime(oldList);
-	const newLatest = getLatestOrderTime(newList);
+	// 配列の長さが違えば、新しい注文がある
+	if (oldList.length !== newList.length) {
+		return true;
+	}
 
-	// 最新の注文時間が更新されていれば true（＝新しい注文が来た）
-	return newLatest > oldLatest;
+	// 各要素の orderInfo の長さを比較
+	for (let i = 0; i < newList.length; i++) {
+		const oldOrderInfo = oldList[i]?.orderInfo || [];
+		const newOrderInfo = newList[i]?.orderInfo || [];
+
+		if (oldOrderInfo.length !== newOrderInfo.length) {
+			return true;
+		}
+	}
+
+	return false; // 差分がなければ false
 }
+
 
 // ページ読み込み時に前回の注文リストを復元（なければ空配列）
 let previousOrderList = JSON.parse(localStorage.getItem('previousOrderList') || '[]');
