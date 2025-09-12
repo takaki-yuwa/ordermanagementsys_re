@@ -6,12 +6,12 @@ main {
 }
 
 .home{
-	font-size: 25px;
+	font-size: 20px;
 }
 
 /*ログアウトボタン*/
 .logout {
-	width: 150px;
+	width: 125px;
 }
 
 /*注文管理のボタン色*/
@@ -29,9 +29,9 @@ main {
 /*ボタン設定*/
 .button {
 	font-size: 20px;
-	width: 20vw;
+	width: 18vw;
 	margin: 0px 20px 20px 0px;
-	height: 60px;
+	height: 55px;
 	border-radius: 20px;
 	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
 }
