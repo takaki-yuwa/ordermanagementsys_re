@@ -8,7 +8,7 @@
 	width: calc(100% - 30px);
 	display: flex;
 	align-items: center;
-	background-color: rgb(251, 255, 251);
+	background-color: rgb(251, 251, 251);
 	z-index: 1000;
 	padding: 10px;
 }
