@@ -94,7 +94,7 @@
 							<td style="border-left: 1px solid #e4e4e4;">
 								${product.visible_flag == 1 ? '表示中：' : '非表示：'}
 								<!-- 表示フラグが1のとき：非表示にするボタン -->
-								<label class="switch" type="button"
+								<label class="switch"
 								class="btn-toggle ${product.visible_flag == 1 ? 'btn-hide' : 'btn-display'}"
 								id="toggle-btn-${product.id}"
 								data-id="<c:out value='${product.id}'/>"
